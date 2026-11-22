@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080104" />
+  <meta name="description" content="BILAL VIP — بوابة التفعيل ولوحة التحكم الرسمية" />
+  <title>BILAL VIP — النسخة المميزة للمتابعين</title>
+  <style>
+    :root {
+      --bg-void: #050103;
+      --bg-primary: #090104;
+      --bg-card: rgba(20, 4, 10, 0.95);
+      --bg-card-elevated: rgba(34, 6, 15, 0.98);
+      --bg-input: #0a0104;
+      --accent-core: #e11d48;
+      --accent-bright: #ff3b5c;
+      --accent-soft: #ff9eb0;
+      --accent-gold: #ffd166;
+      --accent-dark: #5c0416;
+      --accent-rgb: 225, 29, 72;
+      --gold-rgb: 255, 209, 102;
+      --surface-top: #180208;
+      --surface-mid: #080104;
+      --surface-bot: #040102;
+      --border-hairline: rgba(var(--accent-rgb), 0.22);
+      --border-subtle: rgba(var(--accent-rgb), 0.38);
+      --border-strong: rgba(var(--accent-rgb), 0.68);
+      --text-primary: #ffffff;
+      --text-secondary: #f3d6dc;
+      --text-muted: #b88a95;
+      --emerald-bg: rgba(16, 185, 129, 0.16);
+      --emerald-border: rgba(52, 211, 153, 0.5);
+      --emerald-text: #34d399;
+    }
+
+    body.theme-crimson {
+      --accent-core: #e11d48;
+      --accent-bright: #ff3b5c;
+      --accent-soft: #ff9eb0;
+      --accent-gold: #ffd166;
+      --accent-dark: #5c0416;
+      --accent-rgb: 225, 29, 72;
+      --gold-rgb: 255, 209, 102;
+    }
+    body.theme-emerald {
+      --accent-core: #10b981;
+      --accent-bright: #34d399;
+      --accent-soft: #a7f3d0;
+      --accent-gold: #6ee7b7;
+      --accent-dark: #065f46;
+      --accent-rgb: 16, 185, 129;
+      --gold-rgb: 110, 231, 183;
+    }
+    body.theme-gold {
+      --accent-core: #f59e0b;
+      --accent-bright: #fbbf24;
+      --accent-soft: #fde68a;
+      --accent-gold: #ffd166;
+      --accent-dark: #78350f;
+      --accent-rgb: 245, 158, 11;
+      --gold-rgb: 255, 209, 102;
+    }
+    body.theme-violet {
+      --accent-core: #a855f7;
+      --accent-bright: #c084fc;
+      --accent-soft: #e9d5ff;
+      --accent-gold: #f0abfc;
+      --accent-dark: #581c87;
+      --accent-rgb: 168, 85, 247;
+      --gold-rgb: 240, 171, 252;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html { background-color: #040102; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #080104;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.22) 0%, rgba(var(--accent-rgb), 0.07) 45%, transparent 75%),
+        linear-gradient(180deg, #150207 0%, #080104 52%, #040102 100%);
+      color: var(--text-primary);
+      padding: 12px 12px 102px;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    #bgMotionCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.72;
+    }
+
+    .topbar, .card, .metrics, .bottom-nav, .toast, .login-gate-panel {
+      position: relative;
+      z-index: 2;
+    }
+
+    .bottom-nav { position: fixed !important; z-index: 40; }
+    .toast { position: fixed !important; z-index: 50; }
+    .hidden { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 8px;
+      z-index: 35;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      border-radius: 16px;
+      background: rgba(18, 3, 9, 0.92);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(12px);
+    }
+
+    .top-actions { display: flex; align-items: center; gap: 6px; }
+
+    .lang-btn, .theme-cycle-btn {
+      background: #1d050d;
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .theme-cycle-btn { color: var(--accent-gold); }
+
+    .brand-center { text-align: center; min-width: 0; flex: 1; }
+    .brand-title { font-size: 0.98rem; font-weight: 900; letter-spacing: 1.2px; color: var(--accent-bright); display: block; }
+    .brand-sub { font-size: 0.7rem; color: var(--text-muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .online-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--emerald-bg);
+      border: 1px solid var(--emerald-border);
+      color: var(--emerald-text);
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald-text); }
+
+    .login-gate-panel {
+      border-radius: 26px;
+      padding: 24px 18px 20px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(var(--gold-rgb), 0.16), transparent 46%),
+        radial-gradient(circle at 50% 18%, rgba(var(--accent-rgb), 0.28), transparent 68%),
+        linear-gradient(175deg, var(--bg-card-elevated) 0%, var(--bg-card) 100%);
+      border: 1.5px solid rgba(var(--gold-rgb), 0.58);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(var(--gold-rgb), 0.35);
+    }
+
+    .card {
+      background: rgba(18, 3, 9, 0.94);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 15px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .card h2, .card h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 900; color: #ffffff; }
+    .desc { margin: 0; font-size: 0.8rem; color: var(--text-secondary); }
+    .label { display: block; font-size: 0.85rem; font-weight: 800; color: var(--accent-soft); margin-bottom: 8px; }
+
+    .input-shell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(180deg, #070103 0%, #100207 100%);
+      border: 1.5px solid rgba(var(--gold-rgb), 0.52);
+      border-radius: 15px;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 16px rgba(var(--accent-rgb), 0.16);
+    }
+    .input-field {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+    }
+
+    .btn-mini {
+      background: #230610;
+      color: #ffffff;
+      border: 1px solid rgba(var(--gold-rgb), 0.35);
+      border-radius: 10px;
+      padding: 7px 11px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 15px 18px;
+      border: 1px solid rgba(var(--gold-rgb), 0.65);
+      border-radius: 15px;
+      background-image: linear-gradient(110deg, #5c0212 0%, var(--accent-core) 52%, #7a0419 100%);
+      color: #ffffff;
+      font-size: 1.02rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(var(--accent-rgb), 0.42), 0 0 14px rgba(var(--gold-rgb), 0.18);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-strong);
+      background: #1e050e;
+      color: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-happ-connect {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(52, 211, 153, 0.75);
+      background-image: linear-gradient(110deg, #064e3b 0%, #059669 55%, #047857 100%);
+      color: #ffffff;
+      font-size: 0.98rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.34);
+    }
+
+    .happ-ready-banner {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(52, 211, 153, 0.5);
+      color: #a7f3d0;
+      font-size: 0.78rem;
+      font-weight: 800;
+      word-break: break-all;
+    }
+
+    .feedback { margin-top: 10px; min-height: 20px; text-align: center; font-size: 0.84rem; font-weight: 800; color: var(--accent-bright); }
+    .feedback.ok { color: var(--emerald-text); }
+
+    .channels {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-hairline);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .channel-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: #1f050e;
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .timer-wrap { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
+    .dial-stage {
+      position: relative;
+      width: 224px;
+      height: 224px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dial-hud-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      animation: orbitSpin 22s linear infinite;
+    }
+    @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .dial-ring-outer {
+      position: absolute;
+      inset: 11px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(var(--gold-rgb), 0.45);
+      pointer-events: none;
+    }
+    .dial {
+      position: relative;
+      width: 184px;
+      height: 184px;
+      border-radius: 50%;
+      background-color: #090104;
+      border: 2px solid rgba(var(--gold-rgb), 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .dial-tag { font-size: 0.64rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 4px; }
+    .dial-val { font-size: 1.68rem; font-weight: 900; color: var(--accent-bright); font-variant-numeric: tabular-nums; }
+    .dial-lbl { font-size: 0.76rem; color: var(--accent-soft); margin-top: 2px; }
+    .dial-pct-pill { font-size: 0.68rem; font-weight: 900; color: var(--accent-gold); margin-top: 4px; }
+
+    .active-key-box { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .active-key-label { display: block; font-size: 0.74rem; color: var(--text-muted); }
+    .active-key-val { font-size: 0.98rem; font-weight: 900; color: var(--accent-bright); word-break: break-all; }
+    .copy-btn {
+      background-image: linear-gradient(135deg, var(--accent-core), var(--accent-dark));
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .metric { background: rgba(18, 3, 9, 0.94); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 11px 8px; text-align: center; }
+    .metric small { display: block; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+    .metric strong { display: block; font-size: 0.88rem; color: #ffffff; }
+    .stack { display: grid; gap: 10px; }
+
+    .vid-header-card {
+      background: linear-gradient(180deg, rgba(28, 4, 12, 0.96), rgba(14, 2, 7, 0.96));
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 13px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .vid-header-card h2 { margin: 0 0 2px; font-size: 1.05rem; font-weight: 900; color: #ffffff; }
+    .vid-header-card p { margin: 0; font-size: 0.76rem; color: var(--text-secondary); }
+    .vid-modes-badge {
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: rgba(var(--accent-rgb), 0.16);
+      border: 1px solid var(--border-strong);
+      color: var(--accent-bright);
+      font-size: 0.74rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .vid-feat-box {
+      background: linear-gradient(180deg, rgba(24, 3, 10, 0.96), rgba(12, 2, 6, 0.96));
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 14px 13px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .vid-row-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .vid-title-wrap { flex: 1; min-width: 0; }
+    .vid-title-line { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+    .vid-feat-title { margin: 0; font-size: 1rem; font-weight: 900; color: #ffffff; }
+    .vid-safe-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #34d399;
+    }
+    .vid-watch-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: #fbbf24;
+      margin-top: 6px;
+    }
+    .vid-feat-desc { margin: 0; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .switch-btn {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #3a2e34;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .switch-btn::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .switch-btn.active {
+      background: var(--accent-core);
+      border-color: var(--accent-bright);
+      box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.55);
+    }
+    .switch-btn.active::after {
+      transform: translateX(-24px);
+      background: #ffffff;
+    }
+
+    .vid-ready-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+      background: rgba(var(--accent-rgb), 0.14);
+      color: #ffd6de;
+      font-size: 0.84rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .vid-aim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+    .vid-aim-header span { font-size: 0.8rem; color: var(--text-muted); font-weight: 800; }
+    .vid-aim-header strong { font-size: 0.96rem; color: var(--accent-bright); font-weight: 900; font-variant-numeric: tabular-nums; }
+
+    .vid-tuner-panel {
+      display: grid;
+      grid-template-columns: 124px 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+    .vid-figure-box {
+      position: relative;
+      border-radius: 12px;
+      background: radial-gradient(circle at 50% 35%, rgba(var(--accent-rgb), 0.24), #090104 78%);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 158px;
+      overflow: hidden;
+      padding: 4px;
+    }
+    .vid-right-controls { display: grid; grid-template-columns: 34px 1fr; gap: 8px; align-items: center; }
+    .vid-vert-track-wrap {
+      height: 156px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b0105;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 6px 0;
+    }
+    input[type="range"].vid-vert-slider {
+      writing-mode: vertical-lr;
+      direction: rtl;
+      appearance: slider-vertical;
+      -webkit-appearance: slider-vertical;
+      width: 18px;
+      height: 138px;
+      accent-color: var(--accent-core);
+      cursor: pointer;
+    }
+    .vid-cards-stack { display: grid; gap: 6px; }
+    .vid-stat-pill-btn {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 11px;
+      background: #140208;
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .vid-stat-pill-btn.selected { border-color: var(--accent-bright); background: rgba(var(--accent-rgb), 0.18); }
+    .vid-stat-pill-btn.maint-pill {
+      border-color: rgba(245, 158, 11, 0.45);
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .vid-stat-pill-btn.maint-pill.selected {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.18);
+    }
+    .vid-stat-pill-btn.locked-maint,
+    .vid-stat-pill-btn:disabled {
+      opacity: 0.42 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+      box-shadow: none !important;
+    }
+    .tuner-disabled-overlay {
+      opacity: 0.38 !important;
+      pointer-events: none !important;
+      filter: grayscale(0.65) !important;
+      user-select: none !important;
+    }
+    .tuner-disabled-overlay * {
+      pointer-events: none !important;
+    }
+    .vid-stat-pill-btn strong { font-size: 0.95rem; font-weight: 900; color: #ffffff; font-variant-numeric: tabular-nums; }
+    .vid-stat-pill-btn span { font-size: 0.82rem; font-weight: 800; color: var(--text-secondary); }
+    .maint-tag {
+      color: #fbbf24 !important;
+      font-size: 0.74rem !important;
+      font-weight: 900 !important;
+    }
+    .vid-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 5px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+    .feat-state-line { margin-top: 10px; font-size: 0.74rem; font-weight: 800; color: var(--text-muted); }
+
+    .theme-swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
+    .swatch-btn {
+      padding: 10px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: #1e050e;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .swatch-btn.active { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+    .set-section-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: #0a0104;
+      border: 1px solid var(--border-hairline);
+    }
+    .set-subhead { display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 8px; }
+    .set-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .set-row:last-child { border-bottom: none; }
+    .set-row-txt strong { display: block; font-size: 0.84rem; color: #ffffff; }
+    .set-row-txt span { display: block; font-size: 0.72rem; color: var(--text-secondary); }
+    .set-mini-switch {
+      position: relative;
+      width: 46px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: #2b1820;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .set-mini-switch::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .set-mini-switch.active { background: var(--accent-core); border-color: var(--accent-bright); }
+    .set-mini-switch.active::after { transform: translateX(-20px); background: #ffffff; }
+    .set-actions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: #120208;
+      border-top: 1px solid var(--border-strong);
+      padding: 8px 8px 12px;
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      padding: 7px 6px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .nav-btn.active { color: var(--accent-bright); background: rgba(var(--accent-rgb), 0.16); }
+
+    .toast {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 74px;
+      z-index: 50;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: #1c040c;
+      border: 1px solid var(--accent-bright);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .dev-red-alert {
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: rgba(220, 38, 38, 0.16);
+      border: 1.5px solid #ef4444;
+      color: #fca5a5;
+      font-size: 0.82rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.25);
+      animation: devPulseRed 0.25s ease;
+    }
+    .dev-red-alert.hidden {
+      display: none !important;
+    }
+    @keyframes devPulseRed {
+      0% { transform: scale(0.97); opacity: 0.6; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="theme-crimson">
+<canvas id="bgMotionCanvas"></canvas>
+<header class="topbar">
+  <div class="top-actions">
+    <button type="button" class="lang-btn" id="langBtn">EN</button>
+    <button type="button" class="theme-cycle-btn" id="themeCycleBtn" title="تبديل اللون">✦ لون</button>
+  </div>
+  <div class="brand-center">
+    <strong class="brand-title">BILAL VIP</strong>
+    <span class="brand-sub" id="subBrand">النظام الرسمي المعتمد</span>
+  </div>
+  <span class="online-pill">
+    <span class="dot"></span>
+    <span id="onlineTxt">متصل</span>
+  </span>
+</header>
+
+<section id="loginCard" class="login-gate-panel">
+  <div style="text-align:center; margin-bottom:16px;">
+    <div style="
+      position: relative;
+      width: 100%;
+      min-height: 118px;
+      margin: 0 auto 10px;
+      border-radius: 20px;
+      background: radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), 0.24), rgba(7, 1, 3, 0.92) 76%);
+      border: 1px solid rgba(var(--accent-rgb), 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 8px;
+      box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.32), inset 0 0 18px rgba(var(--accent-rgb), 0.14);
+    ">
+      <svg class="bilal-claw-emblem" viewBox="0 0 280 128" width="250" height="116" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="overflow:visible;">
+        <defs>
+          <radialGradient id="loginClawAura" cx="50%" cy="50%" r="58%">
+            <stop offset="0%" stop-color="rgba(var(--accent-rgb), 0.72)" />
+            <stop offset="55%" stop-color="rgba(var(--accent-rgb), 0.24)" />
+            <stop offset="100%" stop-color="rgba(0, 0, 0, 0)" />
+          </radialGradient>
+          <linearGradient id="loginSlashBladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="40%" stop-color="#fff0b8" />
+            <stop offset="75%" stop-color="var(--accent-bright)" />
+            <stop offset="100%" stop-color="var(--accent-gold)" />
+          </linearGradient>
+          <linearGradient id="loginVipBadgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="50%" stop-color="var(--accent-gold)" />
+            <stop offset="100%" stop-color="#ffffff" />
+          </linearGradient>
+          <filter id="loginSlashGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <ellipse cx="140" cy="64" rx="132" ry="56" fill="url(#loginClawAura)" />
+        <g filter="url(#loginSlashGlow)">
+          <path d="M52 104 C82 64, 114 30, 148 8 C126 38, 98 72, 68 112 Z" fill="url(#loginSlashBladeGrad)" />
+          <path d="M84 112 C116 68, 150 32, 188 6 C164 40, 132 76, 100 118 Z" fill="url(#loginSlashBladeGrad)" />
+          <path d="M120 114 C154 70, 188 34, 226 10 C200 44, 168 80, 136 120 Z" fill="url(#loginSlashBladeGrad)" />
+          <path d="M158 108 C188 70, 218 38, 252 18 C228 48, 200 78, 172 114 Z" fill="url(#loginSlashBladeGrad)" />
+        </g>
+        <g filter="url(#loginSlashGlow)">
+          <text x="140" y="73" text-anchor="middle"
+            fill="url(#slashBladeGrad)"
+            stroke="#140207"
+            stroke-width="2.2"
+            paint-order="stroke fill"
+            font-size="46"
+            font-weight="900"
+            font-style="italic"
+            letter-spacing="4">BILAL</text>
+        </g>
+        <g transform="translate(140, 99)">
+          <polygon points="-54,-12 54,-12 46,11 -46,11" fill="rgba(18, 3, 8, 0.95)" stroke="var(--accent-gold)" stroke-width="2" />
+          <text x="0" y="5" text-anchor="middle" fill="url(#loginVipBadgeGrad)" font-size="14" font-weight="900" letter-spacing="5">VIP MOD</text>
+        </g>
+      </svg>
+    </div>
+    <h2 id="loginTitle" style="margin:8px 0 5px; font-size:1.28rem; font-weight:900; color:#ffffff;">بوابة تفعيل الأكواد الرسمية</h2>
+    <p id="loginDesc" style="margin:0 auto; max-width:340px; font-size:0.82rem; color:var(--text-secondary); line-height:1.55;">أدخل كلمة السر / رمز التفعيل المعتمد لفتح لوحة التحكم ومتابعة مدة الجلسة.</p>
+  </div>
+
+  <div style="margin-bottom:8px;">
+    <label for="keyInput" class="label" id="keyLbl" style="margin-bottom:0; color:var(--accent-gold);">كلمة السر / كود التفعيل</label>
+  </div>
+
+  <div class="input-shell">
+    <button type="button" class="btn-mini" id="eyeBtn" aria-label="إظهار أو إخفاء كلمة السر">👁</button>
+    <button type="button" class="btn-mini" id="pasteBtn" style="color:var(--accent-gold);">لصق</button>
+    <input type="password" id="keyInput" class="input-field" placeholder="XXXX-XXXX-XXXX" autocomplete="off" />
+  </div>
+
+  <button type="button" class="btn-primary" id="enterBtn">دخول إلى اللوحة</button>
+  <div class="feedback" id="loginMsg"></div>
+
+  <div class="channels" id="gateChannels">
+    <a href="https://t.me" target="_blank" rel="noopener" class="channel-link" id="tgLink">✈ تليجرام</a>
+    <a href="https://whatsapp.com" target="_blank" rel="noopener" class="channel-link" id="waLink">💬 قناة الواتساب</a>
+  </div>
+</section>
+
+<main id="dashMain" class="hidden">
+  <div id="tabHome">
+    <section class="card">
+      <h2 id="timerTitle">العدّاد التنازلي للجلسة</h2>
+      <p class="desc" id="timerDesc">يعرض الوقت المتبقي لصلاحية الكود المستخدم.</p>
+      <div class="timer-wrap">
+        <div class="dial-stage">
+          <svg class="dial-hud-svg" viewBox="0 0 244 244" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="hudArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffd166" />
+                <stop offset="50%" stop-color="#ff5270" />
+                <stop offset="100%" stop-color="#a855f7" />
+              </linearGradient>
+            </defs>
+            <circle cx="122" cy="122" r="115" fill="none" stroke="url(#hudArcGrad)" stroke-width="2.2" stroke-dasharray="14 8 4 8" />
+            <circle cx="122" cy="122" r="106" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-dasharray="2 6" />
+            <polygon points="122,2 127,10 117,10" fill="#ffd166" />
+            <polygon points="122,242 127,234 117,234" fill="#ffd166" />
+            <polygon points="2,122 10,117 10,127" fill="#ff5270" />
+            <polygon points="242,122 234,117 234,127" fill="#ff5270" />
+          </svg>
+          <div class="dial-ring-outer"></div>
+          <div class="dial" id="dialEl">
+            <span class="dial-tag">✦ VIP LIVE</span>
+            <div class="dial-val" id="clockEl">23:59:59</div>
+            <div class="dial-lbl" id="remLbl">الوقت المتبقي</div>
+            <div class="dial-pct-pill" id="dialPct">100%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="active-key-box">
+        <div>
+          <small class="active-key-label" id="actLbl">الكود النشط</small>
+          <div class="active-key-val" id="actCode">VIP-KEY</div>
+        </div>
+        <button type="button" class="copy-btn" id="copyActBtn">نسخ</button>
+      </div>
+
+    </section>
+
+    <section class="metrics">
+      <div class="metric"><small id="metDevLbl">الجهاز</small><strong>ANDROID</strong></div>
+      <div class="metric"><small id="metSysLbl">النظام</small><strong>BILAL VIP</strong></div>
+      <div class="metric"><small id="metStatLbl">الحالة</small><strong>ACTIVE</strong></div>
+    </section>
+
+    <section class="card">
+      <h3 id="sumTitle">حالة الجلسة</h3>
+      <p class="desc" id="sumDesc">الجلسة فعالة والعدّاد يعمل مباشرة.</p>
+      <div class="stack" style="margin-top:10px;">
+        <button type="button" class="btn-happ-connect" id="connectHappBtn">تفعيل</button>
+        <button type="button" class="btn-secondary" id="pingBtn">فحص الاتصال الآن</button>
+        <button type="button" class="btn-secondary" id="lockSessionBtn">قفل الجلسة والعودة</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="tabFeatures" class="hidden">
+    <div class="vid-header-card">
+      <div>
+        <h2 id="featTitle">قائمة المميزات</h2>
+        <p id="featDesc">فعّل الأوضاع المتاحة واضبط معايرة التصويب بدقة.</p>
+      </div>
+      <span class="vid-modes-badge" id="modeBadge">3 أوضاع</span>
+    </div>
+
+    <div class="vid-feat-box" id="cardF1">
+      <div class="vid-row-top">
+        <div class="vid-title-wrap">
+          <div class="vid-title-line">
+            <strong class="vid-feat-title" id="f1Title">تصويب</strong>
+            <span class="vid-safe-tag" id="f1SafeTag">آمن 100%</span>
+          </div>
+          <p class="vid-feat-desc" id="f1Desc">يضبط تمركز المؤشر على أقرب هدف ويحدد موضع الإصابة بانسيابية من الصدر إلى الرأس.</p>
+        </div>
+        <button type="button" class="switch-btn" id="sw1" data-idx="1" aria-label="تحويل الميزة الأولى"></button>
+      </div>
+
+      <div id="aimTunerLockWrap" class="tuner-disabled-overlay" aria-disabled="true">
+        <button type="button" class="vid-ready-btn" id="readyPresetsBtn" disabled>إعدادات جاهزة</button>
+
+        <div class="vid-aim-header">
+          <strong id="aimTopTitle">الرأس 100%</strong>
+          <span id="aimTopSub">ارتفاع التصويب</span>
+        </div>
+
+        <div class="vid-tuner-panel">
+          <div class="vid-figure-box">
+            <canvas id="holoCharCanvas" width="220" height="310" style="width:100%; height:100%; max-width:116px; max-height:158px; display:block;"></canvas>
+          </div>
+          <div class="vid-right-controls">
+            <div class="vid-vert-track-wrap">
+              <input type="range" min="0" max="2" step="1" value="2" id="vidVertSlider" class="vid-vert-slider" aria-label="اختيار ارتفاع التصويب" disabled />
+            </div>
+            <div class="vid-cards-stack">
+              <button type="button" class="vid-stat-pill-btn" id="pill100Btn" data-aimval="100" disabled aria-disabled="true">
+                <strong>100%</strong><span id="lbl100Text">الرأس</span>
+              </button>
+              <button type="button" class="vid-stat-pill-btn maint-pill locked-maint" id="pill90Btn" data-aimval="90" disabled aria-disabled="true" tabindex="-1">
+                <strong>90%</strong><span id="lbl90Text" class="maint-tag">تحت الصيانة</span>
+              </button>
+              <button type="button" class="vid-stat-pill-btn maint-pill locked-maint" id="pill0Btn" data-aimval="0" disabled aria-disabled="true" tabindex="-1">
+                <strong>0%</strong><span id="lbl0Text" class="maint-tag">تحت الصيانة</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-state-line" id="st1">الحالة: غير متوفر حالياً (تحت التطوير)</div>
+      <div class="dev-red-alert hidden" id="devAlert1">⚠️ الحالة: غير متوفر حالياً (تحت التطوير)</div>
+    </div>
+
+    <div class="vid-feat-box" id="cardF2">
+      <div class="vid-row-top">
+        <div class="vid-title-wrap">
+          <div class="vid-title-line"><strong class="vid-feat-title" id="f2Title">aim Boat</strong></div>
+          <p class="vid-feat-desc" id="f2Desc">يقلل تقطيع الإطارات ويحافظ على ثبات الاستجابة أثناء المواجهات السريعة.</p>
+        </div>
+        <button type="button" class="switch-btn" id="sw2" data-idx="2" aria-label="تحويل الميزة الثانية"></button>
+      </div>
+      <div class="feat-state-line" id="st2">الحالة: غير متوفر حالياً (تحت التطوير)</div>
+      <div class="dev-red-alert hidden" id="devAlert2">⚠️ الحالة: غير متوفر حالياً (تحت التطوير)</div>
+    </div>
+
+    <div class="vid-feat-box" id="cardF3" style="opacity:0.88;">
+      <div class="vid-row-top">
+        <div class="vid-title-wrap">
+          <div class="vid-title-line">
+            <strong class="vid-feat-title" id="f3Title">قريبا</strong>
+            <span class="vid-num-badge">3</span>
+          </div>
+          <div class="vid-watch-tag" id="f3WatchTag">مع التحديثات القادمة</div>
+          <p class="vid-feat-desc" id="f3Desc" style="margin-top:6px;">ميزة جديدة قيد التطوير، ستُضاف تلقائياً مع التحديثات الجاية.</p>
+        </div>
+        <button type="button" class="switch-btn" id="sw3" data-idx="3" aria-label="تحويل الميزة الثالثة"></button>
+      </div>
+      <div class="feat-state-line" id="st3">الحالة: غير متوفر حالياً (تحت التطوير)</div>
+      <div class="dev-red-alert hidden" id="devAlert3">⚠️ الحالة: غير متوفر حالياً (تحت التطوير)</div>
+    </div>
+  </div>
+
+  <div id="tabSettings" class="hidden">
+    <section class="card">
+      <h2 id="setTitle">إعدادات الجلسة واللون</h2>
+      <p class="desc" id="setDesc">بدّل لون الواجهة الحية وأدِر جلستك الحالية.</p>
+      <label class="label" id="themeLbl" style="margin-top:10px;">نمط الإضاءة واللون</label>
+      <div class="theme-swatches" style="margin-bottom:14px;">
+        <button type="button" class="swatch-btn active" data-theme="crimson" id="thCrimson">قرمزي VIP</button>
+        <button type="button" class="swatch-btn" data-theme="emerald" id="thEmerald">زمردي</button>
+        <button type="button" class="swatch-btn" data-theme="gold" id="thGold">ذهبي ملكي</button>
+        <button type="button" class="swatch-btn" data-theme="violet" id="thViolet">بنفسجي نيون</button>
+      </div>
+      <div class="set-section-box">
+        <div class="set-subhead">
+          <span>✦ خيارات تفيد المتابعة</span>
+          <span>VIP SYNC</span>
+        </div>
+        <div class="set-row">
+          <div class="set-row-txt">
+            <strong>تنبيه قبل انتهاء مدة الكود</strong>
+            <span>إشعار تنبيهي عندما يقترب العدّاد التنازلي من الانتهاء.</span>
+          </div>
+          <button type="button" class="set-mini-switch active" id="setSw1"></button>
+        </div>
+        <div class="set-row">
+          <div class="set-row-txt">
+            <strong>تذكّر الكود الأخير تلقائياً</strong>
+            <span>حفظ آخر كود صالح محلياً لتسريع الوصول عند العودة.</span>
+          </div>
+          <button type="button" class="set-mini-switch active" id="setSw2"></button>
+        </div>
+        <div class="set-row">
+          <div class="set-row-txt">
+            <strong>وضع توفير البطارية والخلفية</strong>
+            <span>تخفيف حركة الخلفية للحفاظ على سلاسة الهاتف.</span>
+          </div>
+          <button type="button" class="set-mini-switch" id="setSw3"></button>
+        </div>
+      </div>
+      <div class="set-actions-grid">
+        <button type="button" class="btn-secondary" id="shareKeyBtn">نسخ كود الجلسة</button>
+        <button type="button" class="btn-secondary" id="resetPrefsBtn">استعادة الافتراضي</button>
+      </div>
+      <div class="stack" style="margin-top:10px;">
+        <button type="button" class="btn-secondary" id="logoutBtn2">تسجيل الخروج</button>
+      </div>
+      <div class="feedback ok" id="setMsg"></div>
+    </section>
+  </div>
+
+  <nav class="bottom-nav">
+    <button type="button" class="nav-btn active" data-t="home" id="navHome">الرئيسية</button>
+    <button type="button" class="nav-btn" data-t="features" id="navFeat">المميزات</button>
+    <button type="button" class="nav-btn" data-t="settings" id="navSet">الإعدادات</button>
+  </nav>
+</main>
+
+<div class="toast hidden" id="toast"></div>
+
+<script>
+(function () {
+  var DEFAULT_SEC = 23 * 3600 + 59 * 60 + 59;
+  var leftSec = DEFAULT_SEC;
+  var totalDur = DEFAULT_SEC;
+  var themes = ["crimson", "emerald", "gold", "violet"];
+  var themeNames = {
+    crimson: { ar: "قرمزي VIP", en: "Crimson VIP" },
+    emerald: { ar: "زمردي", en: "Emerald" },
+    gold: { ar: "ذهبي ملكي", en: "Royal Gold" },
+    violet: { ar: "بنفسجي نيون", en: "Neon Violet" }
+  };
+  var currentTheme = "crimson";
+  var lang = "ar";
+  var aimVal = 100;
+  var smoothYRatio = 0.275;
+  var animT = 0;
+
+  // Configure your protected server endpoint URL here (e.g., Render / Supabase Edge Function)
+  // so the secret URI stays on your backend and is returned only after key/session verification.
+  var REMOTE_DISPATCH_ENDPOINT = "https://cigkxblipkjhvhvdypzi.supabase.co/functions/v1/bilal-vip";
+  var headProfileArmed = false;
+
+  var DEVICE_ID_STORAGE = "bilal_vip_device_id_v1";
+  var DEVICE_BOUND_KEYS_STORAGE = "bilal_vip_bound_keys_map_v1";
+  var BOUND_OTHER_DEVICE_AR = "المفتاح مرتبط بجهاز آخر ولا يمكن استخدامه على أكثر من جهاز.";
+  var BOUND_OTHER_DEVICE_EN = "This key is bound to another device and cannot be used on another device.";
+
+  function getOrCreateDeviceId() {
+    try {
+      var existing = localStorage.getItem(DEVICE_ID_STORAGE);
+      if (existing && existing.length >= 8) return existing;
+    } catch (_e) {}
+
+    var rawParts = [
+      navigator.userAgent || "",
+      navigator.language || "",
+      screen.width + "x" + screen.height + "x" + (screen.colorDepth || 24),
+      (Intl && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : "") || "",
+      String(Date.now()),
+      String(Math.random())
+    ].join("|");
+
+    var h1 = 2166136261;
+    var h2 = 16777619;
+    for (var i = 0; i < rawParts.length; i++) {
+      var ch = rawParts.charCodeAt(i);
+      h1 ^= ch;
+      h1 = Math.imul(h1, 16777619);
+      h2 = (Math.imul(h2, 31) + ch) >>> 0;
+    }
+    var devId = "DEV-" + (h1 >>> 0).toString(16).toUpperCase() + "-" + (h2 >>> 0).toString(16).toUpperCase();
+    try {
+      localStorage.setItem(DEVICE_ID_STORAGE, devId);
+    } catch (_e) {}
+    return devId;
+  }
+
+  function loadBoundKeysMap() {
+    try {
+      var raw = localStorage.getItem(DEVICE_BOUND_KEYS_STORAGE);
+      var parsed = raw ? JSON.parse(raw) : {};
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (_e) {
+      return {};
+    }
+  }
+
+  function saveBoundKeysMap(mapObj) {
+    try {
+      localStorage.setItem(DEVICE_BOUND_KEYS_STORAGE, JSON.stringify(mapObj));
+    } catch (_e) {}
+  }
+
+  function checkSingleDeviceBinding(keyCode, deviceId) {
+    var normalizedKey = String(keyCode || "").trim().toUpperCase();
+    var map = loadBoundKeysMap();
+    var record = map[normalizedKey];
+
+    if (record && record.boundDeviceId && record.boundDeviceId !== deviceId) {
+      return {
+        allowed: false,
+        message: lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN
+      };
+    }
+
+    if (!record) {
+      map[normalizedKey] = {
+        boundDeviceId: deviceId,
+        boundAt: Date.now()
+      };
+      saveBoundKeysMap(map);
+    }
+
+    return { allowed: true };
+  }
+
+  function fetchProtectedTarget(activeKey) {
+    if (!REMOTE_DISPATCH_ENDPOINT) {
+      return Promise.reject(new Error("NO_ENDPOINT"));
+    }
+    var devId = getOrCreateDeviceId();
+    return fetch(REMOTE_DISPATCH_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        key: activeKey || "",
+        device_id: devId,
+        single_device: true,
+        mode: "head_100"
+      })
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (res.status === 409 || (data && (data.code === "DEVICE_MISMATCH" || data.error === "DEVICE_MISMATCH"))) {
+          var errObj = new Error("DEVICE_MISMATCH");
+          errObj.userMessage = data.message || (lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN);
+          throw errObj;
+        }
+        if (!res.ok) throw new Error("AUTH_FAILED");
+        if (!data || !data.uri) throw new Error("EMPTY_URI");
+        return String(data.uri);
+      });
+    });
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  function showToast(msg, isRed) {
+    var t = $("toast");
+    if (!t) return;
+    t.textContent = msg;
+    t.style.borderColor = isRed ? "#ef4444" : "";
+    t.style.background = isRed ? "#2a060a" : "";
+    t.style.color = isRed ? "#fca5a5" : "";
+    t.classList.remove("hidden");
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(function () { t.classList.add("hidden"); }, 2400);
+  }
+
+  function switchTab(tabName) {
+    $("tabHome").classList.toggle("hidden", tabName !== "home");
+    $("tabFeatures").classList.toggle("hidden", tabName !== "features");
+    $("tabSettings").classList.toggle("hidden", tabName !== "settings");
+    document.querySelectorAll(".nav-btn").forEach(function (n) {
+      n.classList.toggle("active", n.getAttribute("data-t") === tabName);
+    });
+  }
+
+  function prepareHappCode(autoReturnHome) {
+    headProfileArmed = true;
+    showToast(
+      autoReturnHome
+        ? "تم تجهيز وضع الرأس 100% — جارٍ العودة للرئيسية للاتصال"
+        : "تم تجهيز وضع الرأس 100%",
+      false
+    );
+    if (autoReturnHome) {
+      setTimeout(function () {
+        switchTab("home");
+      }, 320);
+    }
+  }
+
+  function launchHappApp() {
+    if (!aimEnabled || !headProfileArmed) {
+      showToast("يجب تفعيل زر التصويب / الرأس أولاً قبل الضغط على تفعيل", true);
+      return;
+    }
+    var currentKey = $("actCode") ? $("actCode").textContent.trim() : "";
+    showToast("جاري التحقق وتجهيز التحويل إلى Happ...", false);
+
+    fetchProtectedTarget(currentKey).then(function (uri) {
+      var a = document.createElement("a");
+      a.href = uri;
+      a.rel = "noopener";
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () {
+        if (a && a.parentNode) a.parentNode.removeChild(a);
+      }, 120);
+    }).catch(function (err) {
+      if (err && err.message === "DEVICE_MISMATCH") {
+        showToast(err.userMessage || (lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN), true);
+      } else if (err && err.message === "NO_ENDPOINT") {
+        showToast("أضف رابط السيرفر المحمي (REMOTE_DISPATCH_ENDPOINT) لإخفاء الكود نهائياً عن الواجهة", true);
+      } else {
+        showToast("تعذّر التحقق من الجلسة أو الكود من السيرفر", true);
+      }
+    });
+  }
+
+  function fmtClock(sec) {
+    var s = Math.max(0, Number(sec) || 0);
+    var h = String(Math.floor(s / 3600)).padStart(2, "0");
+    var m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+    var r = String(s % 60).padStart(2, "0");
+    return h + ":" + m + ":" + r;
+  }
+
+  function drawClock() {
+    var c = $("clockEl");
+    var d = $("dialEl");
+    var p = $("dialPct");
+    if (c) c.textContent = fmtClock(leftSec);
+    var ratio = Math.max(0, Math.min(1, leftSec / Math.max(1, totalDur)));
+    if (p) p.textContent = Math.round(ratio * 100) + "%";
+    if (d) {
+      var deg = Math.round(ratio * 360);
+      var st = getComputedStyle(document.body);
+      var core = (st.getPropertyValue("--accent-core") || "#e11d48").trim();
+      var rgb = (st.getPropertyValue("--accent-rgb") || "225, 29, 72").trim();
+      d.style.backgroundImage = "radial-gradient(circle, #090104 65%, transparent 66%), conic-gradient(" + core + " " + deg + "deg, rgba(" + rgb + ", 0.18) " + deg + "deg)";
+    }
+  }
+
+  function applyTheme(name, announce) {
+    if (themes.indexOf(name) === -1) name = "crimson";
+    currentTheme = name;
+    document.body.className = "theme-" + name;
+    document.querySelectorAll(".swatch-btn").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-theme") === name);
+    });
+    var tName = themeNames[name][lang];
+    if ($("setMsg")) {
+      $("setMsg").textContent = lang === "ar" ? ("اللون الحالي: " + tName) : ("Current color: " + tName);
+    }
+    drawClock();
+    if (announce) showToast((lang === "ar" ? "تم تغيير اللون إلى: " : "Color changed to: ") + tName, false);
+  }
+
+  $("themeCycleBtn").addEventListener("click", function () {
+    applyTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length], true);
+  });
+
+  document.querySelectorAll(".swatch-btn").forEach(function (b) {
+    b.addEventListener("click", function () { applyTheme(b.getAttribute("data-theme"), true); });
+  });
+
+  $("eyeBtn").addEventListener("click", function () {
+    var inp = $("keyInput");
+    inp.type = inp.type === "password" ? "text" : "password";
+  });
+
+  $("pasteBtn").addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(function (txt) {
+        if (txt && $("keyInput")) {
+          $("keyInput").type = "text";
+          $("keyInput").value = txt.trim();
+          showToast(lang === "ar" ? "تم لصق الكود" : "Code pasted", false);
+        }
+      }).catch(function () {});
+    }
+  });
+
+  var SAVED_KEY_STORAGE = "bilal_vip_saved_key_v1";
+  var SAVED_UNLOCKED_STORAGE = "bilal_vip_unlocked_v1";
+  var SAVED_EXPIRES_AT_STORAGE = "bilal_vip_expires_at_v1";
+  var SAVED_TOTAL_DUR_STORAGE = "bilal_vip_total_dur_v1";
+
+  var EXPIRED_NOTICE_AR = "إشعار رسمي: انتهى ترخيص مفتاحك، يرجى إدخال رمز تفعيل جديد لمواصلة استخدام النظام.";
+  var EXPIRED_NOTICE_EN = "Official Notice: Your key license has expired. Please enter a valid activation code to continue.";
+
+  function showExpiredNotice(msgOverride) {
+    var txt = msgOverride || (lang === "ar" ? EXPIRED_NOTICE_AR : EXPIRED_NOTICE_EN);
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+      localStorage.removeItem(SAVED_TOTAL_DUR_STORAGE);
+    } catch (_e) {}
+    leftSec = 0;
+    drawClock();
+    $("dashMain").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = txt;
+    }
+    showToast(txt, true);
+  }
+
+  function shouldRememberKey() {
+    var s2 = $("setSw2");
+    return !s2 || s2.classList.contains("active");
+  }
+
+  function unlockWithKey(k, isSilentRestore, customRemainingSec) {
+    var rem = typeof customRemainingSec === "number" ? Math.max(0, Math.floor(customRemainingSec)) : DEFAULT_SEC;
+    if (rem <= 0) {
+      showExpiredNotice();
+      return;
+    }
+    leftSec = rem;
+    if (!isSilentRestore) {
+      totalDur = rem;
+    }
+    drawClock();
+
+    if ($("actCode")) $("actCode").textContent = k;
+    if ($("keyInput")) $("keyInput").value = k;
+    if ($("loginMsg")) $("loginMsg").textContent = "";
+
+    var expiresAt = Date.now() + rem * 1000;
+    if (shouldRememberKey()) {
+      try {
+        localStorage.setItem(SAVED_KEY_STORAGE, k);
+        localStorage.setItem(SAVED_UNLOCKED_STORAGE, "1");
+        localStorage.setItem(SAVED_EXPIRES_AT_STORAGE, String(expiresAt));
+        localStorage.setItem(SAVED_TOTAL_DUR_STORAGE, String(totalDur));
+      } catch (_e) {}
+    }
+    $("loginCard").classList.add("hidden");
+    $("dashMain").classList.remove("hidden");
+    if (!isSilentRestore) {
+      showToast(lang === "ar" ? "تم فتح اللوحة بنجاح" : "Dashboard unlocked", false);
+    }
+  }
+
+  function enterDash() {
+    var k = $("keyInput") ? $("keyInput").value.trim() : "";
+    if (!k) {
+      if ($("loginMsg")) {
+        $("loginMsg").classList.remove("ok");
+        $("loginMsg").textContent = lang === "ar" ? "أدخل كلمة السر / الكود أولاً." : "Enter a password / code first.";
+      }
+      return;
+    }
+    var devId = getOrCreateDeviceId();
+    var check = checkSingleDeviceBinding(k, devId);
+    if (!check.allowed) {
+      if ($("loginMsg")) {
+        $("loginMsg").classList.remove("ok");
+        $("loginMsg").textContent = check.message;
+      }
+      showToast(check.message, true);
+      return;
+    }
+    unlockWithKey(k, false, DEFAULT_SEC);
+  }
+
+  $("enterBtn").addEventListener("click", enterDash);
+  $("keyInput").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); enterDash(); } });
+
+  function logoutDash() {
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+    } catch (_e) {}
+    $("dashMain").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+  }
+
+  $("lockSessionBtn").addEventListener("click", logoutDash);
+  $("logoutBtn2").addEventListener("click", logoutDash);
+
+  $("copyActBtn").addEventListener("click", function () {
+    var v = $("actCode") ? $("actCode").textContent.trim() : "";
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).catch(function () {});
+    showToast((lang === "ar" ? "تم النسخ: " : "Copied: ") + v, false);
+  });
+
+  $("connectHappBtn").addEventListener("click", launchHappApp);
+
+  $("pingBtn").addEventListener("click", function () {
+    showToast(lang === "ar" ? "الاتصال مستقر وجاهز" : "Connection stable", false);
+  });
+
+  $("shareKeyBtn").addEventListener("click", function () {
+    var v = $("actCode") ? $("actCode").textContent.trim() : "";
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).catch(function () {});
+    if ($("setMsg")) $("setMsg").textContent = "تم نسخ كود الجلسة: " + v;
+  });
+
+  $("resetPrefsBtn").addEventListener("click", function () {
+    applyTheme("crimson", false);
+    if ($("setMsg")) $("setMsg").textContent = "تمت استعادة الإعدادات الافتراضية";
+  });
+
+  document.querySelectorAll(".set-mini-switch").forEach(function (ms) {
+    ms.addEventListener("click", function () {
+      ms.classList.toggle("active");
+    });
+  });
+
+  document.querySelectorAll(".nav-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      switchTab(btn.getAttribute("data-t"));
+    });
+  });
+
+  var aimEnabled = false;
+
+  function syncAimLockState() {
+    var wrap = $("aimTunerLockWrap");
+    var p100 = $("pill100Btn");
+    var p90 = $("pill90Btn");
+    var p0 = $("pill0Btn");
+    var sl = $("vidVertSlider");
+    var pr = $("readyPresetsBtn");
+    if (wrap) {
+      wrap.classList.toggle("tuner-disabled-overlay", !aimEnabled);
+      wrap.setAttribute("aria-disabled", String(!aimEnabled));
+    }
+    if (p100) {
+      p100.disabled = !aimEnabled;
+      p100.setAttribute("aria-disabled", String(!aimEnabled));
+      p100.classList.toggle("selected", aimEnabled && aimVal === 100);
+    }
+    if (sl) {
+      sl.disabled = !aimEnabled;
+      sl.setAttribute("aria-disabled", String(!aimEnabled));
+    }
+    if (pr) {
+      pr.disabled = !aimEnabled;
+      pr.setAttribute("aria-disabled", String(!aimEnabled));
+    }
+    // Keep 90% and 0% strictly locked under maintenance until next release
+    if (p90) {
+      p90.disabled = true;
+      p90.setAttribute("aria-disabled", "true");
+      p90.classList.add("locked-maint");
+      p90.classList.remove("selected");
+    }
+    if (p0) {
+      p0.disabled = true;
+      p0.setAttribute("aria-disabled", "true");
+      p0.classList.add("locked-maint");
+      p0.classList.remove("selected");
+    }
+    if (aimEnabled) {
+      aimVal = 100;
+      if (p100) p100.classList.add("selected");
+      if (sl) sl.value = "2";
+      if ($("aimTopTitle")) $("aimTopTitle").textContent = lang === "en" ? "Head 100%" : "الرأس 100%";
+    } else {
+      if (p100) p100.classList.remove("selected");
+    }
+  }
+
+  document.querySelectorAll(".switch-btn").forEach(function (sw) {
+    sw.addEventListener("click", function (ev) {
+      if (ev && ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+      var idx = sw.getAttribute("data-idx");
+      if (idx === "1") {
+        aimEnabled = !aimEnabled;
+        sw.classList.toggle("active", aimEnabled);
+        var st1 = $("st1");
+        var al1 = $("devAlert1");
+        if (aimEnabled) {
+          headProfileArmed = true;
+          if (st1) st1.textContent = lang === "ar" ? "الحالة: مفعّل — يمكنك اختيار الرأس 100%" : "Status: Enabled — You can select Head 100%";
+          if (al1) al1.classList.add("hidden");
+          syncAimLockState();
+          prepareHappCode(false);
+        } else {
+          headProfileArmed = false;
+          if (st1) st1.textContent = lang === "ar" ? "الحالة: متوقف — فعّل الزر أولاً لاختيار الرأس" : "Status: Off — Enable switch first to pick Head";
+          if (al1) al1.classList.add("hidden");
+          syncAimLockState();
+          showToast(lang === "ar" ? "تم إيقاف زر التصويب — لن يتم النقل إلى Happ حتى التفعيل" : "Aim switch off — Happ launch blocked", false);
+        }
+        return;
+      }
+
+      sw.classList.remove("active");
+      var st = $("st" + idx);
+      if (st) {
+        st.textContent = lang === "ar"
+          ? "الحالة: غير متوفر حالياً (تحت التطوير)"
+          : "Status: Currently unavailable (Under development)";
+      }
+      var alertEl = $("devAlert" + idx);
+      if (alertEl) {
+        alertEl.textContent = lang === "ar"
+          ? "⚠️ الحالة: غير متوفر حالياً (تحت التطوير)"
+          : "⚠️ Status: Currently unavailable (Under development)";
+        alertEl.classList.remove("hidden");
+      }
+      showToast(
+        lang === "ar"
+          ? "الحالة: غير متوفر حالياً (تحت التطوير)"
+          : "Status: Currently unavailable (Under development)",
+        true
+      );
+    }, true);
+  });
+
+  function handleAimSelection(v) {
+    if (!aimEnabled) {
+      showToast(lang === "ar" ? "فعّل زر التصويب أولاً لتحديد الرأس" : "Enable Aim toggle first", true);
+      return;
+    }
+    var num = Number(v);
+    if (num === 90 || num === 0) {
+      showToast(lang === "ar" ? "هذا الخيار تحت الصيانة حالياً" : "This option is under maintenance", true);
+      if ($("vidVertSlider")) $("vidVertSlider").value = "2";
+      return;
+    }
+
+    aimVal = 100;
+    if ($("aimTopTitle")) $("aimTopTitle").textContent = lang === "en" ? "Head 100%" : "الرأس 100%";
+    if ($("pill100Btn")) $("pill100Btn").classList.add("selected");
+    if ($("pill90Btn")) $("pill90Btn").classList.remove("selected");
+    if ($("pill0Btn")) $("pill0Btn").classList.remove("selected");
+    if ($("vidVertSlider")) $("vidVertSlider").value = "2";
+    prepareHappCode(false);
+  }
+
+  $("pill100Btn").addEventListener("click", function () { handleAimSelection(100); });
+  $("pill90Btn").addEventListener("click", function () { handleAimSelection(90); });
+  $("pill0Btn").addEventListener("click", function () { handleAimSelection(0); });
+  $("vidVertSlider").addEventListener("input", function () {
+    var steps = [0, 90, 100];
+    var chosen = steps[parseInt(this.value, 10)] || 100;
+    handleAimSelection(chosen);
+  });
+  $("readyPresetsBtn").addEventListener("click", function () {
+    handleAimSelection(100);
+  });
+  syncAimLockState();
+
+  function applyLang() {
+    var ar = lang === "ar";
+    document.documentElement.lang = ar ? "ar" : "en";
+    document.documentElement.dir = ar ? "rtl" : "ltr";
+    if ($("langBtn")) $("langBtn").textContent = ar ? "EN" : "AR";
+    if ($("f1Title")) $("f1Title").textContent = ar ? "تصويب" : "Aim";
+    if ($("f2Title")) $("f2Title").textContent = "aim Boat";
+    if ($("f3Title")) $("f3Title").textContent = ar ? "قريبا" : "Coming Soon";
+    if ($("lbl100Text")) $("lbl100Text").textContent = ar ? "الرأس" : "Head";
+    if ($("lbl90Text")) $("lbl90Text").textContent = ar ? "تحت الصيانة" : "Maintenance";
+    if ($("lbl0Text")) $("lbl0Text").textContent = ar ? "تحت الصيانة" : "Maintenance";
+    if ($("aimTopTitle") && aimVal === 100) {
+      $("aimTopTitle").textContent = ar ? "الرأس 100%" : "Head 100%";
+    }
+    applyTheme(currentTheme, false);
+  }
+
+  $("langBtn").addEventListener("click", function () {
+    lang = lang === "ar" ? "en" : "ar";
+    applyLang();
+  });
+
+  (function initBustCanvas() {
+    var canvas = $("holoCharCanvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    function getTargetYRatio(val) {
+      if (val === 100) return 0.275;
+      if (val === 90) return 0.455;
+      return 0.84;
+    }
+
+    function renderBust() {
+      animT += 0.04;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      var w = 116, h = 158, cx = w * 0.5;
+      if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+
+      var st = getComputedStyle(document.body);
+      var bright = (st.getPropertyValue("--accent-bright") || "#ff3b5c").trim();
+      var rgbRaw = (st.getPropertyValue("--accent-rgb") || "225, 29, 72").split(",");
+      var r = parseInt(rgbRaw[0], 10) || 225;
+      var g = parseInt(rgbRaw[1], 10) || 29;
+      var b = parseInt(rgbRaw[2], 10) || 72;
+
+      var targetRatio = getTargetYRatio(aimVal);
+      smoothYRatio += (targetRatio - smoothYRatio) * 0.22;
+      var starY = h * smoothYRatio;
+
+      var headCx = cx, headCy = h * 0.275, headRx = w * 0.21, headRy = h * 0.148;
+      ctx.beginPath();
+      ctx.moveTo(headCx, headCy - headRy);
+      ctx.bezierCurveTo(headCx - headRx * 1.16, headCy - headRy, headCx - headRx * 1.14, headCy + headRy * 0.65, headCx - headRx * 0.56, headCy + headRy * 0.96);
+      ctx.bezierCurveTo(headCx - headRx * 0.34, headCy + headRy * 1.12, cx - w * 0.125, h * 0.43, cx - w * 0.145, h * 0.495);
+      ctx.bezierCurveTo(cx - w * 0.26, h * 0.525, cx - w * 0.39, h * 0.58, cx - w * 0.43, h * 0.68);
+      ctx.bezierCurveTo(cx - w * 0.45, h * 0.76, cx - w * 0.42, h * 0.86, cx - w * 0.39, h * 0.96);
+      ctx.lineTo(cx + w * 0.39, h * 0.96);
+      ctx.bezierCurveTo(cx + w * 0.42, h * 0.86, cx + w * 0.45, h * 0.76, cx + w * 0.43, h * 0.68);
+      ctx.bezierCurveTo(cx + w * 0.39, h * 0.58, cx + w * 0.26, h * 0.525, cx + w * 0.145, h * 0.495);
+      ctx.bezierCurveTo(cx + w * 0.125, h * 0.43, headCx + headRx * 0.34, headCy + headRy * 1.12, headCx + headRx * 0.56, headCy + headRy * 0.96);
+      ctx.bezierCurveTo(headCx + headRx * 1.14, headCy + headRy * 0.65, headCx + headRx * 1.16, headCy - headRy, headCx, headCy - headRy);
+      ctx.closePath();
+
+      var fillGrad = ctx.createLinearGradient(cx, h * 0.1, cx, h * 0.96);
+      fillGrad.addColorStop(0, "rgba(" + r + ", " + g + ", " + b + ", 0.32)");
+      fillGrad.addColorStop(0.55, "rgba(15, 3, 9, 0.92)");
+      fillGrad.addColorStop(1, "rgba(" + r + ", " + g + ", " + b + ", 0.28)");
+      ctx.fillStyle = fillGrad;
+      ctx.fill();
+      ctx.strokeStyle = bright;
+      ctx.lineWidth = 2.0;
+      ctx.stroke();
+
+      var arm = 11.5 + Math.sin(animT * 4) * 0.9;
+      ctx.save();
+      ctx.shadowColor = "rgba(255, 255, 255, 0.95)";
+      ctx.shadowBlur = 10;
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.moveTo(cx, starY - arm);
+      ctx.quadraticCurveTo(cx + 2.2, starY - 2.2, cx + arm, starY);
+      ctx.quadraticCurveTo(cx + 2.2, starY + 2.2, cx, starY + arm);
+      ctx.quadraticCurveTo(cx - 2.2, starY + 2.2, cx - arm, starY);
+      ctx.quadraticCurveTo(cx - 2.2, starY - 2.2, cx, starY - arm);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      requestAnimationFrame(renderBust);
+    }
+
+    requestAnimationFrame(renderBust);
+  })();
+
+  (function initBg() {
+    var c = $("bgMotionCanvas");
+    if (!c) return;
+    var ctx = c.getContext("2d");
+    if (!ctx) return;
+    var dots = [];
+    for (var i = 0; i < 22; i++) {
+      dots.push({
+        x: Math.random(),
+        y: Math.random(),
+        r: 1.5 + (i % 3) * 0.8,
+        vx: (Math.random() - 0.5) * 0.00025,
+        vy: -0.0002 - (i % 4) * 0.00007,
+        a: 0.24 + (i % 5) * 0.1
+      });
+    }
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      c.width = Math.floor(window.innerWidth * dpr);
+      c.height = Math.floor(window.innerHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function step() {
+      var cw = window.innerWidth, ch = window.innerHeight;
+      ctx.clearRect(0, 0, cw, ch);
+      var rgb = (getComputedStyle(document.body).getPropertyValue("--accent-rgb") || "225, 29, 72").trim();
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i];
+        d.x += d.vx;
+        d.y += d.vy;
+        if (d.y < -0.05) { d.y = 1.05; d.x = Math.random(); }
+        ctx.beginPath();
+        ctx.arc(d.x * cw, d.y * ch, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(" + rgb + ", " + d.a + ")";
+        ctx.fill();
+      }
+      requestAnimationFrame(step);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+    requestAnimationFrame(step);
+  })();
+
+  setInterval(function () {
+    var dashVisible = $("dashMain") && !$("dashMain").classList.contains("hidden");
+    if (!dashVisible) return;
+    if (leftSec > 0) {
+      leftSec -= 1;
+      drawClock();
+      if (leftSec === 0) {
+        showExpiredNotice();
+      }
+    } else {
+      showExpiredNotice();
+    }
+  }, 1000);
+
+  applyLang();
+  applyTheme("crimson", false);
+  drawClock();
+
+  (function restoreSavedSession() {
+    try {
+      var savedK = localStorage.getItem(SAVED_KEY_STORAGE) || "";
+      if (savedK && $("keyInput")) {
+        $("keyInput").value = savedK;
+      }
+      if ($("dashMain")) $("dashMain").classList.add("hidden");
+      if ($("loginCard")) $("loginCard").classList.remove("hidden");
+    } catch (_e) {}
+  })();
+})();
+</script>
+</body>
+</html>
