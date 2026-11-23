@@ -20,9 +20,6 @@
       --accent-dark: #5c0416;
       --accent-rgb: 225, 29, 72;
       --gold-rgb: 255, 209, 102;
-      --surface-top: #180208;
-      --surface-mid: #080104;
-      --surface-bot: #040102;
       --border-hairline: rgba(var(--accent-rgb), 0.22);
       --border-subtle: rgba(var(--accent-rgb), 0.38);
       --border-strong: rgba(var(--accent-rgb), 0.68);
@@ -230,6 +227,7 @@
       cursor: pointer;
       box-shadow: 0 10px 26px rgba(var(--accent-rgb), 0.42), 0 0 14px rgba(var(--gold-rgb), 0.18);
     }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .btn-secondary {
       width: 100%;
@@ -255,6 +253,7 @@
       cursor: pointer;
       box-shadow: 0 10px 24px rgba(16, 185, 129, 0.34);
     }
+    .btn-happ-connect:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .feedback { margin-top: 10px; min-height: 20px; text-align: center; font-size: 0.84rem; font-weight: 800; color: var(--accent-bright); }
     .feedback.ok { color: var(--emerald-text); }
@@ -374,7 +373,6 @@
       border-radius: 16px;
       padding: 14px 13px;
       margin-bottom: 12px;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .vid-row-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -536,9 +534,7 @@
       filter: grayscale(0.65) !important;
       user-select: none !important;
     }
-    .tuner-disabled-overlay * {
-      pointer-events: none !important;
-    }
+    .tuner-disabled-overlay * { pointer-events: none !important; }
     .vid-stat-pill-btn strong { font-size: 0.95rem; font-weight: 900; color: #ffffff; font-variant-numeric: tabular-nums; }
     .vid-stat-pill-btn span { font-size: 0.82rem; font-weight: 800; color: var(--text-secondary); }
     .maint-tag {
@@ -665,198 +661,12 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      box-shadow: 0 0 14px rgba(239, 68, 68, 0.25);
-      animation: devPulseRed 0.25s ease;
     }
-    .dev-red-alert.hidden {
-      display: none !important;
-    }
-    @keyframes devPulseRed {
-      0% { transform: scale(0.97); opacity: 0.6; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    /* واجهة الصيانة الافتتاحية */
-    #maintenanceGate {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      background-color: #080104;
-      background-image:
-        radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.24) 0%, rgba(var(--accent-rgb), 0.08) 45%, transparent 75%),
-        linear-gradient(180deg, #150207 0%, #080104 52%, #040102 100%);
-      overflow-y: auto;
-    }
-
-    #maintenanceGate.hidden {
-      display: none !important;
-    }
-
-    .maint-shell {
-      width: 100%;
-      max-width: 430px;
-      border-radius: 26px;
-      padding: 24px 18px 22px;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(var(--gold-rgb), 0.14), transparent 46%),
-        radial-gradient(circle at 50% 20%, rgba(var(--accent-rgb), 0.25), transparent 68%),
-        linear-gradient(175deg, var(--bg-card-elevated) 0%, var(--bg-card) 100%);
-      border: 1.5px solid rgba(var(--gold-rgb), 0.54);
-      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(var(--gold-rgb), 0.32);
-      text-align: center;
-    }
-
-    .maint-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 13px;
-      border-radius: 999px;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(251, 191, 36, 0.55);
-      color: #fbbf24;
-      font-size: 0.78rem;
-      font-weight: 900;
-      margin-bottom: 14px;
-    }
-
-    .maint-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #fbbf24;
-      animation: maintPulse 1.4s ease-in-out infinite;
-    }
-
-    @keyframes maintPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.35); opacity: 0.55; }
-    }
-
-    .maint-gear-box {
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 14px;
-      border-radius: 22px;
-      background: rgba(var(--accent-rgb), 0.14);
-      border: 1px solid var(--border-strong);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 26px rgba(var(--accent-rgb), 0.28);
-    }
-
-    .maint-gear-svg {
-      width: 42px;
-      height: 42px;
-      color: var(--accent-gold);
-      animation: maintSpin 8s linear infinite;
-    }
-
-    @keyframes maintSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .maint-title {
-      margin: 0 0 8px;
-      font-size: 1.28rem;
-      font-weight: 900;
-      color: #ffffff;
-    }
-
-    .maint-title span {
-      color: var(--accent-bright);
-    }
-
-    .maint-desc {
-      margin: 0 auto 16px;
-      max-width: 345px;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    .maint-card {
-      background: rgba(8, 1, 4, 0.85);
-      border: 1px solid var(--border-subtle);
-      border-radius: 16px;
-      padding: 12px 14px;
-      margin-bottom: 16px;
-      text-align: right;
-    }
-
-    .maint-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-      font-size: 0.82rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .maint-row:last-child {
-      border-bottom: none;
-    }
-
-    .maint-row small {
-      color: var(--text-muted);
-      font-weight: 700;
-    }
-
-    .maint-row strong {
-      color: #fbbf24;
-      font-weight: 900;
-    }
+    .dev-red-alert.hidden { display: none !important; }
   </style>
 </head>
 <body class="theme-crimson">
 <canvas id="bgMotionCanvas"></canvas>
-<section id="maintenanceGate" aria-live="polite">
-  <div class="maint-shell">
-    <div class="maint-badge">
-      <span class="maint-dot"></span>
-      <span id="maintBadgeTxt">وضع الصيانة مفعّل</span>
-    </div>
-
-    <div class="maint-gear-box" aria-hidden="true">
-      <svg class="maint-gear-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-      </svg>
-    </div>
-
-    <h1 class="maint-title"><span>BILAL VIP</span> — الموقع تحت الصيانة</h1>
-    <p class="maint-desc" id="maintDescTxt">
-      النظام متوقف مؤقتاً لإجراء صيانة وتحديثات على السيرفر والأكواد. يرجى المحاولة مرة أخرى لاحقاً.
-    </p>
-
-    <div class="maint-card">
-      <div class="maint-row">
-        <small>حالة النظام</small>
-        <strong>تحت الصيانة</strong>
-      </div>
-      <div class="maint-row">
-        <small>التحقق والأكواد</small>
-        <strong>متوقف مؤقتاً</strong>
-      </div>
-      <div class="maint-row">
-        <small>آخر فحص</small>
-        <strong id="maintLastCheck">الآن</strong>
-      </div>
-    </div>
-
-    <button type="button" class="btn-primary" id="maintRetryBtn">إعادة المحاولة الآن</button>
-
-    <div class="channels">
-      <a href="https://t.me" target="_blank" rel="noopener" class="channel-link">✈ تليجرام</a>
-      <a href="https://whatsapp.com" target="_blank" rel="noopener" class="channel-link">💬 واتساب</a>
-    </div>
-  </div>
-</section>
 
 <header class="topbar">
   <div class="top-actions">
@@ -887,60 +697,22 @@
       align-items: center;
       justify-content: center;
       padding: 6px 8px;
-      box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.32), inset 0 0 18px rgba(var(--accent-rgb), 0.14);
     ">
-      <svg class="bilal-claw-emblem" viewBox="0 0 280 128" width="250" height="116" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="overflow:visible;">
+      <svg viewBox="0 0 280 128" width="250" height="116" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
-          <radialGradient id="loginClawAura" cx="50%" cy="50%" r="58%">
-            <stop offset="0%" stop-color="rgba(var(--accent-rgb), 0.72)" />
-            <stop offset="55%" stop-color="rgba(var(--accent-rgb), 0.24)" />
-            <stop offset="100%" stop-color="rgba(0, 0, 0, 0)" />
-          </radialGradient>
           <linearGradient id="loginSlashBladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#ffffff" />
             <stop offset="40%" stop-color="#fff0b8" />
             <stop offset="75%" stop-color="var(--accent-bright)" />
             <stop offset="100%" stop-color="var(--accent-gold)" />
           </linearGradient>
-          <linearGradient id="loginVipBadgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#ffffff" />
-            <stop offset="50%" stop-color="var(--accent-gold)" />
-            <stop offset="100%" stop-color="#ffffff" />
-          </linearGradient>
-          <filter id="loginSlashGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
-        <ellipse cx="140" cy="64" rx="132" ry="56" fill="url(#loginClawAura)" />
-        <g filter="url(#loginSlashGlow)">
-          <path d="M52 104 C82 64, 114 30, 148 8 C126 38, 98 72, 68 112 Z" fill="url(#loginSlashBladeGrad)" />
-          <path d="M84 112 C116 68, 150 32, 188 6 C164 40, 132 76, 100 118 Z" fill="url(#loginSlashBladeGrad)" />
-          <path d="M120 114 C154 70, 188 34, 226 10 C200 44, 168 80, 136 120 Z" fill="url(#loginSlashBladeGrad)" />
-          <path d="M158 108 C188 70, 218 38, 252 18 C228 48, 200 78, 172 114 Z" fill="url(#loginSlashBladeGrad)" />
-        </g>
-        <g filter="url(#loginSlashGlow)">
-          <text x="140" y="73" text-anchor="middle"
-            fill="url(#loginSlashBladeGrad)"
-            stroke="#140207"
-            stroke-width="2.2"
-            paint-order="stroke fill"
-            font-size="46"
-            font-weight="900"
-            font-style="italic"
-            letter-spacing="4">BILAL</text>
-        </g>
-        <g transform="translate(140, 99)">
-          <polygon points="-54,-12 54,-12 46,11 -46,11" fill="rgba(18, 3, 8, 0.95)" stroke="var(--accent-gold)" stroke-width="2" />
-          <text x="0" y="5" text-anchor="middle" fill="url(#loginVipBadgeGrad)" font-size="14" font-weight="900" letter-spacing="5">VIP MOD</text>
-        </g>
+        <text x="140" y="73" text-anchor="middle" fill="url(#loginSlashBladeGrad)" font-size="46" font-weight="900" font-style="italic" letter-spacing="4">BILAL</text>
+        <text x="140" y="102" text-anchor="middle" fill="var(--accent-gold)" font-size="14" font-weight="900" letter-spacing="5">VIP MOD</text>
       </svg>
     </div>
     <h2 id="loginTitle" style="margin:8px 0 5px; font-size:1.28rem; font-weight:900; color:#ffffff;">بوابة تفعيل الأكواد الرسمية</h2>
-    <p id="loginDesc" style="margin:0 auto; max-width:340px; font-size:0.82rem; color:var(--text-secondary); line-height:1.55;">أدخل كلمة السر / رمز التفعيل المعتمد لفتح لوحة التحكم ومتابعة مدة الجلسة.</p>
+    <p id="loginDesc" style="margin:0 auto; max-width:340px; font-size:0.82rem; color:var(--text-secondary);">أدخل كلمة السر / رمز التفعيل المعتمد لفتح لوحة التحكم ومتابعة مدة الجلسة.</p>
   </div>
 
   <div style="margin-bottom:8px;">
@@ -970,19 +742,7 @@
       <div class="timer-wrap">
         <div class="dial-stage">
           <svg class="dial-hud-svg" viewBox="0 0 244 244" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <linearGradient id="hudArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ffd166" />
-                <stop offset="50%" stop-color="#ff5270" />
-                <stop offset="100%" stop-color="#a855f7" />
-              </linearGradient>
-            </defs>
-            <circle cx="122" cy="122" r="115" fill="none" stroke="url(#hudArcGrad)" stroke-width="2.2" stroke-dasharray="14 8 4 8" />
-            <circle cx="122" cy="122" r="106" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-dasharray="2 6" />
-            <polygon points="122,2 127,10 117,10" fill="#ffd166" />
-            <polygon points="122,242 127,234 117,234" fill="#ffd166" />
-            <polygon points="2,122 10,117 10,127" fill="#ff5270" />
-            <polygon points="242,122 234,117 234,127" fill="#ff5270" />
+            <circle cx="122" cy="122" r="115" fill="none" stroke="var(--accent-gold)" stroke-width="2" stroke-dasharray="14 8 4 8" />
           </svg>
           <div class="dial-ring-outer"></div>
           <div class="dial" id="dialEl">
@@ -1013,7 +773,7 @@
 
     <section class="card">
       <h3 id="sumTitle">حالة الجلسة</h3>
-      <p class="desc" id="sumDesc">الجلسة فعالة والعدّاد يعمل مباشرة.</p>
+      <p class="desc" id="sumDesc">الجلسة فعالة ويتم التحقق عبر الخادم.</p>
       <div class="stack" style="margin-top:10px;">
         <button type="button" class="btn-happ-connect" id="connectHappBtn">تفعيل</button>
         <button type="button" class="btn-secondary" id="pingBtn">فحص الاتصال الآن</button>
@@ -1060,7 +820,7 @@
               <input type="range" min="0" max="2" step="1" value="2" id="vidVertSlider" class="vid-vert-slider" aria-label="اختيار ارتفاع التصويب" disabled />
             </div>
             <div class="vid-cards-stack">
-              <button type="button" class="vid-stat-pill-btn" id="pill100Btn" data-aimval="100" disabled aria-disabled="true">
+              <button type="button" class="vid-stat-pill-btn selected" id="pill100Btn" data-aimval="100" disabled aria-disabled="true">
                 <strong>100%</strong><span id="lbl100Text">الرأس</span>
               </button>
               <button type="button" class="vid-stat-pill-btn" id="pill90Btn" data-aimval="90" disabled aria-disabled="true">
@@ -1074,7 +834,7 @@
         </div>
       </div>
 
-      <div class="feat-state-line" id="st1">الحالة: غير متوفر حالياً (تحت التطوير)</div>
+      <div class="feat-state-line" id="st1">الحالة: معطّل</div>
       <div class="dev-red-alert hidden" id="devAlert1">⚠️ الحالة: غير متوفر حالياً (تحت التطوير)</div>
     </div>
 
@@ -1180,32 +940,65 @@
   var currentTheme = "crimson";
   var lang = "ar";
   var aimVal = 100;
+  var aimEnabled = false;
   var smoothYRatio = 0.275;
   var animT = 0;
 
-  // السيرفر المحمي فقط هو من يُرجع الرابط بعد التحقق
   var REMOTE_DISPATCH_ENDPOINT = "https://cigkxblipkjhvhvdypzi.supabase.co/functions/v1/bilal-vip";
   var activeProfileArmed = false;
-  var activeAimMode = "head_100"; // "head_100" | "head_90"
+  var activeAimMode = "head_100";
+  var activeSessionKey = "";
+  var sessionExpiresAtMs = 0;
+  var isVerifyingServer = false;
 
   var DEVICE_ID_STORAGE = "bilal_vip_device_id_v1";
-  var DEVICE_BOUND_KEYS_STORAGE = "bilal_vip_bound_keys_map_v1";
+  var SAVED_KEY_STORAGE = "bilal_vip_saved_key_v1";
+  var SAVED_UNLOCKED_STORAGE = "bilal_vip_unlocked_v1";
+  var SAVED_EXPIRES_AT_STORAGE = "bilal_vip_expires_at_v1";
+  var SAVED_TOTAL_DUR_STORAGE = "bilal_vip_total_dur_v1";
+
+  var EXPIRED_NOTICE_AR = "إشعار رسمي: انتهى ترخيص مفتاحك، يرجى إدخال رمز تفعيل جديد لمواصلة استخدام النظام.";
+  var EXPIRED_NOTICE_EN = "Official Notice: Your key license has expired. Please enter a valid activation code to continue.";
   var BOUND_OTHER_DEVICE_AR = "المفتاح مرتبط بجهاز آخر ولا يمكن استخدامه على أكثر من جهاز.";
   var BOUND_OTHER_DEVICE_EN = "This key is bound to another device and cannot be used on another device.";
+  var REVOKED_NOTICE_AR = "عذراً، هذا الكود غير صالح أو تم حذفه من قِبل الإدارة.";
+  var REVOKED_NOTICE_EN = "Sorry, this key is invalid or has been deleted by the administration.";
+  var FROZEN_NOTICE_AR = "عذراً، هذا الكود مجمّد حالياً من قِبل الإدارة.";
+  var FROZEN_NOTICE_EN = "Sorry, this key is currently frozen by the administration.";
+
+  function $(id) { return document.getElementById(id); }
+
+  function normalizeKeyCode(raw) {
+    return String(raw || "").trim().toUpperCase();
+  }
 
   function getOrCreateDeviceId() {
     try {
       var existing = localStorage.getItem(DEVICE_ID_STORAGE);
-      if (existing && existing.length >= 8) return existing;
+      if (existing && existing.length >= 10 && existing.indexOf("BRW-") === 0) {
+        return existing;
+      }
     } catch (_e) {}
 
+    var browserNonce = "";
+    try {
+      if (window.crypto && window.crypto.getRandomValues) {
+        var arr = new Uint32Array(3);
+        window.crypto.getRandomValues(arr);
+        browserNonce = arr[0].toString(16) + "-" + arr[1].toString(16) + "-" + arr[2].toString(16);
+      }
+    } catch (_e) {}
+
+    if (!browserNonce) {
+      browserNonce = String(Date.now()) + "-" + Math.random().toString(36).slice(2, 12);
+    }
+
     var rawParts = [
+      "STRICT_SINGLE_BROWSER_SESSION",
+      browserNonce,
       navigator.userAgent || "",
       navigator.language || "",
-      screen.width + "x" + screen.height + "x" + (screen.colorDepth || 24),
-      (Intl && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : "") || "",
-      String(Date.now()),
-      String(Math.random())
+      screen.width + "x" + screen.height + "x" + (screen.colorDepth || 24)
     ].join("|");
 
     var h1 = 2166136261;
@@ -1216,85 +1009,17 @@
       h1 = Math.imul(h1, 16777619);
       h2 = (Math.imul(h2, 31) + ch) >>> 0;
     }
-    var devId = "DEV-" + (h1 >>> 0).toString(16).toUpperCase() + "-" + (h2 >>> 0).toString(16).toUpperCase();
+    var devId = "BRW-" + (h1 >>> 0).toString(16).toUpperCase() + "-" + (h2 >>> 0).toString(16).toUpperCase() + "-" + browserNonce.replace(/[^a-zA-Z0-9]/g, "").slice(0, 8).toUpperCase();
     try {
       localStorage.setItem(DEVICE_ID_STORAGE, devId);
     } catch (_e) {}
     return devId;
   }
 
-  function loadBoundKeysMap() {
-    try {
-      var raw = localStorage.getItem(DEVICE_BOUND_KEYS_STORAGE);
-      var parsed = raw ? JSON.parse(raw) : {};
-      return parsed && typeof parsed === "object" ? parsed : {};
-    } catch (_e) {
-      return {};
-    }
+  function shouldRememberKey() {
+    var s2 = $("setSw2");
+    return !s2 || s2.classList.contains("active");
   }
-
-  function saveBoundKeysMap(mapObj) {
-    try {
-      localStorage.setItem(DEVICE_BOUND_KEYS_STORAGE, JSON.stringify(mapObj));
-    } catch (_e) {}
-  }
-
-  function checkSingleDeviceBinding(keyCode, deviceId) {
-    var normalizedKey = String(keyCode || "").trim().toUpperCase();
-    var map = loadBoundKeysMap();
-    var record = map[normalizedKey];
-
-    if (record && record.boundDeviceId && record.boundDeviceId !== deviceId) {
-      return {
-        allowed: false,
-        message: lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN
-      };
-    }
-
-    if (!record) {
-      map[normalizedKey] = {
-        boundDeviceId: deviceId,
-        boundAt: Date.now()
-      };
-      saveBoundKeysMap(map);
-    }
-
-    return { allowed: true };
-  }
-
-  function fetchProtectedTarget(activeKey) {
-    if (!REMOTE_DISPATCH_ENDPOINT) {
-      return Promise.reject(new Error("NO_ENDPOINT"));
-    }
-    var devId = getOrCreateDeviceId();
-    var selectedMode = activeAimMode || (aimVal === 90 ? "head_90" : "head_100");
-
-    return fetch(REMOTE_DISPATCH_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        key: activeKey || "",
-        device_id: devId,
-        single_device: true,
-        mode: selectedMode,
-        aim_value: aimVal
-      })
-    }).then(function (res) {
-      return res.json().catch(function () { return {}; }).then(function (data) {
-        if (res.status === 409 || (data && (data.code === "DEVICE_MISMATCH" || data.error === "DEVICE_MISMATCH"))) {
-          var errObj = new Error("DEVICE_MISMATCH");
-          errObj.userMessage = data.message || (lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN);
-          throw errObj;
-        }
-        if (!res.ok) throw new Error("AUTH_FAILED");
-        var resolvedUri = (data && (data.uri || data.decrypted_uri || data.happ_uri || data.payload)) || "";
-        if (!resolvedUri) throw new Error("EMPTY_URI");
-        return String(resolvedUri);
-      });
-    });
-  }
-
-  function $(id) { return document.getElementById(id); }
 
   function showToast(msg, isRed) {
     var t = $("toast");
@@ -1305,7 +1030,7 @@
     t.style.color = isRed ? "#fca5a5" : "";
     t.classList.remove("hidden");
     clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(function () { t.classList.add("hidden"); }, 2400);
+    window.__toastTimer = setTimeout(function () { t.classList.add("hidden"); }, 2600);
   }
 
   function switchTab(tabName) {
@@ -1323,7 +1048,56 @@
     return is90 ? "الرأس 90%" : "الرأس 100%";
   }
 
+  function setAimMode(val) {
+    if (Number(val) === 0) {
+      showToast(lang === "ar" ? "وضع 0% تحت الصيانة حالياً" : "0% mode is under maintenance", true);
+      return;
+    }
+    aimVal = Number(val) === 90 ? 90 : 100;
+    activeAimMode = aimVal === 90 ? "head_90" : "head_100";
+    smoothYRatio = aimVal === 90 ? 0.34 : 0.275;
+
+    if ($("aimTopTitle")) $("aimTopTitle").textContent = getAimLabelText(aimVal);
+    if ($("vidVertSlider")) $("vidVertSlider").value = aimVal === 90 ? "1" : "2";
+    if ($("pill100Btn")) $("pill100Btn").classList.toggle("selected", aimVal === 100);
+    if ($("pill90Btn")) $("pill90Btn").classList.toggle("selected", aimVal === 90);
+  }
+
+  function setAimSwitchState(enabled) {
+    aimEnabled = Boolean(enabled);
+    var sw1 = $("sw1");
+    var lockWrap = $("aimTunerLockWrap");
+    var st1 = $("st1");
+
+    if (sw1) sw1.classList.toggle("active", aimEnabled);
+    if (lockWrap) {
+      lockWrap.classList.toggle("tuner-disabled-overlay", !aimEnabled);
+      lockWrap.setAttribute("aria-disabled", String(!aimEnabled));
+    }
+    ["readyPresetsBtn", "vidVertSlider", "pill100Btn", "pill90Btn"].forEach(function (id) {
+      var el = $(id);
+      if (el) {
+        el.disabled = !aimEnabled;
+        el.setAttribute("aria-disabled", String(!aimEnabled));
+      }
+    });
+
+    if (st1) {
+      st1.textContent = aimEnabled
+        ? (lang === "ar" ? ("الحالة: مفعّل (" + getAimLabelText(aimVal) + ")") : ("Status: Enabled (" + getAimLabelText(aimVal) + ")"))
+        : (lang === "ar" ? "الحالة: معطّل" : "Status: Disabled");
+    }
+
+    if (aimEnabled) {
+      activeProfileArmed = true;
+    }
+  }
+
   function prepareHappCode(autoReturnHome) {
+    if (!aimEnabled) {
+      showToast(lang === "ar" ? "فعّل زر التصويب أولاً" : "Enable Aim switch first", true);
+      return;
+    }
     activeProfileArmed = true;
     var modeLabel = getAimLabelText(aimVal);
     showToast(
@@ -1339,32 +1113,171 @@
     }
   }
 
+  function callBilalVipServer(keyCode, modeOverride) {
+    var cleanKey = normalizeKeyCode(keyCode);
+    var devId = getOrCreateDeviceId();
+    var selectedMode = modeOverride || activeAimMode || (aimVal === 90 ? "head_90" : "head_100");
+
+    return fetch(REMOTE_DISPATCH_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code: cleanKey,
+        key: cleanKey,
+        device_id: devId,
+        browser_id: devId,
+        single_device: true,
+        single_browser: true,
+        strict_browser_lock: true,
+        action: "activate",
+        mode: selectedMode,
+        aim_value: aimVal
+      })
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok || !data || data.ok === false) {
+          var code = (data && (data.code || data.error)) || "";
+          var serverMsg = (data && data.message) || "";
+          var errMsg = serverMsg;
+
+          if (!errMsg) {
+            if (code === "DEVICE_MISMATCH" || res.status === 409) {
+              errMsg = lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN;
+            } else if (code === "KEY_EXPIRED") {
+              errMsg = lang === "ar" ? EXPIRED_NOTICE_AR : EXPIRED_NOTICE_EN;
+            } else if (code === "FROZEN_KEY") {
+              errMsg = lang === "ar" ? FROZEN_NOTICE_AR : FROZEN_NOTICE_EN;
+            } else if (code === "INVALID_OR_REVOKED_KEY" || res.status === 401) {
+              errMsg = lang === "ar" ? REVOKED_NOTICE_AR : REVOKED_NOTICE_EN;
+            } else {
+              errMsg = lang === "ar" ? "تعذّر التحقق من الكود من السيرفر." : "Failed to verify key with server.";
+            }
+          }
+
+          var err = new Error(code || "SERVER_REJECTED");
+          err.code = code;
+          err.status = res.status;
+          err.userMessage = errMsg;
+          throw err;
+        }
+        return data;
+      });
+    });
+  }
+
+  function extractHappUriFromResponse(data) {
+    if (!data || typeof data !== "object") return "";
+    var candidates = [
+      data.happ_url,
+      data.happ_uri,
+      data.subscription_url,
+      data.sub_url,
+      data.sub,
+      data.uri,
+      data.url,
+      data.link,
+      data.target_uri,
+      data.payload
+    ];
+    for (var i = 0; i < candidates.length; i++) {
+      var val = candidates[i];
+      if (typeof val === "string") {
+        var trimmed = val.trim();
+        if (
+          trimmed.indexOf("happ://") === 0 ||
+          trimmed.indexOf("vless://") === 0 ||
+          trimmed.indexOf("vmess://") === 0 ||
+          trimmed.indexOf("trojan://") === 0 ||
+          trimmed.indexOf("ss://") === 0 ||
+          trimmed.indexOf("hysteria") === 0 ||
+          trimmed.indexOf("tuic://") === 0 ||
+          trimmed.indexOf("wg://") === 0 ||
+          trimmed.indexOf("http://") === 0 ||
+          trimmed.indexOf("https://") === 0
+        ) {
+          return trimmed;
+        }
+      }
+    }
+    return "";
+  }
+
+  function buildHappOpenUrl(rawUri) {
+    var clean = String(rawUri || "").trim();
+    if (!clean) return "";
+    if (clean.indexOf("happ://") === 0) return clean;
+    return "happ://" + encodeURIComponent(clean);
+  }
+
+  function redirectToHappApp(rawUri) {
+    var clean = String(rawUri || "").trim();
+    var happUrl = buildHappOpenUrl(clean);
+    if (!happUrl) return false;
+
+    try {
+      sessionStorage.setItem("bilal_vip_last_happ_uri", clean);
+      sessionStorage.setItem("bilal_vip_last_happ_url", happUrl);
+    } catch (_e) {}
+
+    window.location.href = happUrl;
+    return true;
+  }
+
   function launchHappApp() {
     if (!aimEnabled || !activeProfileArmed) {
-      showToast("يجب تفعيل زر التصويب / الرأس أولاً قبل الضغط على تفعيل", true);
+      showToast(lang === "ar" ? "يجب تفعيل زر التصويب / الرأس أولاً قبل الضغط على تفعيل" : "Enable Aim / Head switch first", true);
       return;
     }
-    var currentKey = $("actCode") ? $("actCode").textContent.trim() : "";
-    showToast("جاري التحقق من السيرفر وتجهيز الرابط...", false);
+    var currentKey = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+    var btn = $("connectHappBtn");
+    if (btn) btn.disabled = true;
+    showToast(lang === "ar" ? "جاري التحقق من السيرفر وتجهيز رابط Happ..." : "Verifying with server & preparing Happ link...", false);
 
-    fetchProtectedTarget(currentKey).then(function (uri) {
-      var a = document.createElement("a");
-      a.href = uri;
-      a.rel = "noopener";
-      a.style.display = "none";
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () {
-        if (a && a.parentNode) a.parentNode.removeChild(a);
-      }, 120);
-    }).catch(function (err) {
-      if (err && err.message === "DEVICE_MISMATCH") {
-        showToast(err.userMessage || (lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN), true);
-      } else if (err && err.message === "NO_ENDPOINT") {
-        showToast("رابط سيرفر الحماية غير مضبوط", true);
-      } else {
-        showToast("تعذّر التحقق من الجلسة أو الكود من السيرفر", true);
+    callBilalVipServer(currentKey, activeAimMode).then(function (data) {
+      var payloadSize = data && data.payload ? String(data.payload).length : 0;
+
+      if (typeof data.remaining_sec === "number") {
+        leftSec = Math.max(0, Math.floor(data.remaining_sec));
+        sessionExpiresAtMs = Date.now() + leftSec * 1000;
+      } else if (data && data.expires_at) {
+        var expMs = new Date(data.expires_at).getTime();
+        if (!Number.isNaN(expMs)) {
+          sessionExpiresAtMs = expMs;
+          leftSec = Math.max(0, Math.floor((expMs - Date.now()) / 1000));
+        }
       }
+
+      if (typeof data.total_duration_sec === "number" && data.total_duration_sec > 0) {
+        totalDur = Math.floor(data.total_duration_sec);
+      }
+      drawClock();
+
+      var extractedUri = extractHappUriFromResponse(data);
+      if (extractedUri) {
+        var modeText = getAimLabelText(aimVal);
+        var openMsg = lang === "ar"
+          ? ("تم تجهيز رابط " + modeText + " — جاري فتح تطبيق Happ...")
+          : ("Prepared " + modeText + " link — opening Happ...");
+        if ($("sumDesc")) $("sumDesc").textContent = openMsg;
+        showToast(openMsg, false);
+        setTimeout(function () {
+          redirectToHappApp(extractedUri);
+        }, 180);
+      } else {
+        var fallbackText = lang === "ar"
+          ? ("تم تفعيل الجلسة بنجاح عبر الخادم (" + payloadSize + " بايت) لكن لم يرجع السيرفر رابط Happ بعد.")
+          : ("Session verified (" + payloadSize + " bytes), but server did not return a Happ URI.");
+        if ($("sumDesc")) $("sumDesc").textContent = fallbackText;
+        showToast(fallbackText, true);
+      }
+    }).catch(function (err) {
+      var msg = (err && err.userMessage) || (lang === "ar" ? "تعذّر التحقق من الجلسة أو الكود من السيرفر" : "Session or key verification failed");
+      showToast(msg, true);
+      if (err && (err.code === "KEY_EXPIRED" || err.code === "INVALID_OR_REVOKED_KEY" || err.code === "FROZEN_KEY" || err.code === "DEVICE_MISMATCH")) {
+        kickSessionWithReason(msg);
+      }
+    }).finally(function () {
+      if (btn) btn.disabled = false;
     });
   }
 
@@ -1384,4 +1297,68 @@
     var ratio = Math.max(0, Math.min(1, leftSec / Math.max(1, totalDur)));
     if (p) p.textContent = Math.round(ratio * 100) + "%";
     if (d) {
-      var deg = Mat
+      var deg = Math.round(ratio * 360);
+      var st = getComputedStyle(document.body);
+      var core = (st.getPropertyValue("--accent-core") || "#e11d48").trim();
+      var rgb = (st.getPropertyValue("--accent-rgb") || "225, 29, 72").trim();
+      d.style.backgroundImage = "radial-gradient(circle, #090104 65%, transparent 66%), conic-gradient(" + core + " " + deg + "deg, rgba(" + rgb + ", 0.18) " + deg + "deg)";
+    }
+  }
+
+  function applyTheme(name, announce) {
+    if (themes.indexOf(name) === -1) name = "crimson";
+    currentTheme = name;
+    document.body.className = "theme-" + name;
+    document.querySelectorAll(".swatch-btn").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-theme") === name);
+    });
+    var tName = themeNames[name][lang];
+    if ($("setMsg")) {
+      $("setMsg").textContent = lang === "ar" ? ("اللون الحالي: " + tName) : ("Current color: " + tName);
+    }
+    drawClock();
+    if (announce) showToast((lang === "ar" ? "تم تغيير اللون إلى: " : "Color changed to: ") + tName, false);
+  }
+
+  $("themeCycleBtn").addEventListener("click", function () {
+    applyTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length], true);
+  });
+
+  document.querySelectorAll(".swatch-btn").forEach(function (b) {
+    b.addEventListener("click", function () { applyTheme(b.getAttribute("data-theme"), true); });
+  });
+
+  $("eyeBtn").addEventListener("click", function () {
+    var inp = $("keyInput");
+    inp.type = inp.type === "password" ? "text" : "password";
+  });
+
+  $("pasteBtn").addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(function (txt) {
+        if (txt && $("keyInput")) {
+          $("keyInput").type = "text";
+          $("keyInput").value = txt.trim();
+          showToast(lang === "ar" ? "تم لصق الكود" : "Code pasted", false);
+        }
+      }).catch(function () {});
+    }
+  });
+
+  function showExpiredNotice(msgOverride) {
+    var txt = msgOverride || (lang === "ar" ? EXPIRED_NOTICE_AR : EXPIRED_NOTICE_EN);
+    sessionExpiresAtMs = 0;
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+      localStorage.removeItem(SAVED_TOTAL_DUR_STORAGE);
+    } catch (_e) {}
+    leftSec = 0;
+    drawClock();
+    $("dashMain").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = txt;
+    }
+   
