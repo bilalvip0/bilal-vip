@@ -1360,4 +1360,507 @@
     } catch (_e) {}
     leftSec = 0;
     drawClock();
-    $("dashMain").classList.add("hidd
+    $("dashMain").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = txt;
+    }
+    showToast(txt, true);
+  }
+
+  function kickSessionWithReason(reasonMsg) {
+    activeProfileArmed = false;
+    activeSessionKey = "";
+    sessionExpiresAtMs = 0;
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+      localStorage.removeItem(SAVED_TOTAL_DUR_STORAGE);
+    } catch (_e) {}
+    showExpiredNotice(reasonMsg);
+  }
+
+  function unlockDashboardWithCode(codeStr, serverData) {
+    var clean = normalizeKeyCode(codeStr) || "VIP-KEY";
+    activeSessionKey = clean;
+    if ($("actCode")) $("actCode").textContent = clean;
+
+    if (serverData && typeof serverData.remaining_sec === "number") {
+      leftSec = Math.max(0, Math.floor(serverData.remaining_sec));
+      sessionExpiresAtMs = Date.now() + leftSec * 1000;
+    } else if (serverData && serverData.expires_at) {
+      var expMs = new Date(serverData.expires_at).getTime();
+      if (!Number.isNaN(expMs)) {
+        sessionExpiresAtMs = expMs;
+        leftSec = Math.max(0, Math.floor((expMs - Date.now()) / 1000));
+      } else {
+        leftSec = DEFAULT_SEC;
+        sessionExpiresAtMs = Date.now() + leftSec * 1000;
+      }
+    } else {
+      leftSec = DEFAULT_SEC;
+      sessionExpiresAtMs = Date.now() + leftSec * 1000;
+    }
+
+    if (serverData && typeof serverData.total_duration_sec === "number" && serverData.total_duration_sec > 0) {
+      totalDur = Math.floor(serverData.total_duration_sec);
+    } else {
+      totalDur = Math.max(totalDur, leftSec, 1);
+    }
+
+    try {
+      if (shouldRememberKey()) {
+        localStorage.setItem(SAVED_KEY_STORAGE, clean);
+        localStorage.setItem(SAVED_UNLOCKED_STORAGE, "1");
+        localStorage.setItem(SAVED_EXPIRES_AT_STORAGE, String(sessionExpiresAtMs));
+        localStorage.setItem(SAVED_TOTAL_DUR_STORAGE, String(totalDur));
+      } else {
+        localStorage.removeItem(SAVED_KEY_STORAGE);
+        localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      }
+    } catch (_e) {}
+
+    if ($("loginMsg")) {
+      $("loginMsg").classList.add("ok");
+      $("loginMsg").textContent = lang === "ar" ? "تم التحقق وتفعيل الجلسة بنجاح" : "Session verified and unlocked";
+    }
+
+    $("loginCard").classList.add("hidden");
+    $("dashMain").classList.remove("hidden");
+    switchTab("home");
+    drawClock();
+    showToast(lang === "ar" ? "مرحباً بك في BILAL VIP" : "Welcome to BILAL VIP", false);
+  }
+
+  function handleEnterClick() {
+    if (isVerifyingServer) return;
+    var rawCode = $("keyInput") ? $("keyInput").value : "";
+    var cleanCode = normalizeKeyCode(rawCode);
+    if (!cleanCode) {
+      var msgEmpty = lang === "ar" ? "أدخل كلمة السر / كود التفعيل أولاً." : "Please enter your activation code first.";
+      if ($("loginMsg")) {
+        $("loginMsg").classList.remove("ok");
+        $("loginMsg").textContent = msgEmpty;
+      }
+      showToast(msgEmpty, true);
+      return;
+    }
+
+    isVerifyingServer = true;
+    var enterBtn = $("enterBtn");
+    if (enterBtn) enterBtn.disabled = true;
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = lang === "ar" ? "جاري التحقق من الكود عبر السيرفر..." : "Verifying code with server...";
+    }
+
+    callBilalVipServer(cleanCode, activeAimMode).then(function (data) {
+      unlockDashboardWithCode(cleanCode, data);
+    }).catch(function (err) {
+      var errTxt = (err && err.userMessage) || (lang === "ar" ? "تعذّر تفعيل الكود." : "Failed to activate code.");
+      if ($("loginMsg")) {
+        $("loginMsg").classList.remove("ok");
+        $("loginMsg").textContent = errTxt;
+      }
+      showToast(errTxt, true);
+    }).finally(function () {
+      isVerifyingServer = false;
+      if (enterBtn) enterBtn.disabled = false;
+    });
+  }
+
+  if ($("enterBtn")) {
+    $("enterBtn").addEventListener("click", handleEnterClick);
+  }
+  if ($("keyInput")) {
+    $("keyInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleEnterClick();
+      }
+    });
+  }
+
+  function applyLanguage(newLang) {
+    lang = newLang === "en" ? "en" : "ar";
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+    if ($("langBtn")) $("langBtn").textContent = lang === "ar" ? "EN" : "AR";
+    if ($("subBrand")) $("subBrand").textContent = lang === "ar" ? "النظام الرسمي المعتمد" : "Official Verified System";
+    if ($("onlineTxt")) $("onlineTxt").textContent = lang === "ar" ? "متصل" : "Online";
+    if ($("loginTitle")) $("loginTitle").textContent = lang === "ar" ? "بوابة تفعيل الأكواد الرسمية" : "Official Activation Gate";
+    if ($("loginDesc")) $("loginDesc").textContent = lang === "ar" ? "أدخل كلمة السر / رمز التفعيل المعتمد لفتح لوحة التحكم ومتابعة مدة الجلسة." : "Enter your activation code to unlock the dashboard and track your session timer.";
+    if ($("keyLbl")) $("keyLbl").textContent = lang === "ar" ? "كلمة السر / كود التفعيل" : "Password / Activation Key";
+    if ($("pasteBtn")) $("pasteBtn").textContent = lang === "ar" ? "لصق" : "Paste";
+    if ($("enterBtn")) $("enterBtn").textContent = lang === "ar" ? "دخول إلى اللوحة" : "Enter Dashboard";
+    if ($("timerTitle")) $("timerTitle").textContent = lang === "ar" ? "العدّاد التنازلي للجلسة" : "Session Countdown";
+    if ($("timerDesc")) $("timerDesc").textContent = lang === "ar" ? "يعرض الوقت المتبقي لصلاحية الكود المستخدم." : "Displays the remaining validity time of your active code.";
+    if ($("remLbl")) $("remLbl").textContent = lang === "ar" ? "الوقت المتبقي" : "Time Remaining";
+    if ($("actLbl")) $("actLbl").textContent = lang === "ar" ? "الكود النشط" : "Active Key";
+    if ($("copyActBtn")) $("copyActBtn").textContent = lang === "ar" ? "نسخ" : "Copy";
+    if ($("metDevLbl")) $("metDevLbl").textContent = lang === "ar" ? "الجهاز" : "Device";
+    if ($("metSysLbl")) $("metSysLbl").textContent = lang === "ar" ? "النظام" : "System";
+    if ($("metStatLbl")) $("metStatLbl").textContent = lang === "ar" ? "الحالة" : "Status";
+    if ($("sumTitle")) $("sumTitle").textContent = lang === "ar" ? "حالة الجلسة" : "Session Status";
+    if ($("sumDesc")) $("sumDesc").textContent = lang === "ar" ? "الجلسة فعالة ويتم التحقق عبر الخادم." : "Session is active and verified via server.";
+    if ($("connectHappBtn")) $("connectHappBtn").textContent = lang === "ar" ? "تفعيل" : "Activate";
+    if ($("pingBtn")) $("pingBtn").textContent = lang === "ar" ? "فحص الاتصال الآن" : "Check Connection Now";
+    if ($("lockSessionBtn")) $("lockSessionBtn").textContent = lang === "ar" ? "قفل الجلسة والعودة" : "Lock Session & Return";
+    if ($("navHome")) $("navHome").textContent = lang === "ar" ? "الرئيسية" : "Home";
+    if ($("navFeat")) $("navFeat").textContent = lang === "ar" ? "المميزات" : "Features";
+    if ($("navSet")) $("navSet").textContent = lang === "ar" ? "الإعدادات" : "Settings";
+    if ($("featTitle")) $("featTitle").textContent = lang === "ar" ? "قائمة المميزات" : "Features List";
+    if ($("featDesc")) $("featDesc").textContent = lang === "ar" ? "فعّل الأوضاع المتاحة واضبط معايرة التصويب بدقة." : "Enable available modes and tune aiming calibration accurately.";
+    if ($("modeBadge")) $("modeBadge").textContent = lang === "ar" ? "3 أوضاع" : "3 Modes";
+    if ($("f1Title")) $("f1Title").textContent = lang === "ar" ? "تصويب" : "Aim Assist";
+    if ($("f1SafeTag")) $("f1SafeTag").textContent = lang === "ar" ? "آمن 100%" : "100% Safe";
+    if ($("f1Desc")) $("f1Desc").textContent = lang === "ar" ? "يضبط تمركز المؤشر على أقرب هدف ويحدد موضع الإصابة بانسيابية من الصدر إلى الرأس." : "Centers pointer calibration smoothly from chest to head.";
+    if ($("readyPresetsBtn")) $("readyPresetsBtn").textContent = lang === "ar" ? "إعدادات جاهزة" : "Ready Presets";
+    if ($("aimTopSub")) $("aimTopSub").textContent = lang === "ar" ? "ارتفاع التصويب" : "Aim Height";
+    if ($("lbl100Text")) $("lbl100Text").textContent = lang === "ar" ? "الرأس" : "Head";
+    if ($("lbl90Text")) $("lbl90Text").textContent = lang === "ar" ? "الرأس 90%" : "Head 90%";
+    if ($("lbl0Text")) $("lbl0Text").textContent = lang === "ar" ? "تحت الصيانة" : "Maintenance";
+    if ($("f2Desc")) $("f2Desc").textContent = lang === "ar" ? "يقلل تقطيع الإطارات ويحافظ على ثبات الاستجابة أثناء المواجهات السريعة." : "Reduces frame stutters and keeps response steady in fast fights.";
+    if ($("f3Title")) $("f3Title").textContent = lang === "ar" ? "قريبا" : "Coming Soon";
+    if ($("f3WatchTag")) $("f3WatchTag").textContent = lang === "ar" ? "مع التحديثات القادمة" : "In Upcoming Updates";
+    if ($("f3Desc")) $("f3Desc").textContent = lang === "ar" ? "ميزة جديدة قيد التطوير، ستُضاف تلقائياً مع التحديثات الجاية." : "New feature in development, arriving in future updates.";
+    if ($("setTitle")) $("setTitle").textContent = lang === "ar" ? "إعدادات الجلسة واللون" : "Session & Theme Settings";
+    if ($("setDesc")) $("setDesc").textContent = lang === "ar" ? "بدّل لون الواجهة الحية وأدِر جلستك الحالية." : "Switch live interface color and manage your session.";
+    if ($("themeLbl")) $("themeLbl").textContent = lang === "ar" ? "نمط الإضاءة واللون" : "Lighting & Color Theme";
+    if ($("thCrimson")) $("thCrimson").textContent = themeNames.crimson[lang];
+    if ($("thEmerald")) $("thEmerald").textContent = themeNames.emerald[lang];
+    if ($("thGold")) $("thGold").textContent = themeNames.gold[lang];
+    if ($("thViolet")) $("thViolet").textContent = themeNames.violet[lang];
+    if ($("shareKeyBtn")) $("shareKeyBtn").textContent = lang === "ar" ? "نسخ كود الجلسة" : "Copy Session Key";
+    if ($("resetPrefsBtn")) $("resetPrefsBtn").textContent = lang === "ar" ? "استعادة الافتراضي" : "Reset Defaults";
+    if ($("logoutBtn2")) $("logoutBtn2").textContent = lang === "ar" ? "تسجيل الخروج" : "Log Out";
+
+    setAimMode(aimVal);
+    setAimSwitchState(aimEnabled);
+  }
+
+  if ($("langBtn")) {
+    $("langBtn").addEventListener("click", function () {
+      applyLanguage(lang === "ar" ? "en" : "ar");
+      showToast(lang === "ar" ? "تم التبديل إلى العربية" : "Switched to English", false);
+    });
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var targetTab = btn.getAttribute("data-t");
+      if (targetTab) switchTab(targetTab);
+    });
+  });
+
+  function copyTextHelper(txt, okMsg) {
+    if (!txt) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).catch(function () {});
+    }
+    showToast(okMsg, false);
+  }
+
+  if ($("copyActBtn")) {
+    $("copyActBtn").addEventListener("click", function () {
+      var code = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+      copyTextHelper(code, lang === "ar" ? ("تم نسخ الكود: " + code) : ("Copied key: " + code));
+    });
+  }
+
+  if ($("shareKeyBtn")) {
+    $("shareKeyBtn").addEventListener("click", function () {
+      var code = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+      copyTextHelper(code, lang === "ar" ? ("تم نسخ كود الجلسة: " + code) : ("Session key copied: " + code));
+    });
+  }
+
+  if ($("connectHappBtn")) {
+    $("connectHappBtn").addEventListener("click", launchHappApp);
+  }
+
+  if ($("pingBtn")) {
+    $("pingBtn").addEventListener("click", function () {
+      var currentKey = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+      if (!currentKey) {
+        showToast(lang === "ar" ? "لا يوجد كود نشط للفحص" : "No active key to check", true);
+        return;
+      }
+      showToast(lang === "ar" ? "جاري فحص الاتصال مع السيرفر..." : "Checking server connection...", false);
+      callBilalVipServer(currentKey, activeAimMode).then(function (data) {
+        if (typeof data.remaining_sec === "number") {
+          leftSec = Math.max(0, Math.floor(data.remaining_sec));
+          sessionExpiresAtMs = Date.now() + leftSec * 1000;
+          drawClock();
+        }
+        var okTxt = lang === "ar" ? "الاتصال بالسيرفر سليم والجلسة نشطة" : "Server connection healthy & session active";
+        if ($("sumDesc")) $("sumDesc").textContent = okTxt;
+        showToast(okTxt, false);
+      }).catch(function (err) {
+        var failTxt = (err && err.userMessage) || (lang === "ar" ? "فشل الاتصال بالسيرفر" : "Server connection failed");
+        showToast(failTxt, true);
+      });
+    });
+  }
+
+  function lockDashboardSession() {
+    activeProfileArmed = false;
+    activeSessionKey = "";
+    sessionExpiresAtMs = 0;
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+      localStorage.removeItem(SAVED_TOTAL_DUR_STORAGE);
+    } catch (_e) {}
+    $("dashMain").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = "";
+    }
+    showToast(lang === "ar" ? "تم قفل الجلسة" : "Session locked", false);
+  }
+
+  if ($("lockSessionBtn")) $("lockSessionBtn").addEventListener("click", lockDashboardSession);
+  if ($("logoutBtn2")) $("logoutBtn2").addEventListener("click", lockDashboardSession);
+
+  if ($("sw1")) {
+    $("sw1").addEventListener("click", function () {
+      setAimSwitchState(!aimEnabled);
+      showToast(
+        aimEnabled
+          ? (lang === "ar" ? "تم تفعيل وضع التصويب" : "Aim Assist enabled")
+          : (lang === "ar" ? "تم إيقاف وضع التصويب" : "Aim Assist disabled"),
+        false
+      );
+    });
+  }
+
+  if ($("pill100Btn")) {
+    $("pill100Btn").addEventListener("click", function () {
+      if (!aimEnabled) return;
+      setAimMode(100);
+      setAimSwitchState(true);
+      showToast(lang === "ar" ? "تم اختيار الرأس 100%" : "Selected Head 100%", false);
+    });
+  }
+
+  if ($("pill90Btn")) {
+    $("pill90Btn").addEventListener("click", function () {
+      if (!aimEnabled) return;
+      setAimMode(90);
+      setAimSwitchState(true);
+      showToast(lang === "ar" ? "تم اختيار الرأس 90%" : "Selected Head 90%", false);
+    });
+  }
+
+  if ($("pill0Btn")) {
+    $("pill0Btn").addEventListener("click", function () {
+      showToast(lang === "ar" ? "وضع 0% تحت الصيانة حالياً" : "0% mode is currently under maintenance", true);
+    });
+  }
+
+  if ($("vidVertSlider")) {
+    $("vidVertSlider").addEventListener("input", function () {
+      if (!aimEnabled) return;
+      var v = Number(this.value);
+      if (v <= 1) {
+        setAimMode(90);
+      } else {
+        setAimMode(100);
+      }
+      setAimSwitchState(true);
+    });
+  }
+
+  if ($("readyPresetsBtn")) {
+    $("readyPresetsBtn").addEventListener("click", function () {
+      if (!aimEnabled) return;
+      prepareHappCode(true);
+    });
+  }
+
+  function bindDevAlertSwitch(swId, stId, alertId) {
+    var sw = $(swId);
+    if (!sw) return;
+    sw.addEventListener("click", function () {
+      sw.classList.toggle("active");
+      var isOn = sw.classList.contains("active");
+      var alertEl = $(alertId);
+      var stEl = $(stId);
+      if (alertEl) alertEl.classList.toggle("hidden", !isOn);
+      if (stEl) {
+        stEl.textContent = isOn
+          ? (lang === "ar" ? "الحالة: غير متوفر حالياً (تحت التطوير)" : "Status: Unavailable (In Development)")
+          : (lang === "ar" ? "الحالة: غير متوفر حالياً (تحت التطوير)" : "Status: Unavailable (In Development)");
+      }
+      if (isOn) {
+        showToast(lang === "ar" ? "هذه الميزة تحت التطوير حالياً" : "This feature is currently in development", true);
+      }
+    });
+  }
+
+  bindDevAlertSwitch("sw2", "st2", "devAlert2");
+  bindDevAlertSwitch("sw3", "st3", "devAlert3");
+
+  ["setSw1", "setSw2", "setSw3"].forEach(function (id) {
+    var el = $(id);
+    if (!el) return;
+    el.addEventListener("click", function () {
+      el.classList.toggle("active");
+      showToast(lang === "ar" ? "تم تحديث الإعداد" : "Preference updated", false);
+    });
+  });
+
+  if ($("resetPrefsBtn")) {
+    $("resetPrefsBtn").addEventListener("click", function () {
+      applyTheme("crimson", false);
+      setAimMode(100);
+      setAimSwitchState(false);
+      if ($("setSw1")) $("setSw1").classList.add("active");
+      if ($("setSw2")) $("setSw2").classList.add("active");
+      if ($("setSw3")) $("setSw3").classList.remove("active");
+      showToast(lang === "ar" ? "تمت استعادة الإعدادات الافتراضية" : "Defaults restored", false);
+    });
+  }
+
+  function drawHoloFigure() {
+    var canvas = $("holoCharCanvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    var w = canvas.width;
+    var h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    var st = getComputedStyle(document.body);
+    var bright = (st.getPropertyValue("--accent-bright") || "#ff3b5c").trim();
+    var gold = (st.getPropertyValue("--accent-gold") || "#ffd166").trim();
+
+    ctx.save();
+    ctx.strokeStyle = "rgba(255,255,255,0.42)";
+    ctx.fillStyle = "rgba(255,255,255,0.08)";
+    ctx.lineWidth = 2.4;
+
+    ctx.beginPath();
+    ctx.arc(w * 0.5, h * 0.22, 22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(w * 0.31, h * 0.36);
+    ctx.quadraticCurveTo(w * 0.5, h * 0.32, w * 0.69, h * 0.36);
+    ctx.lineTo(w * 0.63, h * 0.66);
+    ctx.lineTo(w * 0.37, h * 0.66);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(w * 0.42, h * 0.66);
+    ctx.lineTo(w * 0.39, h * 0.94);
+    ctx.moveTo(w * 0.58, h * 0.66);
+    ctx.lineTo(w * 0.61, h * 0.94);
+    ctx.stroke();
+
+    var targetY = h * smoothYRatio;
+    var pulse = 1 + Math.sin(animT * 0.08) * 0.12;
+    ctx.strokeStyle = aimEnabled ? bright : gold;
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.arc(w * 0.5, targetY, 12 * pulse, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(w * 0.5 - 20, targetY);
+    ctx.lineTo(w * 0.5 - 6, targetY);
+    ctx.moveTo(w * 0.5 + 6, targetY);
+    ctx.lineTo(w * 0.5 + 20, targetY);
+    ctx.moveTo(w * 0.5, targetY - 20);
+    ctx.lineTo(w * 0.5, targetY - 6);
+    ctx.moveTo(w * 0.5, targetY + 6);
+    ctx.lineTo(w * 0.5, targetY + 20);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function renderBgCanvas() {
+    var bg = $("bgMotionCanvas");
+    if (!bg) return;
+    var ctx = bg.getContext("2d");
+    if (!ctx) return;
+
+    function resize() {
+      bg.width = window.innerWidth || 360;
+      bg.height = window.innerHeight || 640;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    var pts = [];
+    for (var i = 0; i < 24; i++) {
+      pts.push({
+        x: Math.random() * bg.width,
+        y: Math.random() * bg.height,
+        r: 1.2 + Math.random() * 2.2,
+        vy: 0.25 + Math.random() * 0.55
+      });
+    }
+
+    function step() {
+      animT += 1;
+      var lowPower = $("setSw3") && $("setSw3").classList.contains("active");
+      ctx.clearRect(0, 0, bg.width, bg.height);
+      if (!lowPower) {
+        var st = getComputedStyle(document.body);
+        var core = (st.getPropertyValue("--accent-core") || "#e11d48").trim();
+        ctx.fillStyle = core;
+        for (var i = 0; i < pts.length; i++) {
+          var p = pts[i];
+          p.y -= p.vy;
+          if (p.y < -10) {
+            p.y = bg.height + 10;
+            p.x = Math.random() * bg.width;
+          }
+          ctx.globalAlpha = 0.28;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+      drawHoloFigure();
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  try {
+    if ($("keyInput")) {
+      $("keyInput").value = "";
+      $("keyInput").type = "text";
+    }
+  } catch (_e) {}
+
+  setInterval(function () {
+    if (!$("dashMain").classList.contains("hidden") && sessionExpiresAtMs > 0) {
+      leftSec = Math.max(0, Math.floor((sessionExpiresAtMs - Date.now()) / 1000));
+      drawClock();
+      if (leftSec <= 0) {
+        kickSessionWithReason(lang === "ar" ? EXPIRED_NOTICE_AR : EXPIRED_NOTICE_EN);
+      }
+    }
+  }, 1000);
+
+  applyTheme("crimson", false);
+  setAimMode(100);
+  setAimSwitchState(false);
+  drawClock();
+  renderBgCanvas();
+})();
+</script>
+</body>
+</html>
