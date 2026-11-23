@@ -722,7 +722,7 @@
   <div class="input-shell">
     <button type="button" class="btn-mini" id="eyeBtn" aria-label="إظهار أو إخفاء كلمة السر">👁</button>
     <button type="button" class="btn-mini" id="pasteBtn" style="color:var(--accent-gold);">لصق</button>
-    <input type="password" id="keyInput" class="input-field" placeholder="XXXX-XXXX-XXXX" autocomplete="off" />
+    <input type="text" id="keyInput" class="input-field" value="" placeholder="أدخل أو الصق الكود هنا..." autocomplete="off" />
   </div>
 
   <button type="button" class="btn-primary" id="enterBtn">دخول إلى اللوحة</button>
@@ -1113,11 +1113,7 @@
     }
   }
 
-  function callBilalVipServer(keyCode, modeOverride) {
-    var cleanKey = normalizeKeyCode(keyCode);
-    var devId = getOrCreateDeviceId();
-    var selectedMode = modeOverride || activeAimMode || (aimVal === 90 ? "head_90" : "head_100");
-
+  function postActivatePayload(cleanKey, devId, selectedMode) {
     return fetch(REMOTE_DISPATCH_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1133,7 +1129,15 @@
         mode: selectedMode,
         aim_value: aimVal
       })
-    }).then(function (res) {
+    });
+  }
+
+  function callBilalVipServer(keyCode, modeOverride) {
+    var cleanKey = normalizeKeyCode(keyCode);
+    var devId = getOrCreateDeviceId();
+    var selectedMode = modeOverride || activeAimMode || (aimVal === 90 ? "head_90" : "head_100");
+
+    return postActivatePayload(cleanKey, devId, selectedMode).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (data) {
         if (!res.ok || !data || data.ok === false) {
           var code = (data && (data.code || data.error)) || "";
@@ -1330,6 +1334,7 @@
 
   $("eyeBtn").addEventListener("click", function () {
     var inp = $("keyInput");
+    if (!inp) return;
     inp.type = inp.type === "password" ? "text" : "password";
   });
 
@@ -1355,10 +1360,4 @@
     } catch (_e) {}
     leftSec = 0;
     drawClock();
-    $("dashMain").classList.add("hidden");
-    $("loginCard").classList.remove("hidden");
-    if ($("loginMsg")) {
-      $("loginMsg").classList.remove("ok");
-      $("loginMsg").textContent = txt;
-    }
-   
+    $("dashMain").classList.add("hidd
