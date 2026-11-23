@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080104" />
+  <title>BILAL VIP — لوحة توليد وإدارة الأكواد V3</title>
+  <style>
+    :root {
+      --bg-primary: #080104;
+      --bg-card: rgba(20, 4, 10, 0.95);
+      --bg-card-elevated: rgba(32, 6, 15, 0.98);
+      --accent-core: #e11d48;
+      --accent-bright: #ff3b5c;
+      --accent-soft: #ff9eb0;
+      --accent-gold: #ffd166;
+      --accent-dark: #5c0416;
+      --border-hairline: rgba(225, 29, 72, 0.22);
+      --border-subtle: rgba(225, 29, 72, 0.38);
+      --border-strong: rgba(225, 29, 72, 0.68);
+      --text-primary: #ffffff;
+      --text-secondary: #f3d6dc;
+      --text-muted: #b88a95;
+      --emerald: #34d399;
+      --amber: #fbbf24;
+      --cyan: #38bdf8;
+      --violet: #c084fc;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #080104;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.24) 0%, rgba(225, 29, 72, 0.06) 45%, transparent 75%),
+        linear-gradient(180deg, #160208 0%, #080104 55%, #040102 100%);
+      color: var(--text-primary);
+      padding: 12px 12px 96px;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    .hidden { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 8px;
+      z-index: 35;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      border-radius: 16px;
+      background: rgba(18, 3, 9, 0.94);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
+    }
+
+    .brand-title {
+      font-size: 1.02rem;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      color: var(--accent-bright);
+      display: block;
+    }
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      display: block;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(52, 211, 153, 0.5);
+      color: var(--emerald);
+      white-space: nowrap;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+    }
+
+    .card {
+      background: linear-gradient(175deg, var(--bg-card-elevated) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 16px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+    }
+
+    .card-gold {
+      border: 1.5px solid rgba(255, 209, 102, 0.55);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 209, 102, 0.25);
+    }
+
+    h2, h3 {
+      margin: 0 0 4px;
+      font-size: 1.06rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+    .desc {
+      margin: 0 0 12px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+    .stat-box {
+      background: rgba(16, 2, 7, 0.94);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 10px 6px;
+      text-align: center;
+    }
+    .stat-box small {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .stat-box strong {
+      font-size: 1.05rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .form-full {
+      grid-column: 1 / -1;
+    }
+
+    .label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+    }
+
+    .input-box, .select-box {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 13px;
+      background: #090104;
+      border: 1.5px solid rgba(255, 209, 102, 0.35);
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-weight: 800;
+      outline: none;
+    }
+    .input-box:focus, .select-box:focus {
+      border-color: var(--accent-bright);
+      box-shadow: 0 0 14px rgba(225, 29, 72, 0.3);
+    }
+
+    .preset-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 7px;
+    }
+    .chip-btn {
+      background: #1f050e;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      border-radius: 9px;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .chip-btn.active, .chip-btn:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: rgba(255, 209, 102, 0.12);
+    }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 13px;
+      background: #0d0105;
+      border: 1px solid var(--border-hairline);
+      margin-top: 10px;
+    }
+    .toggle-row strong {
+      display: block;
+      font-size: 0.85rem;
+      color: #ffffff;
+    }
+    .toggle-row span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .switch-btn {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: #2f1a22;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .switch-btn::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .switch-btn.active {
+      background: var(--accent-core);
+      border-color: var(--accent-bright);
+    }
+    .switch-btn.active::after {
+      transform: translateX(-22px);
+      background: #ffffff;
+    }
+
+    .btn-primary {
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 209, 102, 0.65);
+      background-image: linear-gradient(110deg, #5c0212 0%, var(--accent-core) 52%, #7a0419 100%);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(225, 29, 72, 0.42);
+    }
+    .btn-primary:active {
+      transform: scale(0.99);
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn-sec {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-strong);
+      background: #1d040d;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .bulk-output {
+      margin-top: 12px;
+      padding: 11px;
+      border-radius: 13px;
+      background: #070103;
+      border: 1px solid rgba(52, 211, 153, 0.45);
+    }
+    .bulk-textarea {
+      width: 100%;
+      min-height: 96px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--emerald);
+      font-family: monospace;
+      font-size: 0.84rem;
+      font-weight: 700;
+      resize: vertical;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .filter-btn {
+      padding: 6px 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: #17030a;
+      color: var(--text-secondary);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background: rgba(225, 29, 72, 0.22);
+      border-color: var(--accent-bright);
+      color: #ffffff;
+    }
+
+    .key-item {
+      background: #0e0206;
+      border: 1px solid var(--border-subtle);
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .key-item.held {
+      border-color: rgba(192, 132, 252, 0.65);
+      background: linear-gradient(180deg, rgba(46, 16, 72, 0.28), rgba(14, 2, 6, 0.96));
+    }
+    .key-item.frozen {
+      border-color: rgba(56, 189, 248, 0.65);
+      background: linear-gradient(180deg, rgba(14, 42, 62, 0.32), rgba(14, 2, 6, 0.96));
+    }
+    .key-item.expired {
+      border-color: rgba(239, 68, 68, 0.55);
+      opacity: 0.78;
+    }
+
+    .key-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .key-code-txt {
+      font-family: monospace;
+      font-size: 0.96rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      word-break: break-all;
+    }
+
+    .status-tag {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .st-active {
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(52, 211, 153, 0.5);
+      color: var(--emerald);
+    }
+    .st-held {
+      background: rgba(192, 132, 252, 0.16);
+      border: 1px solid rgba(192, 132, 252, 0.55);
+      color: var(--violet);
+    }
+    .st-frozen {
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.55);
+      color: var(--cyan);
+    }
+    .st-expired {
+      background: rgba(239, 68, 68, 0.16);
+      border: 1px solid rgba(239, 68, 68, 0.55);
+      color: #fca5a5;
+    }
+
+    .key-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .key-meta strong {
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .key-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .act-btn {
+      padding: 7px 6px;
+      border-radius: 9px;
+      border: 1px solid var(--border-subtle);
+      background: #1c040c;
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+    }
+    .act-start {
+      border-color: rgba(192, 132, 252, 0.65);
+      color: var(--violet);
+    }
+    .act-freeze {
+      border-color: rgba(56, 189, 248, 0.55);
+      color: var(--cyan);
+    }
+    .act-plus {
+      border-color: rgba(52, 211, 153, 0.55);
+      color: var(--emerald);
+    }
+    .act-del {
+      border-color: rgba(239, 68, 68, 0.55);
+      color: #fca5a5;
+    }
+
+    .toast {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 20px;
+      z-index: 60;
+      padding: 12px 14px;
+      border-radius: 13px;
+      background: #1c040c;
+      border: 1px solid var(--accent-gold);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div>
+    <strong class="brand-title">BILAL VIP — KEY GENERATOR</strong>
+    <span class="brand-sub">توليد وتجميد وحفظ الوقت حتى أول دخول</span>
+  </div>
+  <span class="badge-pill">
+    <span class="dot"></span>
+    <span>V3 PRO</span>
+  </span>
+</header>
+
+<section class="stats-grid">
+  <div class="stat-box"><small>الإجمالي</small><strong id="statTotal" style="color:#ffffff;">0</strong></div>
+  <div class="stat-box"><small>مستعملة ✔</small><strong id="statUsed" style="color:var(--emerald);">0</strong></div>
+  <div class="stat-box"><small>غير مستعملة ⏳</small><strong id="statUnused" style="color:var(--amber);">0</strong></div>
+  <div class="stat-box"><small>مجمّد/منتهي</small><strong id="statFrozen" style="color:var(--cyan);">0</strong></div>
+</section>
+
+<section class="card card-gold">
+  <h2>⚡ توليد أكواد جديدة</h2>
+  <p class="desc">حدّد البادئة، عدد الأكواد، مدة الصلاحية، وحفظ الوقت حتى أول دخول للمستخدم.</p>
+
+  <div class="form-grid">
+    <div>
+      <label class="label" for="prefixInp">بادئة الكود (Prefix)</label>
+      <input type="text" id="prefixInp" class="input-box" value="BILAL" maxlength="12" placeholder="BILAL" />
+    </div>
+    <div>
+      <label class="label" for="countInp">عدد الأكواد (1 - 100)</label>
+      <input type="number" id="countInp" class="input-box" value="5" min="1" max="100" />
+    </div>
+
+    <div class="form-full">
+      <label class="label" for="durValInp">مدة صلاحية الكود</label>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+        <input type="number" id="durValInp" class="input-box" value="24" min="1" max="9999" />
+        <select id="durUnitSel" class="select-box">
+          <option value="60">دقائق (Minutes)</option>
+          <option value="3600" selected>ساعات (Hours)</option>
+          <option value="86400">أيام (Days)</option>
+        </select>
+      </div>
+      <div class="preset-chips">
+        <button type="button" class="chip-btn" data-val="1" data-unit="3600">1 ساعة</button>
+        <button type="button" class="chip-btn" data-val="6" data-unit="3600">6 ساعات</button>
+        <button type="button" class="chip-btn active" data-val="24" data-unit="3600">24 ساعة</button>
+        <button type="button" class="chip-btn" data-val="7" data-unit="86400">7 أيام</button>
+        <button type="button" class="chip-btn" data-val="30" data-unit="86400">30 يوم</button>
+      </div>
+    </div>
+
+    <div class="form-full">
+      <label class="label" for="noteInp">ملاحظة / اسم المشترك (اختياري)</label>
+      <input type="text" id="noteInp" class="input-box" placeholder="مثال: دفعة متابعين تيك توك" />
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <div>
+      <strong>⏳ حفظ الوقت حتى أول دخول للموقع</strong>
+      <span>يبقى وقت الكود محفوظاً كاملاً ولا يبدأ العدّاد إلا عند أول دخول للمستخدم.</span>
+    </div>
+    <button type="button" class="switch-btn active" id="holdFirstLoginSw"></button>
+  </div>
+
+  <div class="toggle-row">
+    <div>
+      <strong>🔒 ربط تلقائي بجهاز واحد (Single Device)</strong>
+      <span>يُقفل الكود على أول جهاز يفعّله ويُمنع على أي جهاز آخر.</span>
+    </div>
+    <button type="button" class="switch-btn active" id="singleDevSw"></button>
+  </div>
+
+  <div class="toggle-row">
+    <div>
+      <strong>❄ إنشاء الأكواد في وضع التجميد المسبق</strong>
+      <span>تجميد يدوي إضافي حتى تقوم بإلغاء التجميد.</span>
+    </div>
+    <button type="button" class="switch-btn" id="startFrozenSw"></button>
+  </div>
+
+  <button type="button" class="btn-primary" id="generateBtn">توليد الأكواد الآن</button>
+  <div id="genFeedback" style="margin-top:8px; text-align:center; font-size:0.8rem; font-weight:800; color:var(--emerald);"></div>
+
+  <div id="bulkResultBox" class="bulk-output hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+      <strong style="font-size:0.82rem; color:var(--emerald);">✔ تم توليد الأكواد بنجاح:</strong>
+      <span id="bulkCountLbl" style="font-size:0.75rem; color:var(--accent-gold); font-weight:800;">0 أكواد</span>
+    </div>
+    <textarea id="bulkTextarea" class="bulk-textarea" readonly></textarea>
+    <div class="btn-row">
+      <button type="button" class="btn-sec" id="copyBulkBtn">📋 نسخ الكل</button>
+      <button type="button" class="btn-sec" id="exportTxtBtn">⬇ تحميل ملف TXT</button>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🛠 إدارة الأكواد والتجميد وأول دخول</h2>
+  <p class="desc">تحكّم في وقت كل مفتاح: بدء العدّاد عند أول دخول، تجميد / استئناف، تمديد، أو تصدير JSON.</p>
+
+  <div class="btn-row" style="margin-bottom:12px;">
+    <button type="button" class="btn-sec" id="freezeAllBtn" style="border-color:rgba(56,189,248,0.55); color:var(--cyan);">❄ تجميد وقت الكل</button>
+    <button type="button" class="btn-sec" id="unfreezeAllBtn" style="border-color:rgba(52,211,153,0.55); color:var(--emerald);">▶ استئناف وقت الكل</button>
+    <button type="button" class="btn-sec" id="exportJsonBtn">📦 تصدير JSON للربط</button>
+    <button type="button" class="btn-sec" id="clearExpiredBtn" style="border-color:rgba(239,68,68,0.55); color:#fca5a5;">🗑 حذف المنتهية</button>
+    <button type="button" class="btn-sec form-full" id="deleteAllBtn" style="background:rgba(127,29,29,0.28); border-color:#ef4444; color:#fca5a5; font-weight:900;">⚠ حذف كل الأكواد نهائياً</button>
+  </div>
+
+  <input type="text" id="searchInp" class="input-box" placeholder="🔍 ابحث بالكود أو الملاحظة..." style="margin-bottom:10px;" />
+
+  <div class="filter-bar">
+    <button type="button" class="filter-btn active" data-filter="all">الكل</button>
+    <button type="button" class="filter-btn" data-filter="used">مستعملة ✔</button>
+    <button type="button" class="filter-btn" data-filter="unused">غير مستعملة ⏳</button>
+    <button type="button" class="filter-btn" data-filter="frozen">المجمّدة ❄</button>
+    <button type="button" class="filter-btn" data-filter="expired">المنتهية</button>
+  </div>
+
+  <div id="keysListContainer"></div>
+</section>
+
+<div class="toast hidden" id="toast"></div>
+
+<script>
+(function () {
+  var STORAGE_KEY = "bilal_vip_admin_keys_db_v3";
+  var memoryFallback = "[]";
+  var keysDB = [];
+  var currentFilter = "all";
+
+  function $(id) { return document.getElementById(id); }
+
+  function showToast(msg) {
+    var t = $("toast");
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.remove("hidden");
+    clearTimeout(window.__admToast);
+    window.__admToast = setTimeout(function () { t.classList.add("hidden"); }, 2400);
+  }
+
+  function loadDB() {
+    var raw = "";
+    try {
+      raw = localStorage.getItem(STORAGE_KEY) || "";
+    } catch (_e) {
+      raw = "";
+    }
+    if (!raw && window.name && window.name.indexOf("BILAL_VIP_DB_V3::") === 0) {
+      raw = window.name.slice("BILAL_VIP_DB_V3::".length);
+    }
+    if (!raw) raw = memoryFallback;
+
+    try {
+      var arr = JSON.parse(raw);
+      keysDB = Array.isArray(arr) ? arr : [];
+    } catch (_e) {
+      keysDB = [];
+    }
+  }
+
+  function saveDB() {
+    var serialized = JSON.stringify(keysDB);
+    memoryFallback = serialized;
+    try {
+      localStorage.setItem(STORAGE_KEY, serialized);
+    } catch (_e) {}
+    try {
+      if (serialized.length < 400000) {
+        window.name = "BILAL_VIP_DB_V3::" + serialized;
+      }
+    } catch (_e) {}
+  }
+
+  function randChunk(len) {
+    var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    var out = "";
+    for (var i = 0; i < len; i++) {
+      out += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return out;
+  }
+
+  function buildUniqueCode(prefix) {
+    var cleanPrefix = String(prefix || "BILAL").toUpperCase().replace(/[^A-Z0-9]/g, "") || "BILAL";
+    var code = "";
+    var guard = 0;
+    do {
+      code = cleanPrefix + "-" + randChunk(4) + "-" + randChunk(4);
+      guard++;
+    } while (keysDB.some(function (item) { return item.code === code; }) && guard < 80);
+    return code;
+  }
+
+  function isKeyUsed(item) {
+    return !!(item.activatedAt || item.used === true);
+  }
+
+  function isHeldUntilLogin(item) {
+    return !isKeyUsed(item) && (item.holdUntilFirstLogin !== false);
+  }
+
+  function getRemainingSec(item) {
+    if (isHeldUntilLogin(item)) {
+      return Math.max(0, Math.floor(item.totalDurationSec || 0));
+    }
+    if (item.frozen) {
+      return Math.max(0, Math.floor(item.frozenRemainingSec || 0));
+    }
+    return Math.max(0, Math.floor(((item.expiresAt || 0) - Date.now()) / 1000));
+  }
+
+  function formatDuration(sec) {
+    var s = Math.max(0, Math.floor(sec));
+    var d = Math.floor(s / 86400);
+    var h = Math.floor((s % 86400) / 3600);
+    var m = Math.floor((s % 3600) / 60);
+    var r = s % 60;
+    var hh = String(h).padStart(2, "0");
+    var mm = String(m).padStart(2, "0");
+    var ss = String(r).padStart(2, "0");
+    return d > 0 ? (d + "ي " + hh + ":" + mm + ":" + ss) : (hh + ":" + mm + ":" + ss);
+  }
+
+  function activateFirstLogin(id) {
+    var item = keysDB.find(function (k) { return k.id === id; });
+    if (!item) return;
+    var now = Date.now();
+    var dur = Math.max(1, Math.floor(item.totalDurationSec || 86400));
+    item.activatedAt = now;
+    item.used = true;
+    item.holdUntilFirstLogin = false;
+    item.frozen = false;
+    item.frozenRemainingSec = 0;
+    item.expiresAt = now + dur * 1000;
+    saveDB();
+    renderKeys();
+    showToast("✔ تم احتساب الكود كمستعمل وبدأ العدّاد: " + item.code);
+  }
+
+  function toggleUsedState(id) {
+    var item = keysDB.find(function (k) { return k.id === id; });
+    if (!item) return;
+    if (isKeyUsed(item)) {
+      item.used = false;
+      item.activatedAt = null;
+      item.holdUntilFirstLogin = true;
+      item.frozen = false;
+      item.frozenRemainingSec = 0;
+      item.expiresAt = 0;
+      showToast("⏳ تم إرجاع الكود إلى: غير مستعمل");
+    } else {
+      activateFirstLogin(id);
+      return;
+    }
+    saveDB();
+    renderKeys();
+  }
+
+  function toggleFreezeItem(id) {
+    var item = keysDB.find(function (k) { return k.id === id; });
+    if (!item) return;
+    if (isHeldUntilLogin(item)) {
+      showToast("وقت هذا الكود محفوظ أصلاً حتى أول دخول");
+      return;
+    }
+    if (item.frozen) {
+      var rem = Math.max(0, Math.floor(item.frozenRemainingSec || 0));
+      item.frozen = false;
+      item.expiresAt = Date.now() + rem * 1000;
+      item.frozenRemainingSec = 0;
+      showToast("▶ تم استئناف الوقت للمفتاح: " + item.code);
+    } else {
+      var left = getRemainingSec(item);
+      if (left <= 0) {
+        showToast("هذا المفتاح منتهي بالفعل ولا يمكن تجميده");
+        return;
+      }
+      item.frozen = true;
+      item.frozenRemainingSec = left;
+      showToast("❄ تم تجميد وقت المفتاح: " + item.code);
+    }
+    saveDB();
+    renderKeys();
+  }
+
+  function extendItemHours(id, addSec) {
+    var item = keysDB.find(function (k) { return k.id === id; });
+    if (!item) return;
+    if (isHeldUntilLogin(item)) {
+      item.totalDurationSec = Math.max(0, Math.floor(item.totalDurationSec || 0)) + addSec;
+    } else if (item.frozen) {
+      item.frozenRemainingSec = Math.max(0, Math.floor(item.frozenRemainingSec || 0)) + addSec;
+      item.totalDurationSec = (item.totalDurationSec || 0) + addSec;
+    } else {
+      var base = Math.max(Date.now(), item.expiresAt || Date.now());
+      item.expiresAt = base + addSec * 1000;
+      item.totalDurationSec = (item.totalDurationSec || 0) + addSec;
+    }
+    saveDB();
+    renderKeys();
+    showToast("➕ تم تمديد الوقت للمفتاح: " + item.code);
+  }
+
+  function deleteItem(id) {
+    keysDB = keysDB.filter(function (k) { return k.id !== id; });
+    saveDB();
+    renderKeys();
+    showToast("🗑 تم حذف المفتاح");
+  }
+
+  function getStatusKey(item) {
+    if (item.frozen) return "frozen";
+    if (!isKeyUsed(item)) return "unused";
+    return getRemainingSec(item) > 0 ? "used" : "expired";
+  }
+
+  function renderKeys() {
+    var container = $("keysListContainer");
+    if (!container) return;
+
+    var q = ($("searchInp") ? $("searchInp").value.trim().toLowerCase() : "");
+    var total = keysDB.length;
+    var usedCount = 0;
+    var unusedCount = 0;
+    var frozenOrExpCount = 0;
+
+    keysDB.forEach(function (item) {
+      var used = isKeyUsed(item);
+      var rem = getRemainingSec(item);
+      if (used) usedCount++;
+      else unusedCount++;
+      if (item.frozen || (used && rem <= 0)) frozenOrExpCount++;
+    });
+
+    if ($("statTotal")) $("statTotal").textContent = String(total);
+    if ($("statUsed")) $("statUsed").textContent = String(usedCount);
+    if ($("statUnused")) $("statUnused").textContent = String(unusedCount);
+    if ($("statFrozen")) $("statFrozen").textContent = String(frozenOrExpCount);
+
+    var filtered = keysDB.filter(function (item) {
+      var status = getStatusKey(item);
+      if (currentFilter === "used" && !isKeyUsed(item)) return false;
+      if (currentFilter === "unused" && isKeyUsed(item)) return false;
+      if ((currentFilter === "frozen" || currentFilter === "expired") && status !== currentFilter) return false;
+      if (q) {
+        var hay = (item.code + " " + (item.note || "")).toLowerCase();
+        if (hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:18px 10px; color:var(--text-muted); font-size:0.84rem; font-weight:700;">لا توجد أكواد مطابقة حالياً — اضغط «توليد الأكواد الآن» بالأعلى.</div>';
+      return;
+    }
+
+    container.innerHTML = filtered.map(function (item) {
+      var st = getStatusKey(item);
+      var used = isKeyUsed(item);
+      var rem = getRemainingSec(item);
+      var cardCls = "key-item" + (!used ? " held" : (st === "frozen" ? " frozen" : (st === "expired" ? " expired" : "")));
+
+      var statusHtml = "";
+      if (st === "frozen") {
+        statusHtml = '<span class="status-tag st-frozen">❄ مجمّد</span>';
+      } else if (!used) {
+        statusHtml = '<span class="status-tag st-held">⏳ غير مستعمل</span>';
+      } else if (rem > 0) {
+        statusHtml = '<span class="status-tag st-active">✔ مستعمل</span>';
+      } else {
+        statusHtml = '<span class="status-tag st-expired">منتهي</span>';
+      }
+
+      var devText = item.singleDevice ? (item.boundDeviceId ? "مرتبط بجهاز" : "جهاز واحد (جاهز)") : "متعدد الأجهزة";
+      var timeModeText = !used ? "محفوظ حتى أول دخول" : (item.frozen ? "مجمّد يدوياً" : "يعدّ تنازلياً");
+      var useToggleLabel = !used ? "✔ تفعيل/مستعمل" : "⏳ إرجاع غير مستعمل";
+
+      return (
+        '<div class="' + cardCls + '">' +
+          '<div class="key-top">' +
+            '<span class="key-code-txt">' + item.code + '</span>' +
+            statusHtml +
+          '</div>' +
+          '<div class="key-meta">' +
+            '<div>المدة المحفوظة: <strong data-timer-id="' + item.id + '">' + formatDuration(rem) + '</strong></div>' +
+            '<div>العدّاد: <strong>' + timeModeText + '</strong></div>' +
+            '<div>الحماية: <strong>' + devText + '</strong></div>' +
+            '<div>الملاحظة: <strong>' + (item.note || "—") + '</strong></div>' +
+          '</div>' +
+          '<div class="key-actions">' +
+            '<button type="button" class="act-btn" data-act="copy" data-id="' + item.id + '">📋 نسخ</button>' +
+            '<button type="button" class="act-btn act-start" data-act="toggleuse" data-id="' + item.id + '">' + useToggleLabel + '</button>' +
+            '<button type="button" class="act-btn act-plus" data-act="plus24" data-id="' + item.id + '">+24س</button>' +
+            '<button type="button" class="act-btn act-del" data-act="del" data-id="' + item.id + '">🗑 حذف</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  $("keysListContainer").addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("button[data-act]") : null;
+    if (!btn) return;
+    var act = btn.getAttribute("data-act");
+    var id = btn.getAttribute("data-id");
+    var item = keysDB.find(function (k) { return k.id === id; });
+    if (!item) return;
+
+    if (act === "copy") {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(item.code).catch(function () {});
+      }
+      showToast("📋 تم نسخ الكود: " + item.code);
+    } else if (act === "toggleuse") {
+      toggleUsedState(id);
+    } else if (act === "freeze") {
+      toggleFreezeItem(id);
+    } else if (act === "plus24") {
+      extendItemHours(id, 86400);
+    } else if (act === "del") {
+      deleteItem(id);
+    }
+  });
+
+  document.querySelectorAll(".chip-btn").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      document.querySelectorAll(".chip-btn").forEach(function (c) { c.classList.remove("active"); });
+      chip.classList.add("active");
+      $("durValInp").value = chip.getAttribute("data-val");
+      $("durUnitSel").value = chip.getAttribute("data-unit");
+    });
+  });
+
+  $("holdFirstLoginSw").addEventListener("click", function () {
+    this.classList.toggle("active");
+  });
+  $("singleDevSw").addEventListener("click", function () {
+    this.classList.toggle("active");
+  });
+  $("startFrozenSw").addEventListener("click", function () {
+    this.classList.toggle("active");
+  });
+
+  function runGenerate() {
+    try {
+      var prefix = ($("prefixInp") && $("prefixInp").value.trim()) || "BILAL";
+      var countRaw = parseInt(($("countInp") && $("countInp").value) || "1", 10);
+      var count = isNaN(countRaw) ? 1 : Math.max(1, Math.min(100, countRaw));
+      var durValRaw = parseInt(($("durValInp") && $("durValInp").value) || "24", 10);
+      var durVal = isNaN(durValRaw) ? 24 : Math.max(1, durValRaw);
+      var durUnitRaw = parseInt(($("durUnitSel") && $("durUnitSel").value) || "3600", 10);
+      var durUnit = isNaN(durUnitRaw) ? 3600 : Math.max(1, durUnitRaw);
+      var note = ($("noteInp") && $("noteInp").value.trim()) || "";
+      var holdFirstLogin = $("holdFirstLoginSw") ? $("holdFirstLoginSw").classList.contains("active") : true;
+      var singleDevice = $("singleDevSw") ? $("singleDevSw").classList.contains("active") : true;
+      var startFrozen = $("startFrozenSw") ? $("startFrozenSw").classList.contains("active") : false;
+
+      var totalSec = durVal * durUnit;
+      var now = Date.now();
+      var generatedList = [];
+
+      for (var i = 0; i < count; i++) {
+        var code = buildUniqueCode(prefix);
+        var isHeld = holdFirstLogin && !startFrozen;
+        var entry = {
+          id: "K_" + now + "_" + i + "_" + Math.random().toString(36).slice(2, 7),
+          code: code,
+          note: note,
+          holdUntilFirstLogin: holdFirstLogin,
+          activatedAt: null,
+          singleDevice: singleDevice,
+          boundDeviceId: null,
+          totalDurationSec: totalSec,
+          frozen: !!startFrozen,
+          frozenRemainingSec: startFrozen ? totalSec : 0,
+          expiresAt: isHeld || startFrozen ? 0 : (now + totalSec * 1000),
+          createdAt: now
+        };
+        keysDB.unshift(entry);
+        generatedList.push(code);
+      }
+
+      saveDB();
+      renderKeys();
+
+      if ($("bulkResultBox")) $("bulkResultBox").classList.remove("hidden");
+      if ($("bulkCountLbl")) $("bulkCountLbl").textContent = generatedList.length + " أكواد";
+      if ($("bulkTextarea")) $("bulkTextarea").value = generatedList.join("\n");
+      if ($("genFeedback")) {
+        $("genFeedback").textContent = "✔ تم توليد " + generatedList.length + " كود" + (holdFirstLogin ? " — الوقت محفوظ حتى أول دخول" : "");
+      }
+      showToast("⚡ تم توليد " + generatedList.length + " كود بنجاح");
+    } catch (err) {
+      if ($("genFeedback")) $("genFeedback").textContent = "حدث خطأ أثناء التوليد: " + (err && err.message ? err.message : "");
+      showToast("تعذّر توليد الأكواد، أعد المحاولة");
+    }
+  }
+
+  $("generateBtn").addEventListener("click", runGenerate);
+
+  $("copyBulkBtn").addEventListener("click", function () {
+    var txt = $("bulkTextarea").value;
+    if (!txt) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).catch(function () {});
+    }
+    showToast("📋 تم نسخ جميع الأكواد المولدة");
+  });
+
+  function downloadFile(filename, content, mime) {
+    var blob = new Blob([content], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 150);
+  }
+
+  $("exportTxtBtn").addEventListener("click", function () {
+    var txt = $("bulkTextarea").value;
+    if (!txt) return;
+    downloadFile("bilal_vip_keys.txt", txt, "text/plain;charset=utf-8");
+    showToast("⬇ تم تحميل ملف الأكواد TXT");
+  });
+
+  $("exportJsonBtn").addEventListener("click", function () {
+    var payload = keysDB.map(function (item) {
+      var st = getStatusKey(item);
+      return {
+        code: item.code,
+        status: st,
+        hold_until_first_login: !!item.holdUntilFirstLogin,
+        activated_at: item.activatedAt || null,
+        total_duration_seconds: item.totalDurationSec,
+        remaining_seconds: getRemainingSec(item),
+        single_device: item.singleDevice,
+        note: item.note || ""
+      };
+    });
+    downloadFile("bilal_vip_keys_db.json", JSON.stringify(payload, null, 2), "application/json;charset=utf-8");
+    showToast("📦 تم تصدير قاعدة الأكواد بصيغة JSON");
+  });
+
+  $("freezeAllBtn").addEventListener("click", function () {
+    var changed = 0;
+    keysDB.forEach(function (item) {
+      if (!isHeldUntilLogin(item) && !item.frozen) {
+        var rem = getRemainingSec(item);
+        if (rem > 0) {
+          item.frozen = true;
+          item.frozenRemainingSec = rem;
+          changed++;
+        }
+      }
+    });
+    saveDB();
+    renderKeys();
+    showToast("❄ تم تجميد وقت " + changed + " مفتاح نشط");
+  });
+
+  $("unfreezeAllBtn").addEventListener("click", function () {
+    var changed = 0;
+    var now = Date.now();
+    keysDB.forEach(function (item) {
+      if (item.frozen) {
+        var rem = Math.max(0, Math.floor(item.frozenRemainingSec || 0));
+        item.frozen = false;
+        item.expiresAt = now + rem * 1000;
+        item.frozenRemainingSec = 0;
+        changed++;
+      }
+    });
+    saveDB();
+    renderKeys();
+    showToast("▶ تم استئناف وقت " + changed + " مفتاح مجمّد");
+  });
+
+  $("deleteAllBtn").addEventListener("click", function () {
+    if (keysDB.length === 0) {
+      showToast("لا توجد أكواد لحذفها");
+      return;
+    }
+    var countBefore = keysDB.length;
+    keysDB = [];
+    saveDB();
+    renderKeys();
+    if ($("bulkResultBox")) $("bulkResultBox").classList.add("hidden");
+    if ($("genFeedback")) $("genFeedback").textContent = "";
+    showToast("⚠ تم حذف كل الأكواد (" + countBefore + " كود)");
+  });
+
+  $("clearExpiredBtn").addEventListener("click", function () {
+    var before = keysDB.length;
+    keysDB = keysDB.filter(function (item) {
+      return getStatusKey(item) !== "expired";
+    });
+    var removed = before - keysDB.length;
+    saveDB();
+    renderKeys();
+    showToast("🗑 تم حذف " + removed + " كود منتهي");
+  });
+
+  $("searchInp").addEventListener("input", renderKeys);
+
+  document.querySelectorAll(".filter-btn").forEach(function (fb) {
+    fb.addEventListener("click", function () {
+      document.querySelectorAll(".filter-btn").forEach(function (b) { b.classList.remove("active"); });
+      fb.classList.add("active");
+      currentFilter = fb.getAttribute("data-filter");
+      renderKeys();
+    });
+  });
+
+  setInterval(function () {
+    var needsFullRender = false;
+    keysDB.forEach(function (item) {
+      var st = getStatusKey(item);
+      if (st === "active") {
+        var rem = getRemainingSec(item);
+        var el = document.querySelector('[data-timer-id="' + item.id + '"]');
+        if (el) {
+          el.textContent = formatDuration(rem);
+        }
+        if (rem === 0 && item.expiresAt > 0) {
+          item.expiresAt = 0;
+          needsFullRender = true;
+        }
+      }
+    });
+    if (needsFullRender) {
+      saveDB();
+      renderKeys();
+    }
+  }, 1000);
+
+  loadDB();
+  renderKeys();
+})();
+</script>
+</body>
+</html>
