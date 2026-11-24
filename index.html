@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080104" />
+  <meta name="description" content="BILAL VIP — الموقع تحت الصيانة حالياً" />
+  <title>BILAL VIP — الموقع تحت الصيانة حالياً</title>
+  <style>
+    :root {
+      --bg-void: #050103;
+      --bg-primary: #090104;
+      --accent-core: #e11d48;
+      --accent-bright: #ff3b5c;
+      --accent-soft: #ff9eb0;
+      --accent-gold: #ffd166;
+      --accent-dark: #5c0416;
+      --accent-rgb: 225, 29, 72;
+      --gold-rgb: 255, 209, 102;
+      --border-hairline: rgba(var(--accent-rgb), 0.22);
+      --border-subtle: rgba(var(--accent-rgb), 0.38);
+      --border-strong: rgba(var(--accent-rgb), 0.68);
+      --text-primary: #ffffff;
+      --text-secondary: #f3d6dc;
+      --text-muted: #b88a95;
+      --maint-bg: rgba(245, 158, 11, 0.16);
+      --maint-border: rgba(251, 191, 36, 0.55);
+      --maint-text: #fbbf24;
+    }
+
+    body.theme-crimson {
+      --accent-core: #e11d48;
+      --accent-bright: #ff3b5c;
+      --accent-soft: #ff9eb0;
+      --accent-gold: #ffd166;
+      --accent-dark: #5c0416;
+      --accent-rgb: 225, 29, 72;
+      --gold-rgb: 255, 209, 102;
+    }
+    body.theme-emerald {
+      --accent-core: #10b981;
+      --accent-bright: #34d399;
+      --accent-soft: #a7f3d0;
+      --accent-gold: #6ee7b7;
+      --accent-dark: #065f46;
+      --accent-rgb: 16, 185, 129;
+      --gold-rgb: 110, 231, 183;
+    }
+    body.theme-gold {
+      --accent-core: #f59e0b;
+      --accent-bright: #fbbf24;
+      --accent-soft: #fde68a;
+      --accent-gold: #ffd166;
+      --accent-dark: #78350f;
+      --accent-rgb: 245, 158, 11;
+      --gold-rgb: 255, 209, 102;
+    }
+    body.theme-violet {
+      --accent-core: #a855f7;
+      --accent-bright: #c084fc;
+      --accent-soft: #e9d5ff;
+      --accent-gold: #f0abfc;
+      --accent-dark: #581c87;
+      --accent-rgb: 168, 85, 247;
+      --gold-rgb: 240, 171, 252;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html { background-color: #040102; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #080104;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.22) 0%, rgba(var(--accent-rgb), 0.07) 45%, transparent 75%),
+        linear-gradient(180deg, #150207 0%, #080104 52%, #040102 100%);
+      color: var(--text-primary);
+      padding: 12px 12px 48px;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    #bgMotionCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.72;
+    }
+
+    .topbar, .maintenance-wrap, .toast {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hidden { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 8px;
+      z-index: 60;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      background: rgba(18, 3, 9, 0.92);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(12px);
+    }
+
+    .top-actions { display: flex; align-items: center; gap: 6px; }
+
+    .lang-btn, .theme-cycle-btn {
+      background: #1d050d;
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .theme-cycle-btn { color: var(--accent-gold); }
+
+    .brand-center { text-align: center; min-width: 0; flex: 1; }
+    .brand-title { font-size: 0.98rem; font-weight: 900; letter-spacing: 1.2px; color: var(--accent-bright); display: block; }
+    .brand-sub { font-size: 0.7rem; color: var(--text-muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .maint-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--maint-bg);
+      border: 1px solid var(--maint-border);
+      color: var(--maint-text);
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--maint-text); }
+
+    .maintenance-wrap {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .maintenance-card {
+      border-radius: 26px;
+      padding: 24px 18px 22px;
+      background: linear-gradient(175deg, rgba(32, 6, 15, 0.97) 0%, rgba(15, 3, 8, 0.97) 100%);
+      border: 1.5px solid rgba(251, 191, 36, 0.55);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(251, 191, 36, 0.28);
+      text-align: center;
+    }
+
+    .maint-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--maint-bg);
+      border: 1px solid var(--maint-border);
+      color: var(--maint-text);
+      font-size: 0.78rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .maint-icon-wrap {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 14px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 35%, rgba(251, 191, 36, 0.22), rgba(var(--accent-rgb), 0.18) 78%);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    .maint-gear-svg {
+      width: 46px;
+      height: 46px;
+      color: var(--accent-gold);
+      animation: maintSpin 9s linear infinite;
+    }
+    @keyframes maintSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .maint-title {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .maint-desc {
+      margin: 0 auto 16px;
+      max-width: 390px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .maint-status-box {
+      background: #090104;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 13px 14px;
+      margin-bottom: 14px;
+      text-align: start;
+    }
+
+    .maint-status-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .maint-progress-track {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .maint-progress-bar {
+      width: 68%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-core), #f59e0b, var(--accent-gold));
+      animation: maintPulseBar 2.4s ease-in-out infinite alternate;
+    }
+    @keyframes maintPulseBar {
+      from { width: 52%; opacity: 0.85; }
+      to { width: 82%; opacity: 1; }
+    }
+
+    .maint-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .maint-meta-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-hairline);
+      border-radius: 12px;
+      padding: 9px 10px;
+    }
+    .maint-meta-item small {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .maint-meta-item strong {
+      display: block;
+      font-size: 0.84rem;
+      color: #ffffff;
+    }
+
+    .channels {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-hairline);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .channel-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: #1f050e;
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .toast {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 20px;
+      z-index: 70;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: #1c040c;
+      border: 1px solid var(--accent-bright);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="theme-crimson">
+<canvas id="bgMotionCanvas"></canvas>
+
+<header class="topbar">
+  <div class="top-actions">
+    <button type="button" class="lang-btn" id="langBtn">EN</button>
+    <button type="button" class="theme-cycle-btn" id="themeCycleBtn" title="تبديل اللون">✦ لون</button>
+  </div>
+  <div class="brand-center">
+    <strong class="brand-title">BILAL VIP</strong>
+    <span class="brand-sub" id="subBrand">وضع الصيانة الرسمي</span>
+  </div>
+  <span class="maint-pill" id="topStatusPill">
+    <span class="dot"></span>
+    <span id="maintPillTxt">صيانة</span>
+  </span>
+</header>
+
+<main class="maintenance-wrap" aria-live="polite">
+  <section class="maintenance-card">
+    <div class="maint-badge">
+      <span>🛠</span>
+      <span id="maintBadgeTxt">وضع الصيانة مفعّل</span>
+    </div>
+
+    <div class="maint-icon-wrap" aria-hidden="true">
+      <svg class="maint-gear-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </div>
+
+    <h1 class="maint-title" id="maintTitle">الموقع تحت الصيانة حالياً</h1>
+    <p class="maint-desc" id="maintDesc">
+      نقوم حالياً بتحديث الخوادم وتحسين استقرار الجلسات والأوضاع. سنعود للعمل بأسرع وقت ممكن.
+    </p>
+
+    <div class="maint-status-box">
+      <div class="maint-status-top">
+        <span id="maintTaskLbl">تحديث البنية والخوادم</span>
+        <span id="maintEstLbl">قريباً</span>
+      </div>
+      <div class="maint-progress-track">
+        <div class="maint-progress-bar"></div>
+      </div>
+      <div class="maint-meta-grid">
+        <div class="maint-meta-item">
+          <small id="maintMeta1Lbl">حالة النظام</small>
+          <strong id="maintMeta1Val">MAINTENANCE</strong>
+        </div>
+        <div class="maint-meta-item">
+          <small id="maintMeta2Lbl">الخدمة</small>
+          <strong id="maintMeta2Val">BILAL VIP</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="channels">
+      <a href="https://t.me" target="_blank" rel="noopener" class="channel-link" id="maintTgLink">✈ تليجرام</a>
+      <a href="https://whatsapp.com" target="_blank" rel="noopener" class="channel-link" id="maintWaLink">💬 قناة الواتساب</a>
+    </div>
+  </section>
+</main>
+
+<div class="toast hidden" id="toast"></div>
+
+<script>
+(function () {
+  var themes = ["crimson", "emerald", "gold", "violet"];
+  var themeNames = {
+    crimson: { ar: "قرمزي VIP", en: "Crimson VIP" },
+    emerald: { ar: "زمردي", en: "Emerald" },
+    gold: { ar: "ذهبي ملكي", en: "Royal Gold" },
+    violet: { ar: "بنفسجي نيون", en: "Neon Violet" }
+  };
+  var currentTheme = "crimson";
+  var lang = "ar";
+
+  function $(id) { return document.getElementById(id); }
+
+  function showToast(msg, isRed) {
+    var t = $("toast");
+    if (!t) return;
+    t.textContent = msg;
+    t.style.borderColor = isRed ? "#ef4444" : "";
+    t.style.background = isRed ? "#2a060a" : "";
+    t.style.color = isRed ? "#fca5a5" : "";
+    t.classList.remove("hidden");
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(function () { t.classList.add("hidden"); }, 2600);
+  }
+
+  function applyTheme(name, announce) {
+    if (themes.indexOf(name) === -1) name = "crimson";
+    currentTheme = name;
+    document.body.className = "theme-" + name;
+    var tName = themeNames[name][lang];
+    if (announce) showToast((lang === "ar" ? "تم تغيير اللون إلى: " : "Color changed to: ") + tName, false);
+  }
+
+  function applyLanguage(newLang) {
+    lang = newLang === "en" ? "en" : "ar";
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+    if ($("langBtn")) $("langBtn").textContent = lang === "ar" ? "EN" : "AR";
+    if ($("subBrand")) $("subBrand").textContent = lang === "ar" ? "وضع الصيانة الرسمي" : "Official Maintenance Mode";
+    if ($("maintPillTxt")) $("maintPillTxt").textContent = lang === "ar" ? "صيانة" : "Maint";
+    if ($("maintBadgeTxt")) $("maintBadgeTxt").textContent = lang === "ar" ? "وضع الصيانة مفعّل" : "Maintenance Mode Active";
+    if ($("maintTitle")) $("maintTitle").textContent = lang === "ar" ? "الموقع تحت الصيانة حالياً" : "Website Under Maintenance";
+    if ($("maintDesc")) {
+      $("maintDesc").textContent = lang === "ar"
+        ? "نقوم حالياً بتحديث الخوادم وتحسين استقرار الجلسات والأوضاع. سنعود للعمل بأسرع وقت ممكن."
+        : "We are updating servers and improving session and mode stability. We will be back shortly.";
+    }
+    if ($("maintTaskLbl")) $("maintTaskLbl").textContent = lang === "ar" ? "تحديث البنية والخوادم" : "Server & System Upgrade";
+    if ($("maintEstLbl")) $("maintEstLbl").textContent = lang === "ar" ? "قريباً" : "Soon";
+    if ($("maintMeta1Lbl")) $("maintMeta1Lbl").textContent = lang === "ar" ? "حالة النظام" : "System State";
+    if ($("maintMeta2Lbl")) $("maintMeta2Lbl").textContent = lang === "ar" ? "الخدمة" : "Service";
+    if ($("maintTgLink")) $("maintTgLink").textContent = lang === "ar" ? "✈ تليجرام" : "✈ Telegram";
+    if ($("maintWaLink")) $("maintWaLink").textContent = lang === "ar" ? "💬 قناة الواتساب" : "💬 WhatsApp Channel";
+  }
+
+  if ($("themeCycleBtn")) {
+    $("themeCycleBtn").addEventListener("click", function () {
+      applyTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length], true);
+    });
+  }
+
+  if ($("langBtn")) {
+    $("langBtn").addEventListener("click", function () {
+      applyLanguage(lang === "ar" ? "en" : "ar");
+      showToast(lang === "ar" ? "تم التبديل إلى العربية" : "Switched to English", false);
+    });
+  }
+
+  function renderBgCanvas() {
+    var bg = $("bgMotionCanvas");
+    if (!bg) return;
+    var ctx = bg.getContext("2d");
+    if (!ctx) return;
+
+    function resize() {
+      bg.width = window.innerWidth || 360;
+      bg.height = window.innerHeight || 640;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    var pts = [];
+    for (var i = 0; i < 24; i++) {
+      pts.push({
+        x: Math.random() * bg.width,
+        y: Math.random() * bg.height,
+        r: 1.2 + Math.random() * 2.2,
+        vy: 0.25 + Math.random() * 0.55
+      });
+    }
+
+    function step() {
+      ctx.clearRect(0, 0, bg.width, bg.height);
+      var st = getComputedStyle(document.body);
+      var core = (st.getPropertyValue("--accent-core") || "#e11d48").trim();
+      ctx.fillStyle = core;
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        p.y -= p.vy;
+        if (p.y < -10) {
+          p.y = bg.height + 10;
+          p.x = Math.random() * bg.width;
+        }
+        ctx.globalAlpha = 0.28;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  applyTheme("crimson", false);
+  applyLanguage("ar");
+  renderBgCanvas();
+})();
+</script>
+</body>
+</html>
