@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#080104" />
-  <meta name="description" content="BILAL VIP — الموقع تحت الصيانة حالياً" />
-  <title>BILAL VIP — الموقع تحت الصيانة حالياً</title>
+  <meta name="description" content="BILAL VIP — بوابة التفعيل ولوحة التحكم الرسمية" />
+  <title>BILAL VIP — النسخة المميزة للمتابعين</title>
   <style>
     :root {
       --bg-void: #050103;
       --bg-primary: #090104;
+      --bg-card: rgba(20, 4, 10, 0.95);
+      --bg-card-elevated: rgba(34, 6, 15, 0.98);
+      --bg-input: #0a0104;
       --accent-core: #e11d48;
       --accent-bright: #ff3b5c;
       --accent-soft: #ff9eb0;
@@ -23,9 +26,9 @@
       --text-primary: #ffffff;
       --text-secondary: #f3d6dc;
       --text-muted: #b88a95;
-      --maint-bg: rgba(245, 158, 11, 0.16);
-      --maint-border: rgba(251, 191, 36, 0.55);
-      --maint-text: #fbbf24;
+      --emerald-bg: rgba(16, 185, 129, 0.16);
+      --emerald-border: rgba(52, 211, 153, 0.5);
+      --emerald-text: #34d399;
     }
 
     body.theme-crimson {
@@ -81,7 +84,7 @@
         radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.22) 0%, rgba(var(--accent-rgb), 0.07) 45%, transparent 75%),
         linear-gradient(180deg, #150207 0%, #080104 52%, #040102 100%);
       color: var(--text-primary);
-      padding: 12px 12px 48px;
+      padding: 12px 12px 102px;
       line-height: 1.55;
       overflow-x: hidden;
     }
@@ -96,23 +99,25 @@
       opacity: 0.72;
     }
 
-    .topbar, .maintenance-wrap, .toast {
+    .topbar, .card, .metrics, .bottom-nav, .toast, .login-gate-panel {
       position: relative;
       z-index: 2;
     }
 
+    .bottom-nav { position: fixed !important; z-index: 40; }
+    .toast { position: fixed !important; z-index: 50; }
     .hidden { display: none !important; }
 
     .topbar {
       position: sticky;
       top: 8px;
-      z-index: 60;
+      z-index: 35;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
       padding: 10px 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border-radius: 16px;
       background: rgba(18, 3, 9, 0.92);
       border: 1px solid var(--border-subtle);
@@ -130,7 +135,6 @@
       font-size: 0.78rem;
       font-weight: 900;
       cursor: pointer;
-      white-space: nowrap;
     }
     .theme-cycle-btn { color: var(--accent-gold); }
 
@@ -138,152 +142,121 @@
     .brand-title { font-size: 0.98rem; font-weight: 900; letter-spacing: 1.2px; color: var(--accent-bright); display: block; }
     .brand-sub { font-size: 0.7rem; color: var(--text-muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .maint-pill {
+    .online-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--maint-bg);
-      border: 1px solid var(--maint-border);
-      color: var(--maint-text);
+      background: var(--emerald-bg);
+      border: 1px solid var(--emerald-border);
+      color: var(--emerald-text);
       padding: 6px 11px;
       border-radius: 999px;
       font-size: 0.76rem;
       font-weight: 800;
       white-space: nowrap;
     }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--maint-text); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald-text); }
 
-    .maintenance-wrap {
-      max-width: 520px;
-      margin: 0 auto;
-    }
-
-    .maintenance-card {
+    .login-gate-panel {
       border-radius: 26px;
-      padding: 24px 18px 22px;
-      background: linear-gradient(175deg, rgba(32, 6, 15, 0.97) 0%, rgba(15, 3, 8, 0.97) 100%);
-      border: 1.5px solid rgba(251, 191, 36, 0.55);
-      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(251, 191, 36, 0.28);
-      text-align: center;
+      padding: 24px 18px 20px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(var(--gold-rgb), 0.16), transparent 46%),
+        radial-gradient(circle at 50% 18%, rgba(var(--accent-rgb), 0.28), transparent 68%),
+        linear-gradient(175deg, var(--bg-card-elevated) 0%, var(--bg-card) 100%);
+      border: 1.5px solid rgba(var(--gold-rgb), 0.58);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(var(--gold-rgb), 0.35);
     }
 
-    .maint-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: var(--maint-bg);
-      border: 1px solid var(--maint-border);
-      color: var(--maint-text);
-      font-size: 0.78rem;
-      font-weight: 900;
-      margin-bottom: 14px;
-    }
-
-    .maint-icon-wrap {
-      width: 84px;
-      height: 84px;
-      margin: 0 auto 14px;
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 50% 35%, rgba(251, 191, 36, 0.22), rgba(var(--accent-rgb), 0.18) 78%);
-      border: 1px solid rgba(251, 191, 36, 0.45);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-    }
-
-    .maint-gear-svg {
-      width: 46px;
-      height: 46px;
-      color: var(--accent-gold);
-      animation: maintSpin 9s linear infinite;
-    }
-    @keyframes maintSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .maint-title {
-      margin: 0 0 8px;
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: #ffffff;
-    }
-
-    .maint-desc {
-      margin: 0 auto 16px;
-      max-width: 390px;
-      font-size: 0.84rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    .maint-status-box {
-      background: #090104;
+    .card {
+      background: rgba(18, 3, 9, 0.94);
       border: 1px solid var(--border-subtle);
-      border-radius: 16px;
-      padding: 13px 14px;
-      margin-bottom: 14px;
-      text-align: start;
+      border-radius: 18px;
+      padding: 15px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
     }
 
-    .maint-status-top {
+    .card h2, .card h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 900; color: #ffffff; }
+    .desc { margin: 0; font-size: 0.8rem; color: var(--text-secondary); }
+    .label { display: block; font-size: 0.85rem; font-weight: 800; color: var(--accent-soft); margin-bottom: 8px; }
+
+    .input-shell {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 8px;
+      background: linear-gradient(180deg, #070103 0%, #100207 100%);
+      border: 1.5px solid rgba(var(--gold-rgb), 0.52);
+      border-radius: 15px;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 16px rgba(var(--accent-rgb), 0.16);
+    }
+    .input-field {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+    }
+
+    .btn-mini {
+      background: #230610;
+      color: #ffffff;
+      border: 1px solid rgba(var(--gold-rgb), 0.35);
+      border-radius: 10px;
+      padding: 7px 11px;
       font-size: 0.78rem;
       font-weight: 800;
-      color: var(--accent-gold);
-      margin-bottom: 8px;
+      cursor: pointer;
     }
 
-    .maint-progress-track {
+    .btn-primary {
       width: 100%;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-
-    .maint-progress-bar {
-      width: 68%;
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent-core), #f59e0b, var(--accent-gold));
-      animation: maintPulseBar 2.4s ease-in-out infinite alternate;
-    }
-    @keyframes maintPulseBar {
-      from { width: 52%; opacity: 0.85; }
-      to { width: 82%; opacity: 1; }
-    }
-
-    .maint-meta-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .maint-meta-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-hairline);
-      border-radius: 12px;
-      padding: 9px 10px;
-    }
-    .maint-meta-item small {
-      display: block;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-    .maint-meta-item strong {
-      display: block;
-      font-size: 0.84rem;
+      padding: 15px 18px;
+      border: 1px solid rgba(var(--gold-rgb), 0.65);
+      border-radius: 15px;
+      background-image: linear-gradient(110deg, #5c0212 0%, var(--accent-core) 52%, #7a0419 100%);
       color: #ffffff;
+      font-size: 1.02rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(var(--accent-rgb), 0.42), 0 0 14px rgba(var(--gold-rgb), 0.18);
     }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-strong);
+      background: #1e050e;
+      color: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-happ-connect {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(52, 211, 153, 0.75);
+      background-image: linear-gradient(110deg, #064e3b 0%, #059669 55%, #047857 100%);
+      color: #ffffff;
+      font-size: 0.98rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.34);
+    }
+    .btn-happ-connect:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .feedback { margin-top: 10px; min-height: 20px; text-align: center; font-size: 0.84rem; font-weight: 800; color: var(--accent-bright); }
+    .feedback.ok { color: var(--emerald-text); }
 
     .channels {
       margin-top: 14px;
@@ -308,12 +281,364 @@
       font-weight: 800;
     }
 
+    .timer-wrap { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
+    .dial-stage {
+      position: relative;
+      width: 224px;
+      height: 224px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dial-hud-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      animation: orbitSpin 22s linear infinite;
+    }
+    @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .dial-ring-outer {
+      position: absolute;
+      inset: 11px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(var(--gold-rgb), 0.45);
+      pointer-events: none;
+    }
+    .dial {
+      position: relative;
+      width: 184px;
+      height: 184px;
+      border-radius: 50%;
+      background-color: #090104;
+      border: 2px solid rgba(var(--gold-rgb), 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .dial-tag { font-size: 0.64rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 4px; }
+    .dial-val { font-size: 1.68rem; font-weight: 900; color: var(--accent-bright); font-variant-numeric: tabular-nums; }
+    .dial-lbl { font-size: 0.76rem; color: var(--accent-soft); margin-top: 2px; }
+    .dial-pct-pill { font-size: 0.68rem; font-weight: 900; color: var(--accent-gold); margin-top: 4px; }
+
+    .active-key-box { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .active-key-label { display: block; font-size: 0.74rem; color: var(--text-muted); }
+    .active-key-val { font-size: 0.98rem; font-weight: 900; color: var(--accent-bright); word-break: break-all; }
+    .copy-btn {
+      background-image: linear-gradient(135deg, var(--accent-core), var(--accent-dark));
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .metric { background: rgba(18, 3, 9, 0.94); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 11px 8px; text-align: center; }
+    .metric small { display: block; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+    .metric strong { display: block; font-size: 0.88rem; color: #ffffff; }
+    .stack { display: grid; gap: 10px; }
+
+    .vid-header-card {
+      background: linear-gradient(180deg, rgba(28, 4, 12, 0.96), rgba(14, 2, 7, 0.96));
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 13px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .vid-header-card h2 { margin: 0 0 2px; font-size: 1.05rem; font-weight: 900; color: #ffffff; }
+    .vid-header-card p { margin: 0; font-size: 0.76rem; color: var(--text-secondary); }
+    .vid-modes-badge {
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: rgba(var(--accent-rgb), 0.16);
+      border: 1px solid var(--border-strong);
+      color: var(--accent-bright);
+      font-size: 0.74rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .vid-feat-box {
+      background: linear-gradient(180deg, rgba(24, 3, 10, 0.96), rgba(12, 2, 6, 0.96));
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 14px 13px;
+      margin-bottom: 12px;
+    }
+
+    .vid-row-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .vid-title-wrap { flex: 1; min-width: 0; }
+    .vid-title-line { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+    .vid-feat-title { margin: 0; font-size: 1rem; font-weight: 900; color: #ffffff; }
+    .vid-safe-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #34d399;
+    }
+    .vid-watch-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: #fbbf24;
+      margin-top: 6px;
+    }
+    .vid-feat-desc { margin: 0; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .switch-btn {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #3a2e34;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .switch-btn::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .switch-btn.active {
+      background: var(--accent-core);
+      border-color: var(--accent-bright);
+      box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.55);
+    }
+    .switch-btn.active::after {
+      transform: translateX(-24px);
+      background: #ffffff;
+    }
+
+    .vid-ready-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+      background: rgba(var(--accent-rgb), 0.14);
+      color: #ffd6de;
+      font-size: 0.84rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .vid-aim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+    .vid-aim-header span { font-size: 0.8rem; color: var(--text-muted); font-weight: 800; }
+    .vid-aim-header strong { font-size: 0.96rem; color: var(--accent-bright); font-weight: 900; font-variant-numeric: tabular-nums; }
+
+    .vid-tuner-panel {
+      display: grid;
+      grid-template-columns: 124px 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+    .vid-figure-box {
+      position: relative;
+      border-radius: 12px;
+      background: radial-gradient(circle at 50% 35%, rgba(var(--accent-rgb), 0.24), #090104 78%);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 158px;
+      overflow: hidden;
+      padding: 4px;
+    }
+    .vid-right-controls { display: grid; grid-template-columns: 34px 1fr; gap: 8px; align-items: center; }
+    .vid-vert-track-wrap {
+      height: 156px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b0105;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 6px 0;
+    }
+    input[type="range"].vid-vert-slider {
+      writing-mode: vertical-lr;
+      direction: rtl;
+      appearance: slider-vertical;
+      -webkit-appearance: slider-vertical;
+      width: 18px;
+      height: 138px;
+      accent-color: var(--accent-core);
+      cursor: pointer;
+    }
+    .vid-cards-stack { display: grid; gap: 6px; }
+    .vid-stat-pill-btn {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 11px;
+      background: #140208;
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .vid-stat-pill-btn.selected { border-color: var(--accent-bright); background: rgba(var(--accent-rgb), 0.18); }
+    .vid-stat-pill-btn.maint-pill {
+      border-color: rgba(245, 158, 11, 0.45);
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .vid-stat-pill-btn.maint-pill.selected {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.18);
+    }
+    .vid-stat-pill-btn.locked-maint,
+    .vid-stat-pill-btn:disabled {
+      opacity: 0.42 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+      box-shadow: none !important;
+    }
+    .tuner-disabled-overlay {
+      opacity: 0.38 !important;
+      pointer-events: none !important;
+      filter: grayscale(0.65) !important;
+      user-select: none !important;
+    }
+    .tuner-disabled-overlay * { pointer-events: none !important; }
+    .vid-stat-pill-btn strong { font-size: 0.95rem; font-weight: 900; color: #ffffff; font-variant-numeric: tabular-nums; }
+    .vid-stat-pill-btn span { font-size: 0.82rem; font-weight: 800; color: var(--text-secondary); }
+    .maint-tag {
+      color: #fbbf24 !important;
+      font-size: 0.74rem !important;
+      font-weight: 900 !important;
+    }
+    .vid-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 5px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+    .feat-state-line { margin-top: 10px; font-size: 0.74rem; font-weight: 800; color: var(--text-muted); }
+
+    .theme-swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
+    .swatch-btn {
+      padding: 10px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: #1e050e;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .swatch-btn.active { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+    .set-section-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: #0a0104;
+      border: 1px solid var(--border-hairline);
+    }
+    .set-subhead { display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 8px; }
+    .set-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .set-row:last-child { border-bottom: none; }
+    .set-row-txt strong { display: block; font-size: 0.84rem; color: #ffffff; }
+    .set-row-txt span { display: block; font-size: 0.72rem; color: var(--text-secondary); }
+    .set-mini-switch {
+      position: relative;
+      width: 46px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: #2b1820;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .set-mini-switch::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .set-mini-switch.active { background: var(--accent-core); border-color: var(--accent-bright); }
+    .set-mini-switch.active::after { transform: translateX(-20px); background: #ffffff; }
+    .set-actions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: #120208;
+      border-top: 1px solid var(--border-strong);
+      padding: 8px 8px 12px;
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      padding: 7px 6px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .nav-btn.active { color: var(--accent-bright); background: rgba(var(--accent-rgb), 0.16); }
+
     .toast {
       position: fixed;
       left: 16px;
       right: 16px;
-      bottom: 20px;
-      z-index: 70;
+      bottom: 74px;
+      z-index: 50;
       padding: 11px 14px;
       border-radius: 12px;
       background: #1c040c;
@@ -323,6 +648,21 @@
       font-weight: 800;
       text-align: center;
     }
+
+    .dev-red-alert {
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: rgba(220, 38, 38, 0.16);
+      border: 1.5px solid #ef4444;
+      color: #fca5a5;
+      font-size: 0.82rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .dev-red-alert.hidden { display: none !important; }
   </style>
 </head>
 <body class="theme-crimson">
@@ -335,64 +675,261 @@
   </div>
   <div class="brand-center">
     <strong class="brand-title">BILAL VIP</strong>
-    <span class="brand-sub" id="subBrand">وضع الصيانة الرسمي</span>
+    <span class="brand-sub" id="subBrand">النظام الرسمي المعتمد</span>
   </div>
-  <span class="maint-pill" id="topStatusPill">
+  <span class="online-pill">
     <span class="dot"></span>
-    <span id="maintPillTxt">صيانة</span>
+    <span id="onlineTxt">متصل</span>
   </span>
 </header>
 
-<main class="maintenance-wrap" aria-live="polite">
-  <section class="maintenance-card">
-    <div class="maint-badge">
-      <span>🛠</span>
-      <span id="maintBadgeTxt">وضع الصيانة مفعّل</span>
-    </div>
-
-    <div class="maint-icon-wrap" aria-hidden="true">
-      <svg class="maint-gear-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+<section id="loginCard" class="login-gate-panel">
+  <div style="text-align:center; margin-bottom:16px;">
+    <div style="
+      position: relative;
+      width: 100%;
+      min-height: 118px;
+      margin: 0 auto 10px;
+      border-radius: 20px;
+      background: radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), 0.24), rgba(7, 1, 3, 0.92) 76%);
+      border: 1px solid rgba(var(--accent-rgb), 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 8px;
+    ">
+      <svg viewBox="0 0 280 128" width="250" height="116" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="loginSlashBladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="40%" stop-color="#fff0b8" />
+            <stop offset="75%" stop-color="var(--accent-bright)" />
+            <stop offset="100%" stop-color="var(--accent-gold)" />
+          </linearGradient>
+        </defs>
+        <text x="140" y="73" text-anchor="middle" fill="url(#loginSlashBladeGrad)" font-size="46" font-weight="900" font-style="italic" letter-spacing="4">BILAL</text>
+        <text x="140" y="102" text-anchor="middle" fill="var(--accent-gold)" font-size="14" font-weight="900" letter-spacing="5">VIP MOD</text>
       </svg>
     </div>
+    <h2 id="loginTitle" style="margin:8px 0 5px; font-size:1.28rem; font-weight:900; color:#ffffff;">بوابة تفعيل الأكواد الرسمية</h2>
+    <p id="loginDesc" style="margin:0 auto; max-width:340px; font-size:0.82rem; color:var(--text-secondary);">أدخل كلمة السر / رمز التفعيل المعتمد لفتح لوحة التحكم ومتابعة مدة الجلسة.</p>
+  </div>
 
-    <h1 class="maint-title" id="maintTitle">الموقع تحت الصيانة حالياً</h1>
-    <p class="maint-desc" id="maintDesc">
-      نقوم حالياً بتحديث الخوادم وتحسين استقرار الجلسات والأوضاع. سنعود للعمل بأسرع وقت ممكن.
-    </p>
+  <div style="margin-bottom:8px;">
+    <label for="keyInput" class="label" id="keyLbl" style="margin-bottom:0; color:var(--accent-gold);">كلمة السر / كود التفعيل</label>
+  </div>
 
-    <div class="maint-status-box">
-      <div class="maint-status-top">
-        <span id="maintTaskLbl">تحديث البنية والخوادم</span>
-        <span id="maintEstLbl">قريباً</span>
-      </div>
-      <div class="maint-progress-track">
-        <div class="maint-progress-bar"></div>
-      </div>
-      <div class="maint-meta-grid">
-        <div class="maint-meta-item">
-          <small id="maintMeta1Lbl">حالة النظام</small>
-          <strong id="maintMeta1Val">MAINTENANCE</strong>
+  <div class="input-shell">
+    <button type="button" class="btn-mini" id="eyeBtn" aria-label="إظهار أو إخفاء كلمة السر">👁</button>
+    <button type="button" class="btn-mini" id="pasteBtn" style="color:var(--accent-gold);">لصق</button>
+    <input type="text" id="keyInput" class="input-field" value="" placeholder="أدخل أو الصق الكود هنا..." autocomplete="off" />
+  </div>
+
+  <button type="button" class="btn-primary" id="enterBtn">دخول إلى اللوحة</button>
+  <div class="feedback" id="loginMsg"></div>
+
+  <div class="channels" id="gateChannels">
+    <a href="https://t.me" target="_blank" rel="noopener" class="channel-link" id="tgLink">✈ تليجرام</a>
+    <a href="https://whatsapp.com" target="_blank" rel="noopener" class="channel-link" id="waLink">💬 قناة الواتساب</a>
+  </div>
+</section>
+
+<main id="dashMain" class="hidden">
+  <div id="tabHome">
+    <section class="card">
+      <h2 id="timerTitle">العدّاد التنازلي للجلسة</h2>
+      <p class="desc" id="timerDesc">يعرض الوقت المتبقي لصلاحية الكود المستخدم.</p>
+      <div class="timer-wrap">
+        <div class="dial-stage">
+          <svg class="dial-hud-svg" viewBox="0 0 244 244" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="122" cy="122" r="115" fill="none" stroke="var(--accent-gold)" stroke-width="2" stroke-dasharray="14 8 4 8" />
+          </svg>
+          <div class="dial-ring-outer"></div>
+          <div class="dial" id="dialEl">
+            <span class="dial-tag">✦ VIP LIVE</span>
+            <div class="dial-val" id="clockEl">23:59:59</div>
+            <div class="dial-lbl" id="remLbl">الوقت المتبقي</div>
+            <div class="dial-pct-pill" id="dialPct">100%</div>
+          </div>
         </div>
-        <div class="maint-meta-item">
-          <small id="maintMeta2Lbl">الخدمة</small>
-          <strong id="maintMeta2Val">BILAL VIP</strong>
-        </div>
       </div>
+    </section>
+
+    <section class="card">
+      <div class="active-key-box">
+        <div>
+          <small class="active-key-label" id="actLbl">الكود النشط</small>
+          <div class="active-key-val" id="actCode">VIP-KEY</div>
+        </div>
+        <button type="button" class="copy-btn" id="copyActBtn">نسخ</button>
+      </div>
+    </section>
+
+    <section class="metrics">
+      <div class="metric"><small id="metDevLbl">الجهاز</small><strong>ANDROID</strong></div>
+      <div class="metric"><small id="metSysLbl">النظام</small><strong>BILAL VIP</strong></div>
+      <div class="metric"><small id="metStatLbl">الحالة</small><strong>ACTIVE</strong></div>
+    </section>
+
+    <section class="card">
+      <h3 id="sumTitle">حالة الجلسة</h3>
+      <p class="desc" id="sumDesc">الجلسة فعالة ويتم التحقق عبر الخادم.</p>
+      <div class="stack" style="margin-top:10px;">
+        <button type="button" class="btn-happ-connect" id="connectHappBtn">تفعيل</button>
+        <button type="button" class="btn-secondary" id="pingBtn">فحص الاتصال الآن</button>
+        <button type="button" class="btn-secondary" id="lockSessionBtn">قفل الجلسة والعودة</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="tabFeatures" class="hidden">
+    <div class="vid-header-card">
+      <div>
+        <h2 id="featTitle">قائمة المميزات</h2>
+        <p id="featDesc">فعّل الأوضاع المتاحة واضبط معايرة التصويب بدقة.</p>
+      </div>
+      <span class="vid-modes-badge" id="modeBadge">3 أوضاع</span>
     </div>
 
-    <div class="channels">
-      <a href="https://t.me" target="_blank" rel="noopener" class="channel-link" id="maintTgLink">✈ تليجرام</a>
-      <a href="https://whatsapp.com" target="_blank" rel="noopener" class="channel-link" id="maintWaLink">💬 قناة الواتساب</a>
+    <div class="vid-feat-box" id="cardF1">
+      <div class="vid-row-top">
+        <div class="vid-title-wrap">
+          <div class="vid-title-line">
+            <strong class="vid-feat-title" id="f1Title">تصويب</strong>
+            <span class="vid-safe-tag" id="f1SafeTag">آمن 100%</span>
+          </div>
+          <p class="vid-feat-desc" id="f1Desc">يضبط تمركز المؤشر على أقرب هدف ويحدد موضع الإصابة بانسيابية من الصدر إلى الرأس.</p>
+        </div>
+        <button type="button" class="switch-btn" id="sw1" data-idx="1" aria-label="تحويل الميزة الأولى"></button>
+      </div>
+
+      <div id="aimTunerLockWrap" class="tuner-disabled-overlay" aria-disabled="true">
+        <button type="button" class="vid-ready-btn" id="readyPresetsBtn" disabled>إعدادات جاهزة</button>
+
+        <div class="vid-aim-header">
+          <strong id="aimTopTitle">الرأس 100%</strong>
+          <span id="aimTopSub">ارتفاع التصويب</span>
+        </div>
+
+        <div class="vid-tuner-panel">
+          <div class="vid-figure-box">
+            <canvas id="holoCharCanvas" width="220" height="310" style="width:100%; height:100%; max-width:116px; max-height:158px; display:block;"></canvas>
+          </div>
+          <div class="vid-right-controls">
+            <div class="vid-vert-track-wrap">
+              <input type="range" min="0" max="2" step="1" value="2" id="vidVertSlider" class="vid-vert-slider" aria-label="اختيار ارتفاع التصويب" disabled />
+            </div>
+            <div class="vid-cards-stack">
+              <button type="button" class="vid-stat-pill-btn selected" id="pill100Btn" data-aimval="100" disabled aria-disabled="true">
+                <strong>100%</strong><span id="lbl100Text">الرأس</span>
+              </button>
+              <button type="button" class="vid-stat-pill-btn" id="pill90Btn" data-aimval="90" disabled aria-disabled="true">
+                <strong>90%</strong><span id="lbl90Text">الرأس 90%</span>
+              </button>
+              <button type="button" class="vid-stat-pill-btn maint-pill locked-maint" id="pill0Btn" data-aimval="0" disabled aria-disabled="true" tabindex="-1">
+                <strong>0%</strong><span id="lbl0Text" class="maint-tag">تحت الصيانة</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-state-line" id="st1">الحالة: معطّل</div>
+      <div class="dev-red-alert hidden" id="devAlert1">⚠️ الحالة: غير متوفر حالياً (تحت التطوير)</div>
     </div>
-  </section>
+
+    <div class="vid-feat-box" id="cardF2">
+      <div class="vid-row-top">
+        <div class="vid-title-wrap">
+          <div class="vid-title-line"><strong class="vid-feat-title" id="f2Title">aim Boat</strong></div>
+          <p class="vid-feat-desc" id="f2Desc">يقلل تقطيع الإطارات ويحافظ على ثبات الاستجابة أثناء المواجهات السريعة.</p>
+        </div>
+        <button type="button" class="switch-btn" id="sw2" data-idx="2" aria-label="تحويل الميزة الثانية"></button>
+      </div>
+      <div class="feat-state-line" id="st2">الحالة: غير متوفر حالياً (تحت التطوير)</div>
+      <div class="dev-red-alert hidden" id="devAlert2">⚠️ الحالة: غير متوفر حالياً (تحت التطوير)</div>
+    </div>
+
+    <div class="vid-feat-box" id="cardF3" style="opacity:0.88;">
+      <div class="vid-row-top">
+        <div class="vid-title-wrap">
+          <div class="vid-title-line">
+            <strong class="vid-feat-title" id="f3Title">قريبا</strong>
+            <span class="vid-num-badge">3</span>
+          </div>
+          <div class="vid-watch-tag" id="f3WatchTag">مع التحديثات القادمة</div>
+          <p class="vid-feat-desc" id="f3Desc" style="margin-top:6px;">ميزة جديدة قيد التطوير، ستُضاف تلقائياً مع التحديثات الجاية.</p>
+        </div>
+        <button type="button" class="switch-btn" id="sw3" data-idx="3" aria-label="تحويل الميزة الثالثة"></button>
+      </div>
+      <div class="feat-state-line" id="st3">الحالة: غير متوفر حالياً (تحت التطوير)</div>
+      <div class="dev-red-alert hidden" id="devAlert3">⚠️ الحالة: غير متوفر حالياً (تحت التطوير)</div>
+    </div>
+  </div>
+
+  <div id="tabSettings" class="hidden">
+    <section class="card">
+      <h2 id="setTitle">إعدادات الجلسة واللون</h2>
+      <p class="desc" id="setDesc">بدّل لون الواجهة الحية وأدِر جلستك الحالية.</p>
+      <label class="label" id="themeLbl" style="margin-top:10px;">نمط الإضاءة واللون</label>
+      <div class="theme-swatches" style="margin-bottom:14px;">
+        <button type="button" class="swatch-btn active" data-theme="crimson" id="thCrimson">قرمزي VIP</button>
+        <button type="button" class="swatch-btn" data-theme="emerald" id="thEmerald">زمردي</button>
+        <button type="button" class="swatch-btn" data-theme="gold" id="thGold">ذهبي ملكي</button>
+        <button type="button" class="swatch-btn" data-theme="violet" id="thViolet">بنفسجي نيون</button>
+      </div>
+      <div class="set-section-box">
+        <div class="set-subhead">
+          <span>✦ خيارات تفيد المتابعة</span>
+          <span>VIP SYNC</span>
+        </div>
+        <div class="set-row">
+          <div class="set-row-txt">
+            <strong>تنبيه قبل انتهاء مدة الكود</strong>
+            <span>إشعار تنبيهي عندما يقترب العدّاد التنازلي من الانتهاء.</span>
+          </div>
+          <button type="button" class="set-mini-switch active" id="setSw1"></button>
+        </div>
+        <div class="set-row">
+          <div class="set-row-txt">
+            <strong>تذكّر الكود الأخير تلقائياً</strong>
+            <span>حفظ آخر كود صالح محلياً لتسريع الوصول عند العودة.</span>
+          </div>
+          <button type="button" class="set-mini-switch active" id="setSw2"></button>
+        </div>
+        <div class="set-row">
+          <div class="set-row-txt">
+            <strong>وضع توفير البطارية والخلفية</strong>
+            <span>تخفيف حركة الخلفية للحفاظ على سلاسة الهاتف.</span>
+          </div>
+          <button type="button" class="set-mini-switch" id="setSw3"></button>
+        </div>
+      </div>
+      <div class="set-actions-grid">
+        <button type="button" class="btn-secondary" id="shareKeyBtn">نسخ كود الجلسة</button>
+        <button type="button" class="btn-secondary" id="resetPrefsBtn">استعادة الافتراضي</button>
+      </div>
+      <div class="stack" style="margin-top:10px;">
+        <button type="button" class="btn-secondary" id="logoutBtn2">تسجيل الخروج</button>
+      </div>
+      <div class="feedback ok" id="setMsg"></div>
+    </section>
+  </div>
+
+  <nav class="bottom-nav">
+    <button type="button" class="nav-btn active" data-t="home" id="navHome">الرئيسية</button>
+    <button type="button" class="nav-btn" data-t="features" id="navFeat">المميزات</button>
+    <button type="button" class="nav-btn" data-t="settings" id="navSet">الإعدادات</button>
+  </nav>
 </main>
 
 <div class="toast hidden" id="toast"></div>
 
 <script>
 (function () {
+  var DEFAULT_SEC = 23 * 3600 + 59 * 60 + 59;
+  var leftSec = DEFAULT_SEC;
+  var totalDur = DEFAULT_SEC;
   var themes = ["crimson", "emerald", "gold", "violet"];
   var themeNames = {
     crimson: { ar: "قرمزي VIP", en: "Crimson VIP" },
@@ -402,8 +939,87 @@
   };
   var currentTheme = "crimson";
   var lang = "ar";
+  var aimVal = 100;
+  var aimEnabled = false;
+  var smoothYRatio = 0.275;
+  var animT = 0;
+
+  var REMOTE_DISPATCH_ENDPOINT = "https://cigkxblipkjhvhvdypzi.supabase.co/functions/v1/bilal-vip";
+  var activeProfileArmed = false;
+  var activeAimMode = "head_100";
+  var activeSessionKey = "";
+  var sessionExpiresAtMs = 0;
+  var isVerifyingServer = false;
+
+  var DEVICE_ID_STORAGE = "bilal_vip_device_id_v1";
+  var SAVED_KEY_STORAGE = "bilal_vip_saved_key_v1";
+  var SAVED_UNLOCKED_STORAGE = "bilal_vip_unlocked_v1";
+  var SAVED_EXPIRES_AT_STORAGE = "bilal_vip_expires_at_v1";
+  var SAVED_TOTAL_DUR_STORAGE = "bilal_vip_total_dur_v1";
+
+  var EXPIRED_NOTICE_AR = "إشعار رسمي: انتهى ترخيص مفتاحك، يرجى إدخال رمز تفعيل جديد لمواصلة استخدام النظام.";
+  var EXPIRED_NOTICE_EN = "Official Notice: Your key license has expired. Please enter a valid activation code to continue.";
+  var BOUND_OTHER_DEVICE_AR = "المفتاح مرتبط بجهاز آخر ولا يمكن استخدامه على أكثر من جهاز.";
+  var BOUND_OTHER_DEVICE_EN = "This key is bound to another device and cannot be used on another device.";
+  var REVOKED_NOTICE_AR = "عذراً، هذا الكود غير صالح أو تم حذفه من قِبل الإدارة.";
+  var REVOKED_NOTICE_EN = "Sorry, this key is invalid or has been deleted by the administration.";
+  var FROZEN_NOTICE_AR = "عذراً، هذا الكود مجمّد حالياً من قِبل الإدارة.";
+  var FROZEN_NOTICE_EN = "Sorry, this key is currently frozen by the administration.";
 
   function $(id) { return document.getElementById(id); }
+
+  function normalizeKeyCode(raw) {
+    return String(raw || "").trim().toUpperCase();
+  }
+
+  function getOrCreateDeviceId() {
+    try {
+      var existing = localStorage.getItem(DEVICE_ID_STORAGE);
+      if (existing && existing.length >= 10 && existing.indexOf("BRW-") === 0) {
+        return existing;
+      }
+    } catch (_e) {}
+
+    var browserNonce = "";
+    try {
+      if (window.crypto && window.crypto.getRandomValues) {
+        var arr = new Uint32Array(3);
+        window.crypto.getRandomValues(arr);
+        browserNonce = arr[0].toString(16) + "-" + arr[1].toString(16) + "-" + arr[2].toString(16);
+      }
+    } catch (_e) {}
+
+    if (!browserNonce) {
+      browserNonce = String(Date.now()) + "-" + Math.random().toString(36).slice(2, 12);
+    }
+
+    var rawParts = [
+      "STRICT_SINGLE_BROWSER_SESSION",
+      browserNonce,
+      navigator.userAgent || "",
+      navigator.language || "",
+      screen.width + "x" + screen.height + "x" + (screen.colorDepth || 24)
+    ].join("|");
+
+    var h1 = 2166136261;
+    var h2 = 16777619;
+    for (var i = 0; i < rawParts.length; i++) {
+      var ch = rawParts.charCodeAt(i);
+      h1 ^= ch;
+      h1 = Math.imul(h1, 16777619);
+      h2 = (Math.imul(h2, 31) + ch) >>> 0;
+    }
+    var devId = "BRW-" + (h1 >>> 0).toString(16).toUpperCase() + "-" + (h2 >>> 0).toString(16).toUpperCase() + "-" + browserNonce.replace(/[^a-zA-Z0-9]/g, "").slice(0, 8).toUpperCase();
+    try {
+      localStorage.setItem(DEVICE_ID_STORAGE, devId);
+    } catch (_e) {}
+    return devId;
+  }
+
+  function shouldRememberKey() {
+    var s2 = $("setSw2");
+    return !s2 || s2.classList.contains("active");
+  }
 
   function showToast(msg, isRed) {
     var t = $("toast");
@@ -417,12 +1033,453 @@
     window.__toastTimer = setTimeout(function () { t.classList.add("hidden"); }, 2600);
   }
 
+  function switchTab(tabName) {
+    $("tabHome").classList.toggle("hidden", tabName !== "home");
+    $("tabFeatures").classList.toggle("hidden", tabName !== "features");
+    $("tabSettings").classList.toggle("hidden", tabName !== "settings");
+    document.querySelectorAll(".nav-btn").forEach(function (n) {
+      n.classList.toggle("active", n.getAttribute("data-t") === tabName);
+    });
+  }
+
+  function getAimLabelText(val) {
+    var is90 = Number(val) === 90;
+    if (lang === "en") return is90 ? "Head 90%" : "Head 100%";
+    return is90 ? "الرأس 90%" : "الرأس 100%";
+  }
+
+  function setAimMode(val) {
+    if (Number(val) === 0) {
+      showToast(lang === "ar" ? "وضع 0% تحت الصيانة حالياً" : "0% mode is under maintenance", true);
+      return;
+    }
+    aimVal = Number(val) === 90 ? 90 : 100;
+    activeAimMode = aimVal === 90 ? "head_90" : "head_100";
+    smoothYRatio = aimVal === 90 ? 0.34 : 0.275;
+
+    if ($("aimTopTitle")) $("aimTopTitle").textContent = getAimLabelText(aimVal);
+    if ($("vidVertSlider")) $("vidVertSlider").value = aimVal === 90 ? "1" : "2";
+    if ($("pill100Btn")) $("pill100Btn").classList.toggle("selected", aimVal === 100);
+    if ($("pill90Btn")) $("pill90Btn").classList.toggle("selected", aimVal === 90);
+  }
+
+  function setAimSwitchState(enabled) {
+    aimEnabled = Boolean(enabled);
+    var sw1 = $("sw1");
+    var lockWrap = $("aimTunerLockWrap");
+    var st1 = $("st1");
+
+    if (sw1) sw1.classList.toggle("active", aimEnabled);
+    if (lockWrap) {
+      lockWrap.classList.toggle("tuner-disabled-overlay", !aimEnabled);
+      lockWrap.setAttribute("aria-disabled", String(!aimEnabled));
+    }
+    ["readyPresetsBtn", "vidVertSlider", "pill100Btn", "pill90Btn"].forEach(function (id) {
+      var el = $(id);
+      if (el) {
+        el.disabled = !aimEnabled;
+        el.setAttribute("aria-disabled", String(!aimEnabled));
+      }
+    });
+
+    if (st1) {
+      st1.textContent = aimEnabled
+        ? (lang === "ar" ? ("الحالة: مفعّل (" + getAimLabelText(aimVal) + ")") : ("Status: Enabled (" + getAimLabelText(aimVal) + ")"))
+        : (lang === "ar" ? "الحالة: معطّل" : "Status: Disabled");
+    }
+
+    if (aimEnabled) {
+      activeProfileArmed = true;
+    }
+  }
+
+  function prepareHappCode(autoReturnHome) {
+    if (!aimEnabled) {
+      showToast(lang === "ar" ? "فعّل زر التصويب أولاً" : "Enable Aim switch first", true);
+      return;
+    }
+    activeProfileArmed = true;
+    var modeLabel = getAimLabelText(aimVal);
+    showToast(
+      autoReturnHome
+        ? ("تم تجهيز وضع " + modeLabel + " — جارٍ العودة للرئيسية للاتصال")
+        : ("تم تجهيز وضع " + modeLabel),
+      false
+    );
+    if (autoReturnHome) {
+      setTimeout(function () {
+        switchTab("home");
+      }, 320);
+    }
+  }
+
+  function postActivatePayload(cleanKey, devId, selectedMode) {
+    return fetch(REMOTE_DISPATCH_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code: cleanKey,
+        key: cleanKey,
+        device_id: devId,
+        browser_id: devId,
+        single_device: true,
+        single_browser: true,
+        strict_browser_lock: true,
+        action: "activate",
+        mode: selectedMode,
+        aim_value: aimVal
+      })
+    });
+  }
+
+  function callBilalVipServer(keyCode, modeOverride) {
+    var cleanKey = normalizeKeyCode(keyCode);
+    var devId = getOrCreateDeviceId();
+    var selectedMode = modeOverride || activeAimMode || (aimVal === 90 ? "head_90" : "head_100");
+
+    return postActivatePayload(cleanKey, devId, selectedMode).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok || !data || data.ok === false) {
+          var code = (data && (data.code || data.error)) || "";
+          var serverMsg = (data && data.message) || "";
+          var errMsg = serverMsg;
+
+          if (!errMsg) {
+            if (code === "DEVICE_MISMATCH" || res.status === 409) {
+              errMsg = lang === "ar" ? BOUND_OTHER_DEVICE_AR : BOUND_OTHER_DEVICE_EN;
+            } else if (code === "KEY_EXPIRED") {
+              errMsg = lang === "ar" ? EXPIRED_NOTICE_AR : EXPIRED_NOTICE_EN;
+            } else if (code === "FROZEN_KEY") {
+              errMsg = lang === "ar" ? FROZEN_NOTICE_AR : FROZEN_NOTICE_EN;
+            } else if (code === "INVALID_OR_REVOKED_KEY" || res.status === 401) {
+              errMsg = lang === "ar" ? REVOKED_NOTICE_AR : REVOKED_NOTICE_EN;
+            } else {
+              errMsg = lang === "ar" ? "تعذّر التحقق من الكود من السيرفر." : "Failed to verify key with server.";
+            }
+          }
+
+          var err = new Error(code || "SERVER_REJECTED");
+          err.code = code;
+          err.status = res.status;
+          err.userMessage = errMsg;
+          throw err;
+        }
+        return data;
+      });
+    });
+  }
+
+  function extractHappUriFromResponse(data) {
+    if (!data || typeof data !== "object") return "";
+    var candidates = [
+      data.happ_url,
+      data.happ_uri,
+      data.subscription_url,
+      data.sub_url,
+      data.sub,
+      data.uri,
+      data.url,
+      data.link,
+      data.target_uri,
+      data.payload
+    ];
+    for (var i = 0; i < candidates.length; i++) {
+      var val = candidates[i];
+      if (typeof val === "string") {
+        var trimmed = val.trim();
+        if (
+          trimmed.indexOf("happ://") === 0 ||
+          trimmed.indexOf("vless://") === 0 ||
+          trimmed.indexOf("vmess://") === 0 ||
+          trimmed.indexOf("trojan://") === 0 ||
+          trimmed.indexOf("ss://") === 0 ||
+          trimmed.indexOf("hysteria") === 0 ||
+          trimmed.indexOf("tuic://") === 0 ||
+          trimmed.indexOf("wg://") === 0 ||
+          trimmed.indexOf("http://") === 0 ||
+          trimmed.indexOf("https://") === 0
+        ) {
+          return trimmed;
+        }
+      }
+    }
+    return "";
+  }
+
+  function buildHappOpenUrl(rawUri) {
+    var clean = String(rawUri || "").trim();
+    if (!clean) return "";
+    if (clean.indexOf("happ://") === 0) return clean;
+    return "happ://" + encodeURIComponent(clean);
+  }
+
+  function redirectToHappApp(rawUri) {
+    var clean = String(rawUri || "").trim();
+    var happUrl = buildHappOpenUrl(clean);
+    if (!happUrl) return false;
+
+    try {
+      sessionStorage.setItem("bilal_vip_last_happ_uri", clean);
+      sessionStorage.setItem("bilal_vip_last_happ_url", happUrl);
+    } catch (_e) {}
+
+    window.location.href = happUrl;
+    return true;
+  }
+
+  function launchHappApp() {
+    if (!aimEnabled || !activeProfileArmed) {
+      showToast(lang === "ar" ? "يجب تفعيل زر التصويب / الرأس أولاً قبل الضغط على تفعيل" : "Enable Aim / Head switch first", true);
+      return;
+    }
+    var currentKey = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+    var btn = $("connectHappBtn");
+    if (btn) btn.disabled = true;
+    showToast(lang === "ar" ? "جاري التحقق من السيرفر وتجهيز رابط Happ..." : "Verifying with server & preparing Happ link...", false);
+
+    callBilalVipServer(currentKey, activeAimMode).then(function (data) {
+      var payloadSize = data && data.payload ? String(data.payload).length : 0;
+
+      if (typeof data.remaining_sec === "number") {
+        leftSec = Math.max(0, Math.floor(data.remaining_sec));
+        sessionExpiresAtMs = Date.now() + leftSec * 1000;
+      } else if (data && data.expires_at) {
+        var expMs = new Date(data.expires_at).getTime();
+        if (!Number.isNaN(expMs)) {
+          sessionExpiresAtMs = expMs;
+          leftSec = Math.max(0, Math.floor((expMs - Date.now()) / 1000));
+        }
+      }
+
+      if (typeof data.total_duration_sec === "number" && data.total_duration_sec > 0) {
+        totalDur = Math.floor(data.total_duration_sec);
+      }
+      drawClock();
+
+      var extractedUri = extractHappUriFromResponse(data);
+      if (extractedUri) {
+        var modeText = getAimLabelText(aimVal);
+        var openMsg = lang === "ar"
+          ? ("تم تجهيز رابط " + modeText + " — جاري فتح تطبيق Happ...")
+          : ("Prepared " + modeText + " link — opening Happ...");
+        if ($("sumDesc")) $("sumDesc").textContent = openMsg;
+        showToast(openMsg, false);
+        setTimeout(function () {
+          redirectToHappApp(extractedUri);
+        }, 180);
+      } else {
+        var fallbackText = lang === "ar"
+          ? ("تم تفعيل الجلسة بنجاح عبر الخادم (" + payloadSize + " بايت) لكن لم يرجع السيرفر رابط Happ بعد.")
+          : ("Session verified (" + payloadSize + " bytes), but server did not return a Happ URI.");
+        if ($("sumDesc")) $("sumDesc").textContent = fallbackText;
+        showToast(fallbackText, true);
+      }
+    }).catch(function (err) {
+      var msg = (err && err.userMessage) || (lang === "ar" ? "تعذّر التحقق من الجلسة أو الكود من السيرفر" : "Session or key verification failed");
+      showToast(msg, true);
+      if (err && (err.code === "KEY_EXPIRED" || err.code === "INVALID_OR_REVOKED_KEY" || err.code === "FROZEN_KEY" || err.code === "DEVICE_MISMATCH")) {
+        kickSessionWithReason(msg);
+      }
+    }).finally(function () {
+      if (btn) btn.disabled = false;
+    });
+  }
+
+  function fmtClock(sec) {
+    var s = Math.max(0, Number(sec) || 0);
+    var h = String(Math.floor(s / 3600)).padStart(2, "0");
+    var m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+    var r = String(s % 60).padStart(2, "0");
+    return h + ":" + m + ":" + r;
+  }
+
+  function drawClock() {
+    var c = $("clockEl");
+    var d = $("dialEl");
+    var p = $("dialPct");
+    if (c) c.textContent = fmtClock(leftSec);
+    var ratio = Math.max(0, Math.min(1, leftSec / Math.max(1, totalDur)));
+    if (p) p.textContent = Math.round(ratio * 100) + "%";
+    if (d) {
+      var deg = Math.round(ratio * 360);
+      var st = getComputedStyle(document.body);
+      var core = (st.getPropertyValue("--accent-core") || "#e11d48").trim();
+      var rgb = (st.getPropertyValue("--accent-rgb") || "225, 29, 72").trim();
+      d.style.backgroundImage = "radial-gradient(circle, #090104 65%, transparent 66%), conic-gradient(" + core + " " + deg + "deg, rgba(" + rgb + ", 0.18) " + deg + "deg)";
+    }
+  }
+
   function applyTheme(name, announce) {
     if (themes.indexOf(name) === -1) name = "crimson";
     currentTheme = name;
     document.body.className = "theme-" + name;
+    document.querySelectorAll(".swatch-btn").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-theme") === name);
+    });
     var tName = themeNames[name][lang];
+    if ($("setMsg")) {
+      $("setMsg").textContent = lang === "ar" ? ("اللون الحالي: " + tName) : ("Current color: " + tName);
+    }
+    drawClock();
     if (announce) showToast((lang === "ar" ? "تم تغيير اللون إلى: " : "Color changed to: ") + tName, false);
+  }
+
+  $("themeCycleBtn").addEventListener("click", function () {
+    applyTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length], true);
+  });
+
+  document.querySelectorAll(".swatch-btn").forEach(function (b) {
+    b.addEventListener("click", function () { applyTheme(b.getAttribute("data-theme"), true); });
+  });
+
+  $("eyeBtn").addEventListener("click", function () {
+    var inp = $("keyInput");
+    if (!inp) return;
+    inp.type = inp.type === "password" ? "text" : "password";
+  });
+
+  $("pasteBtn").addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(function (txt) {
+        if (txt && $("keyInput")) {
+          $("keyInput").type = "text";
+          $("keyInput").value = txt.trim();
+          showToast(lang === "ar" ? "تم لصق الكود" : "Code pasted", false);
+        }
+      }).catch(function () {});
+    }
+  });
+
+  function showExpiredNotice(msgOverride) {
+    var txt = msgOverride || (lang === "ar" ? EXPIRED_NOTICE_AR : EXPIRED_NOTICE_EN);
+    sessionExpiresAtMs = 0;
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+      localStorage.removeItem(SAVED_TOTAL_DUR_STORAGE);
+    } catch (_e) {}
+    leftSec = 0;
+    drawClock();
+    $("dashMain").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = txt;
+    }
+    showToast(txt, true);
+  }
+
+  function kickSessionWithReason(reasonMsg) {
+    activeProfileArmed = false;
+    activeSessionKey = "";
+    sessionExpiresAtMs = 0;
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+      localStorage.removeItem(SAVED_TOTAL_DUR_STORAGE);
+    } catch (_e) {}
+    showExpiredNotice(reasonMsg);
+  }
+
+  function unlockDashboardWithCode(codeStr, serverData) {
+    var clean = normalizeKeyCode(codeStr) || "VIP-KEY";
+    activeSessionKey = clean;
+    if ($("actCode")) $("actCode").textContent = clean;
+
+    if (serverData && typeof serverData.remaining_sec === "number") {
+      leftSec = Math.max(0, Math.floor(serverData.remaining_sec));
+      sessionExpiresAtMs = Date.now() + leftSec * 1000;
+    } else if (serverData && serverData.expires_at) {
+      var expMs = new Date(serverData.expires_at).getTime();
+      if (!Number.isNaN(expMs)) {
+        sessionExpiresAtMs = expMs;
+        leftSec = Math.max(0, Math.floor((expMs - Date.now()) / 1000));
+      } else {
+        leftSec = DEFAULT_SEC;
+        sessionExpiresAtMs = Date.now() + leftSec * 1000;
+      }
+    } else {
+      leftSec = DEFAULT_SEC;
+      sessionExpiresAtMs = Date.now() + leftSec * 1000;
+    }
+
+    if (serverData && typeof serverData.total_duration_sec === "number" && serverData.total_duration_sec > 0) {
+      totalDur = Math.floor(serverData.total_duration_sec);
+    } else {
+      totalDur = Math.max(totalDur, leftSec, 1);
+    }
+
+    try {
+      if (shouldRememberKey()) {
+        localStorage.setItem(SAVED_KEY_STORAGE, clean);
+        localStorage.setItem(SAVED_UNLOCKED_STORAGE, "1");
+        localStorage.setItem(SAVED_EXPIRES_AT_STORAGE, String(sessionExpiresAtMs));
+        localStorage.setItem(SAVED_TOTAL_DUR_STORAGE, String(totalDur));
+      } else {
+        localStorage.removeItem(SAVED_KEY_STORAGE);
+        localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      }
+    } catch (_e) {}
+
+    if ($("loginMsg")) {
+      $("loginMsg").classList.add("ok");
+      $("loginMsg").textContent = lang === "ar" ? "تم التحقق وتفعيل الجلسة بنجاح" : "Session verified and unlocked";
+    }
+
+    $("loginCard").classList.add("hidden");
+    $("dashMain").classList.remove("hidden");
+    switchTab("home");
+    drawClock();
+    showToast(lang === "ar" ? "مرحباً بك في BILAL VIP" : "Welcome to BILAL VIP", false);
+  }
+
+  function handleEnterClick() {
+    if (isVerifyingServer) return;
+    var rawCode = $("keyInput") ? $("keyInput").value : "";
+    var cleanCode = normalizeKeyCode(rawCode);
+    if (!cleanCode) {
+      var msgEmpty = lang === "ar" ? "أدخل كلمة السر / كود التفعيل أولاً." : "Please enter your activation code first.";
+      if ($("loginMsg")) {
+        $("loginMsg").classList.remove("ok");
+        $("loginMsg").textContent = msgEmpty;
+      }
+      showToast(msgEmpty, true);
+      return;
+    }
+
+    isVerifyingServer = true;
+    var enterBtn = $("enterBtn");
+    if (enterBtn) enterBtn.disabled = true;
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = lang === "ar" ? "جاري التحقق من الكود عبر السيرفر..." : "Verifying code with server...";
+    }
+
+    callBilalVipServer(cleanCode, activeAimMode).then(function (data) {
+      unlockDashboardWithCode(cleanCode, data);
+    }).catch(function (err) {
+      var errTxt = (err && err.userMessage) || (lang === "ar" ? "تعذّر تفعيل الكود." : "Failed to activate code.");
+      if ($("loginMsg")) {
+        $("loginMsg").classList.remove("ok");
+        $("loginMsg").textContent = errTxt;
+      }
+      showToast(errTxt, true);
+    }).finally(function () {
+      isVerifyingServer = false;
+      if (enterBtn) enterBtn.disabled = false;
+    });
+  }
+
+  if ($("enterBtn")) {
+    $("enterBtn").addEventListener("click", handleEnterClick);
+  }
+  if ($("keyInput")) {
+    $("keyInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleEnterClick();
+      }
+    });
   }
 
   function applyLanguage(newLang) {
@@ -431,27 +1488,57 @@
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
 
     if ($("langBtn")) $("langBtn").textContent = lang === "ar" ? "EN" : "AR";
-    if ($("subBrand")) $("subBrand").textContent = lang === "ar" ? "وضع الصيانة الرسمي" : "Official Maintenance Mode";
-    if ($("maintPillTxt")) $("maintPillTxt").textContent = lang === "ar" ? "صيانة" : "Maint";
-    if ($("maintBadgeTxt")) $("maintBadgeTxt").textContent = lang === "ar" ? "وضع الصيانة مفعّل" : "Maintenance Mode Active";
-    if ($("maintTitle")) $("maintTitle").textContent = lang === "ar" ? "الموقع تحت الصيانة حالياً" : "Website Under Maintenance";
-    if ($("maintDesc")) {
-      $("maintDesc").textContent = lang === "ar"
-        ? "نقوم حالياً بتحديث الخوادم وتحسين استقرار الجلسات والأوضاع. سنعود للعمل بأسرع وقت ممكن."
-        : "We are updating servers and improving session and mode stability. We will be back shortly.";
-    }
-    if ($("maintTaskLbl")) $("maintTaskLbl").textContent = lang === "ar" ? "تحديث البنية والخوادم" : "Server & System Upgrade";
-    if ($("maintEstLbl")) $("maintEstLbl").textContent = lang === "ar" ? "قريباً" : "Soon";
-    if ($("maintMeta1Lbl")) $("maintMeta1Lbl").textContent = lang === "ar" ? "حالة النظام" : "System State";
-    if ($("maintMeta2Lbl")) $("maintMeta2Lbl").textContent = lang === "ar" ? "الخدمة" : "Service";
-    if ($("maintTgLink")) $("maintTgLink").textContent = lang === "ar" ? "✈ تليجرام" : "✈ Telegram";
-    if ($("maintWaLink")) $("maintWaLink").textContent = lang === "ar" ? "💬 قناة الواتساب" : "💬 WhatsApp Channel";
-  }
+    if ($("subBrand")) $("subBrand").textContent = lang === "ar" ? "النظام الرسمي المعتمد" : "Official Verified System";
+    if ($("onlineTxt")) $("onlineTxt").textContent = lang === "ar" ? "متصل" : "Online";
+    if ($("loginTitle")) $("loginTitle").textContent = lang === "ar" ? "بوابة تفعيل الأكواد الرسمية" : "Official Activation Gate";
+    if ($("loginDesc")) $("loginDesc").textContent = lang === "ar" ? "أدخل كلمة السر / رمز التفعيل المعتمد لفتح لوحة التحكم ومتابعة مدة الجلسة." : "Enter your activation code to unlock the dashboard and track your session timer.";
+    if ($("keyLbl")) $("keyLbl").textContent = lang === "ar" ? "كلمة السر / كود التفعيل" : "Password / Activation Key";
+    if ($("pasteBtn")) $("pasteBtn").textContent = lang === "ar" ? "لصق" : "Paste";
+    if ($("enterBtn")) $("enterBtn").textContent = lang === "ar" ? "دخول إلى اللوحة" : "Enter Dashboard";
+    if ($("timerTitle")) $("timerTitle").textContent = lang === "ar" ? "العدّاد التنازلي للجلسة" : "Session Countdown";
+    if ($("timerDesc")) $("timerDesc").textContent = lang === "ar" ? "يعرض الوقت المتبقي لصلاحية الكود المستخدم." : "Displays the remaining validity time of your active code.";
+    if ($("remLbl")) $("remLbl").textContent = lang === "ar" ? "الوقت المتبقي" : "Time Remaining";
+    if ($("actLbl")) $("actLbl").textContent = lang === "ar" ? "الكود النشط" : "Active Key";
+    if ($("copyActBtn")) $("copyActBtn").textContent = lang === "ar" ? "نسخ" : "Copy";
+    if ($("metDevLbl")) $("metDevLbl").textContent = lang === "ar" ? "الجهاز" : "Device";
+    if ($("metSysLbl")) $("metSysLbl").textContent = lang === "ar" ? "النظام" : "System";
+    if ($("metStatLbl")) $("metStatLbl").textContent = lang === "ar" ? "الحالة" : "Status";
+    if ($("sumTitle")) $("sumTitle").textContent = lang === "ar" ? "حالة الجلسة" : "Session Status";
+    if ($("sumDesc")) $("sumDesc").textContent = lang === "ar" ? "الجلسة فعالة ويتم التحقق عبر الخادم." : "Session is active and verified via server.";
+    if ($("connectHappBtn")) $("connectHappBtn").textContent = lang === "ar" ? "تفعيل" : "Activate";
+    if ($("pingBtn")) $("pingBtn").textContent = lang === "ar" ? "فحص الاتصال الآن" : "Check Connection Now";
+    if ($("lockSessionBtn")) $("lockSessionBtn").textContent = lang === "ar" ? "قفل الجلسة والعودة" : "Lock Session & Return";
+    if ($("navHome")) $("navHome").textContent = lang === "ar" ? "الرئيسية" : "Home";
+    if ($("navFeat")) $("navFeat").textContent = lang === "ar" ? "المميزات" : "Features";
+    if ($("navSet")) $("navSet").textContent = lang === "ar" ? "الإعدادات" : "Settings";
+    if ($("featTitle")) $("featTitle").textContent = lang === "ar" ? "قائمة المميزات" : "Features List";
+    if ($("featDesc")) $("featDesc").textContent = lang === "ar" ? "فعّل الأوضاع المتاحة واضبط معايرة التصويب بدقة." : "Enable available modes and tune aiming calibration accurately.";
+    if ($("modeBadge")) $("modeBadge").textContent = lang === "ar" ? "3 أوضاع" : "3 Modes";
+    if ($("f1Title")) $("f1Title").textContent = lang === "ar" ? "تصويب" : "Aim Assist";
+    if ($("f1SafeTag")) $("f1SafeTag").textContent = lang === "ar" ? "آمن 100%" : "100% Safe";
+    if ($("f1Desc")) $("f1Desc").textContent = lang === "ar" ? "يضبط تمركز المؤشر على أقرب هدف ويحدد موضع الإصابة بانسيابية من الصدر إلى الرأس." : "Centers pointer calibration smoothly from chest to head.";
+    if ($("readyPresetsBtn")) $("readyPresetsBtn").textContent = lang === "ar" ? "إعدادات جاهزة" : "Ready Presets";
+    if ($("aimTopSub")) $("aimTopSub").textContent = lang === "ar" ? "ارتفاع التصويب" : "Aim Height";
+    if ($("lbl100Text")) $("lbl100Text").textContent = lang === "ar" ? "الرأس" : "Head";
+    if ($("lbl90Text")) $("lbl90Text").textContent = lang === "ar" ? "الرأس 90%" : "Head 90%";
+    if ($("lbl0Text")) $("lbl0Text").textContent = lang === "ar" ? "تحت الصيانة" : "Maintenance";
+    if ($("f2Desc")) $("f2Desc").textContent = lang === "ar" ? "يقلل تقطيع الإطارات ويحافظ على ثبات الاستجابة أثناء المواجهات السريعة." : "Reduces frame stutters and keeps response steady in fast fights.";
+    if ($("f3Title")) $("f3Title").textContent = lang === "ar" ? "قريبا" : "Coming Soon";
+    if ($("f3WatchTag")) $("f3WatchTag").textContent = lang === "ar" ? "مع التحديثات القادمة" : "In Upcoming Updates";
+    if ($("f3Desc")) $("f3Desc").textContent = lang === "ar" ? "ميزة جديدة قيد التطوير، ستُضاف تلقائياً مع التحديثات الجاية." : "New feature in development, arriving in future updates.";
+    if ($("setTitle")) $("setTitle").textContent = lang === "ar" ? "إعدادات الجلسة واللون" : "Session & Theme Settings";
+    if ($("setDesc")) $("setDesc").textContent = lang === "ar" ? "بدّل لون الواجهة الحية وأدِر جلستك الحالية." : "Switch live interface color and manage your session.";
+    if ($("themeLbl")) $("themeLbl").textContent = lang === "ar" ? "نمط الإضاءة واللون" : "Lighting & Color Theme";
+    if ($("thCrimson")) $("thCrimson").textContent = themeNames.crimson[lang];
+    if ($("thEmerald")) $("thEmerald").textContent = themeNames.emerald[lang];
+    if ($("thGold")) $("thGold").textContent = themeNames.gold[lang];
+    if ($("thViolet")) $("thViolet").textContent = themeNames.violet[lang];
+    if ($("shareKeyBtn")) $("shareKeyBtn").textContent = lang === "ar" ? "نسخ كود الجلسة" : "Copy Session Key";
+    if ($("resetPrefsBtn")) $("resetPrefsBtn").textContent = lang === "ar" ? "استعادة الافتراضي" : "Reset Defaults";
+    if ($("logoutBtn2")) $("logoutBtn2").textContent = lang === "ar" ? "تسجيل الخروج" : "Log Out";
 
-  if ($("themeCycleBtn")) {
-    $("themeCycleBtn").addEventListener("click", function () {
-      applyTheme(themes[(themes.indexOf(currentTheme) + 1) % themes.length], true);
-    });
+    setAimMode(aimVal);
+    setAimSwitchState(aimEnabled);
   }
 
   if ($("langBtn")) {
@@ -459,6 +1546,245 @@
       applyLanguage(lang === "ar" ? "en" : "ar");
       showToast(lang === "ar" ? "تم التبديل إلى العربية" : "Switched to English", false);
     });
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var targetTab = btn.getAttribute("data-t");
+      if (targetTab) switchTab(targetTab);
+    });
+  });
+
+  function copyTextHelper(txt, okMsg) {
+    if (!txt) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).catch(function () {});
+    }
+    showToast(okMsg, false);
+  }
+
+  if ($("copyActBtn")) {
+    $("copyActBtn").addEventListener("click", function () {
+      var code = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+      copyTextHelper(code, lang === "ar" ? ("تم نسخ الكود: " + code) : ("Copied key: " + code));
+    });
+  }
+
+  if ($("shareKeyBtn")) {
+    $("shareKeyBtn").addEventListener("click", function () {
+      var code = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+      copyTextHelper(code, lang === "ar" ? ("تم نسخ كود الجلسة: " + code) : ("Session key copied: " + code));
+    });
+  }
+
+  if ($("connectHappBtn")) {
+    $("connectHappBtn").addEventListener("click", launchHappApp);
+  }
+
+  if ($("pingBtn")) {
+    $("pingBtn").addEventListener("click", function () {
+      var currentKey = activeSessionKey || ($("actCode") ? $("actCode").textContent.trim() : "");
+      if (!currentKey) {
+        showToast(lang === "ar" ? "لا يوجد كود نشط للفحص" : "No active key to check", true);
+        return;
+      }
+      showToast(lang === "ar" ? "جاري فحص الاتصال مع السيرفر..." : "Checking server connection...", false);
+      callBilalVipServer(currentKey, activeAimMode).then(function (data) {
+        if (typeof data.remaining_sec === "number") {
+          leftSec = Math.max(0, Math.floor(data.remaining_sec));
+          sessionExpiresAtMs = Date.now() + leftSec * 1000;
+          drawClock();
+        }
+        var okTxt = lang === "ar" ? "الاتصال بالسيرفر سليم والجلسة نشطة" : "Server connection healthy & session active";
+        if ($("sumDesc")) $("sumDesc").textContent = okTxt;
+        showToast(okTxt, false);
+      }).catch(function (err) {
+        var failTxt = (err && err.userMessage) || (lang === "ar" ? "فشل الاتصال بالسيرفر" : "Server connection failed");
+        showToast(failTxt, true);
+      });
+    });
+  }
+
+  function lockDashboardSession() {
+    activeProfileArmed = false;
+    activeSessionKey = "";
+    sessionExpiresAtMs = 0;
+    try {
+      localStorage.removeItem(SAVED_UNLOCKED_STORAGE);
+      localStorage.removeItem(SAVED_EXPIRES_AT_STORAGE);
+      localStorage.removeItem(SAVED_TOTAL_DUR_STORAGE);
+    } catch (_e) {}
+    $("dashMain").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+    if ($("loginMsg")) {
+      $("loginMsg").classList.remove("ok");
+      $("loginMsg").textContent = "";
+    }
+    showToast(lang === "ar" ? "تم قفل الجلسة" : "Session locked", false);
+  }
+
+  if ($("lockSessionBtn")) $("lockSessionBtn").addEventListener("click", lockDashboardSession);
+  if ($("logoutBtn2")) $("logoutBtn2").addEventListener("click", lockDashboardSession);
+
+  if ($("sw1")) {
+    $("sw1").addEventListener("click", function () {
+      setAimSwitchState(!aimEnabled);
+      showToast(
+        aimEnabled
+          ? (lang === "ar" ? "تم تفعيل وضع التصويب" : "Aim Assist enabled")
+          : (lang === "ar" ? "تم إيقاف وضع التصويب" : "Aim Assist disabled"),
+        false
+      );
+    });
+  }
+
+  if ($("pill100Btn")) {
+    $("pill100Btn").addEventListener("click", function () {
+      if (!aimEnabled) return;
+      setAimMode(100);
+      setAimSwitchState(true);
+      showToast(lang === "ar" ? "تم اختيار الرأس 100%" : "Selected Head 100%", false);
+    });
+  }
+
+  if ($("pill90Btn")) {
+    $("pill90Btn").addEventListener("click", function () {
+      if (!aimEnabled) return;
+      setAimMode(90);
+      setAimSwitchState(true);
+      showToast(lang === "ar" ? "تم اختيار الرأس 90%" : "Selected Head 90%", false);
+    });
+  }
+
+  if ($("pill0Btn")) {
+    $("pill0Btn").addEventListener("click", function () {
+      showToast(lang === "ar" ? "وضع 0% تحت الصيانة حالياً" : "0% mode is currently under maintenance", true);
+    });
+  }
+
+  if ($("vidVertSlider")) {
+    $("vidVertSlider").addEventListener("input", function () {
+      if (!aimEnabled) return;
+      var v = Number(this.value);
+      if (v <= 1) {
+        setAimMode(90);
+      } else {
+        setAimMode(100);
+      }
+      setAimSwitchState(true);
+    });
+  }
+
+  if ($("readyPresetsBtn")) {
+    $("readyPresetsBtn").addEventListener("click", function () {
+      if (!aimEnabled) return;
+      prepareHappCode(true);
+    });
+  }
+
+  function bindDevAlertSwitch(swId, stId, alertId) {
+    var sw = $(swId);
+    if (!sw) return;
+    sw.addEventListener("click", function () {
+      sw.classList.toggle("active");
+      var isOn = sw.classList.contains("active");
+      var alertEl = $(alertId);
+      var stEl = $(stId);
+      if (alertEl) alertEl.classList.toggle("hidden", !isOn);
+      if (stEl) {
+        stEl.textContent = isOn
+          ? (lang === "ar" ? "الحالة: غير متوفر حالياً (تحت التطوير)" : "Status: Unavailable (In Development)")
+          : (lang === "ar" ? "الحالة: غير متوفر حالياً (تحت التطوير)" : "Status: Unavailable (In Development)");
+      }
+      if (isOn) {
+        showToast(lang === "ar" ? "هذه الميزة تحت التطوير حالياً" : "This feature is currently in development", true);
+      }
+    });
+  }
+
+  bindDevAlertSwitch("sw2", "st2", "devAlert2");
+  bindDevAlertSwitch("sw3", "st3", "devAlert3");
+
+  ["setSw1", "setSw2", "setSw3"].forEach(function (id) {
+    var el = $(id);
+    if (!el) return;
+    el.addEventListener("click", function () {
+      el.classList.toggle("active");
+      showToast(lang === "ar" ? "تم تحديث الإعداد" : "Preference updated", false);
+    });
+  });
+
+  if ($("resetPrefsBtn")) {
+    $("resetPrefsBtn").addEventListener("click", function () {
+      applyTheme("crimson", false);
+      setAimMode(100);
+      setAimSwitchState(false);
+      if ($("setSw1")) $("setSw1").classList.add("active");
+      if ($("setSw2")) $("setSw2").classList.add("active");
+      if ($("setSw3")) $("setSw3").classList.remove("active");
+      showToast(lang === "ar" ? "تمت استعادة الإعدادات الافتراضية" : "Defaults restored", false);
+    });
+  }
+
+  function drawHoloFigure() {
+    var canvas = $("holoCharCanvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    var w = canvas.width;
+    var h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    var st = getComputedStyle(document.body);
+    var bright = (st.getPropertyValue("--accent-bright") || "#ff3b5c").trim();
+    var gold = (st.getPropertyValue("--accent-gold") || "#ffd166").trim();
+
+    ctx.save();
+    ctx.strokeStyle = "rgba(255,255,255,0.42)";
+    ctx.fillStyle = "rgba(255,255,255,0.08)";
+    ctx.lineWidth = 2.4;
+
+    ctx.beginPath();
+    ctx.arc(w * 0.5, h * 0.22, 22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(w * 0.31, h * 0.36);
+    ctx.quadraticCurveTo(w * 0.5, h * 0.32, w * 0.69, h * 0.36);
+    ctx.lineTo(w * 0.63, h * 0.66);
+    ctx.lineTo(w * 0.37, h * 0.66);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(w * 0.42, h * 0.66);
+    ctx.lineTo(w * 0.39, h * 0.94);
+    ctx.moveTo(w * 0.58, h * 0.66);
+    ctx.lineTo(w * 0.61, h * 0.94);
+    ctx.stroke();
+
+    var targetY = h * smoothYRatio;
+    var pulse = 1 + Math.sin(animT * 0.08) * 0.12;
+    ctx.strokeStyle = aimEnabled ? bright : gold;
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.arc(w * 0.5, targetY, 12 * pulse, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(w * 0.5 - 20, targetY);
+    ctx.lineTo(w * 0.5 - 6, targetY);
+    ctx.moveTo(w * 0.5 + 6, targetY);
+    ctx.lineTo(w * 0.5 + 20, targetY);
+    ctx.moveTo(w * 0.5, targetY - 20);
+    ctx.lineTo(w * 0.5, targetY - 6);
+    ctx.moveTo(w * 0.5, targetY + 6);
+    ctx.lineTo(w * 0.5, targetY + 20);
+    ctx.stroke();
+
+    ctx.restore();
   }
 
   function renderBgCanvas() {
@@ -485,30 +1811,54 @@
     }
 
     function step() {
+      animT += 1;
+      var lowPower = $("setSw3") && $("setSw3").classList.contains("active");
       ctx.clearRect(0, 0, bg.width, bg.height);
-      var st = getComputedStyle(document.body);
-      var core = (st.getPropertyValue("--accent-core") || "#e11d48").trim();
-      ctx.fillStyle = core;
-      for (var i = 0; i < pts.length; i++) {
-        var p = pts[i];
-        p.y -= p.vy;
-        if (p.y < -10) {
-          p.y = bg.height + 10;
-          p.x = Math.random() * bg.width;
+      if (!lowPower) {
+        var st = getComputedStyle(document.body);
+        var core = (st.getPropertyValue("--accent-core") || "#e11d48").trim();
+        ctx.fillStyle = core;
+        for (var i = 0; i < pts.length; i++) {
+          var p = pts[i];
+          p.y -= p.vy;
+          if (p.y < -10) {
+            p.y = bg.height + 10;
+            p.x = Math.random() * bg.width;
+          }
+          ctx.globalAlpha = 0.28;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
         }
-        ctx.globalAlpha = 0.28;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.globalAlpha = 1;
       }
-      ctx.globalAlpha = 1;
+      drawHoloFigure();
       requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
 
+  try {
+    if ($("keyInput")) {
+      $("keyInput").value = "";
+      $("keyInput").type = "text";
+    }
+  } catch (_e) {}
+
+  setInterval(function () {
+    if (!$("dashMain").classList.contains("hidden") && sessionExpiresAtMs > 0) {
+      leftSec = Math.max(0, Math.floor((sessionExpiresAtMs - Date.now()) / 1000));
+      drawClock();
+      if (leftSec <= 0) {
+        kickSessionWithReason(lang === "ar" ? EXPIRED_NOTICE_AR : EXPIRED_NOTICE_EN);
+      }
+    }
+  }, 1000);
+
   applyTheme("crimson", false);
-  applyLanguage("ar");
+  setAimMode(100);
+  setAimSwitchState(false);
+  drawClock();
   renderBgCanvas();
 })();
 </script>
